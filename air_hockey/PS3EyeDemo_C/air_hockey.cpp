@@ -23,13 +23,54 @@ typedef struct{
 
 static DWORD WINAPI CaptureThread(LPVOID ThreadPointer);
 
+CLEyeCameraInstance setup_camera(int *width, int *height)
+{
+	// Variable Declaration Section
+	CLEyeCameraInstance ps3_camera;
+	int number_of_cameras;
+	GUID camera_id;
+	int temp_width;
+	int temp_height;
+
+	number_of_cameras = CLEyeGetCameraCount();
+	if (number_of_cameras != 0)
+	{
+		printf("Number of camera's detected: %d\r\n", number_of_cameras);
+	}
+	else
+	{
+		printf("Error, no camera detected, press any key to exit\r\n");
+		getchar();
+		assert(number_of_cameras != 0);
+		return NULL;
+	}
+
+	camera_id = CLEyeGetCameraUUID(0);
+
+	ps3_camera = CLEyeCreateCamera(camera_id, FRAME_FORMAT, FRAME_SIZE, FRAME_RATE);
+	assert(ps3_camera != NULL);
+
+	CLEyeSetCameraParameter(ps3_camera, CLEYE_EXPOSURE, 511);
+	CLEyeSetCameraParameter(ps3_camera, CLEYE_GAIN, 0);
+
+	// Get camera frame dimensions;
+	CLEyeCameraGetFrameDimensions(ps3_camera, temp_width, temp_height);
+	*width = temp_width;
+	*height = temp_height;
+
+	// Create a window in which the captured images will be presented
+	cvNamedWindow("PS3 Camera", CV_WINDOW_AUTOSIZE);
+
+	return ps3_camera;
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 
 	///////MY VARS////////
-	PBYTE FramePointer=NULL;
+	PBYTE frame_pointer = NULL;
 	int width,height,CameraCount,FramerCounter=0;
-	CLEyeCameraInstance EyeCamera=NULL;
+	CLEyeCameraInstance ps3_camera=NULL;
 	GUID CameraID;
 	IplImage *frame;
 	clock_t StartTime,EndTime;
@@ -37,82 +78,70 @@ int _tmain(int argc, _TCHAR* argv[])
 	HANDLE _hThread;
 	//////////////////////
 
-	//Check for presence of EYE
-	CameraCount=CLEyeGetCameraCount();
-	if(CameraCount>0) printf("Number of EYE's detected: %d\n\n",CameraCount);
-	else{
-		printf("No camera detected, press any key to exit...");
-		getchar();
-		return 0;
-	}
-	// Get ID of first PSEYE
-	CameraID = CLEyeGetCameraUUID(0);
-	// Get connection to camera and send it running parameters
-	EyeCamera = CLEyeCreateCamera(CameraID,FRAME_FORMAT,FRAME_SIZE,FRAME_RATE);
-	//Couldn't Connect to camera
-	if(EyeCamera == NULL){
-		printf("Couldn't connect to camera, press any key to exit...");
-		getchar();
-		return 0;
-	}
-	// Set some camera parameters;
-	CLEyeSetCameraParameter(EyeCamera, CLEYE_EXPOSURE, 511);
-	CLEyeSetCameraParameter(EyeCamera, CLEYE_GAIN, 0);
-	// Get camera frame dimensions;
-	CLEyeCameraGetFrameDimensions(EyeCamera, width, height);
-	// Create a window in which the captured images will be presented
-	cvNamedWindow( "Camera", CV_WINDOW_AUTOSIZE );
+	ps3_camera = setup_camera(&width, &height);
+	
 	//Make a image to hold the frames captured from the camera
-	frame=cvCreateImage(cvSize(width ,height),IPL_DEPTH_8U, 4);
+	frame = cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 4);
+
 	// GetPointer To Image Data For frame
-	cvGetImageRawData(frame,&FramePointer);
+	cvGetImageRawData(frame, &frame_pointer);
+
 	//Start the eye camera
-	CLEyeCameraStart(EyeCamera);	
+	CLEyeCameraStart(ps3_camera);
 
 	//Need to copy vars into one var to launch the second thread
-	ThreadPointer.CameraInstance=EyeCamera;
-	ThreadPointer.FramePointer=FramePointer;
+	ThreadPointer.CameraInstance= ps3_camera;
+	ThreadPointer.FramePointer= frame_pointer;
+
 	//Launch thread and confirm its running
 	_hThread = CreateThread(NULL, 0, &CaptureThread, &ThreadPointer, 0, 0);
 	if(_hThread == NULL)
 	{
-		printf("failed to create thread...");
+		printf("Error, failed to create thread, press any key to terminate program.\r\n");
 		getchar();
 		return false;
 	}
 
 
-	while( 1 ) {
+	while( 1 )
+	{
 		//Display the captured frame
-		cvShowImage( "Camera", frame );
-		//If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-		//remove higher bits using AND operator
-		if( (cvWaitKey(1) & 255) == 27 ) break;
-		//}
+		cvShowImage("PS3 Camera", frame);
+		
+		// If ESC pressed, programs terminates
+		if ((cvWaitKey(1) & 255) == 27)
+		{
+			break;
+		}
 	}
 	
-	CLEyeCameraStop(EyeCamera);
-	CLEyeDestroyCamera(EyeCamera);
-	EyeCamera = NULL;
+	CLEyeCameraStop(ps3_camera);
+	CLEyeDestroyCamera(ps3_camera);
+	ps3_camera = NULL;
 	cvDestroyWindow( "Camera" );
 
 	return 0;
 }
 
-static DWORD WINAPI CaptureThread(LPVOID ThreadPointer){
-	CAMERA_AND_FRAME *Instance=(CAMERA_AND_FRAME*)ThreadPointer;
-	CLEyeCameraInstance Camera=Instance->CameraInstance;
+static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
+{
+	CAMERA_AND_FRAME *Instance = (CAMERA_AND_FRAME*)ThreadPointer;
+	CLEyeCameraInstance Camera= Instance->CameraInstance;
 	PBYTE FramePtr= Instance->FramePointer;
 	int FramerCounter=0;
 	clock_t StartTime,EndTime;
-	while(1){
+	while(1)
+	{
 		//Get Frame From Camera
 		CLEyeCameraGetFrame(Camera,FramePtr);
 
 		// put your vision code here
 
 		// Track FPS
-		if(FramerCounter==0) StartTime=clock();
+		if (FramerCounter == 0)
+		{
+			StartTime = clock();
+		}
 		FramerCounter++;
 		EndTime=clock();
 		if((EndTime-StartTime)/CLOCKS_PER_SEC>=1)
