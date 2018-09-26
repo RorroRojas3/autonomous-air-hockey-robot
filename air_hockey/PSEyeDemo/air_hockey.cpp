@@ -22,7 +22,10 @@ int dilation_val = 0;
 // Global Variables
 int low_H = 0, low_S = 0, low_V = 0;
 int high_H = MAX_VALUE_H, high_S = MAX_VALUE, high_V = MAX_VALUE;
+Mat current_frame;
+Mat hsv_frame;
 Mat frame_threshold;
+Mat blur_frame;
 
 
 #define FRAME_RATE 60
@@ -106,6 +109,15 @@ void dilation_trackbars()
 	createTrackbar("Kernel Size [2n + 1]", DILUTION_WINDOW_NAME, &erosion_val, MAX_KERNEL_SIZE, dilute_video);
 }
 
+void MousCallback(int mEvent, int x, int y, int flags, void* param)
+{
+	vector<Point2f> * pPointVec = (vector<Point2f>*)param;
+	if (mEvent == CV_EVENT_LBUTTONDOWN)
+	{
+		pPointVec->push_back(Point2f(float(x), float(y)));
+	}
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	// Variable Declaration Section
@@ -113,7 +125,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	int KeyPress;
 	CLEyeCameraInstance EyeCamera=NULL;
 	Mat Frame;
-	Mat current_frame;
 	CAMERA_AND_FRAME ThreadPointer;
 	HANDLE _hThread;
 	CLEyeCameraParameter CamCurrentParam=(CLEyeCameraParameter)0;
@@ -131,6 +142,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	CLEyeCameraGetFrameDimensions(EyeCamera, Width, Height);
 	// Create a window in which the captured images will be presented
 	namedWindow( "Camera", CV_WINDOW_AUTOSIZE );
+	namedWindow("Thresh", CV_WINDOW_AUTOSIZE);
 	//Make a image to hold the frames captured from the camera
 	Frame=Mat(Height,Width,CV_8UC4);//8 bit unsiged 4 channel image for Blue Green Red Alpa (8 bit elements per channel)
 	//Start the eye camera
@@ -138,7 +150,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	/////////////////////////////////////MAIN CODE//////////////////////////////////////
 
-	// For high frame rate launch a seperate thread
 
 	//Need to copy vars into one var to launch the second thread
 	ThreadPointer.CameraInstance=EyeCamera;
@@ -153,6 +164,34 @@ int _tmain(int argc, _TCHAR* argv[])
 		return false;
 	}
 
+	/*
+	imshow("Camera", Frame);
+	MessageBoxA(NULL, "Pick four corners on the video", "Click", MB_OK);
+
+	vector<Point2f> points;
+
+	cvSetMouseCallback("Camera", MousCallback, &points);
+
+	while (1)
+	{
+		// wait for mouse clicks
+		waitKey(10);
+		if (points.size() == 4)
+		{
+			break;
+		}
+	}
+
+	// HERE I ASSUME EACH PIXEL WILL BE 5 mm
+	double scale = 5.0;
+	vector<Point2f> points2;
+	points2.push_back(Point2f(0.0, 2000.0 / scale));
+	points2.push_back(Point2f(1200.0 / scale, 2000.0 / scale));
+	points2.push_back(Point2f(1200.0 / scale, 0.0));
+	points2.push_back(Point2f(0.0, 0.0));
+
+	Mat_<double> H = findHomography(Mat(points), Mat(points2));
+
 	/* CREATE TRACK BAR FOR HSV THRESHOLD VALUES*/
 	hsv_trackbars();
 
@@ -164,6 +203,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 	while( 1 ) 
 	{
+		/*
 		// Creates a copy of the current video input from PS3 camera
 		current_frame = Frame.clone();
 		
@@ -172,6 +212,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		// Change the Threshold for HSV frame with TrackBards
 		inRange(current_frame, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), frame_threshold);
+
+		//warpPerspective(frame_threshold, frame_threshold, H, Size(1200.0 / scale, 2000.0 / scale));
 
 		// Starting point to erode video
 		erode_video(0, 0);
@@ -193,6 +235,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			circle(Frame, center, 3, Scalar(0, 0, 255), -1, 8, 0);
 			circle(Frame, center, radius, Scalar(0, 0, 255), 3, 8, 0);
 		}
+		*/
 		
 		//This will capture keypresses and do whatever you want if you assign the appropriate actions to the right key code
 		KeyPress = waitKey(1);
@@ -208,8 +251,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		//Display the captured frame
 		//imshow("PS3 Camera- RGB", Frame);
 		//imshow("PS3 Camera - HSV", current_frame);
-		imshow(CAMERA_WINDOW_NAME, frame_threshold);
+		//imshow(CAMERA_WINDOW_NAME, frame_threshold);
 		imshow("Camera", Frame);
+		imshow("Tresh", frame_threshold);
 	}
 	
 	CLEyeCameraStop(EyeCamera);
@@ -225,15 +269,41 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer){
 	CAMERA_AND_FRAME *Instance=(CAMERA_AND_FRAME*)ThreadPointer; //type cast the void pointer back to the proper type so we can access its elements
 
 	int FramerCounter=0;
-	Mat CamImg=Mat(*(Instance->Frame));
+	Mat CamImg=Mat(*(Instance->Frame)).clone();
 
 	clock_t StartTime,EndTime;
-	while(1){
+	while(1)
+	{
 		//Get Frame From Camera
 		CLEyeCameraGetFrame(Instance->CameraInstance,CamImg.data);
 
 		// DO YOUR IMAGE PROCESSING HERE
+		cvtColor(CamImg, hsv_frame, CV_RGB2HSV);
 
+		inRange(hsv_frame, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), frame_threshold);
+
+		// Starting point to erode video
+		//erode_video(0, 0);
+
+		// Starting point to dilute video
+		//dilute_video(0, 0);
+
+		GaussianBlur(frame_threshold, blur_frame, Size(9, 9), 2, 2);
+		vector<Vec3f> circles;
+
+		HoughCircles(blur_frame, circles, CV_HOUGH_GRADIENT, 1, frame_threshold.rows / 8, 200, 15, 125, 200);
+		//cvShowImage("Blur", blur_frame);
+
+		//cout << circles.size() << endl;
+		if (circles.size() == 1)
+		{
+			cout << "Circle size: " << circles.size() << endl;
+			Point center(cvRound(circles[0][0]), cvRound(circles[0][1]));
+			int radius = cvRound(circles[0][2]);
+			circle(CamImg, center, 3, Scalar(0, 0, 255), -1, 8, 0);
+			circle(CamImg, center, radius, Scalar(0, 0, 255), 3, 8, 0);
+		}
+		
 		//copy it to main thread image.
 		*(Instance->Frame) = CamImg;
 
@@ -242,7 +312,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer){
 		FramerCounter++;
 		EndTime=clock();
 		if((EndTime-StartTime)/CLOCKS_PER_SEC>=1){
-			cout << "FPS:" << FramerCounter << endl;
+			//cout << "FPS:" << FramerCounter << endl;
 			FramerCounter=0;
 		}
 	}
