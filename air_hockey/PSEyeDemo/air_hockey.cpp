@@ -12,8 +12,12 @@ const int MAX_VALUE_H = 180;
 const int MAX_VALUE = 255;
 const String HSV_WINDOW_NAME = "HSV Values";
 const String EROSION_WINDOW_NAME = "Erosion Values";
+const String DILUTION_WINDOW_NAME = "Dilusion Values";
 const String DILUTE_WINDOW_NAME = "Dilute Values";
 const String CAMERA_WINDOW_NAME = "PS3 Camera";
+int const MAX_KERNEL_SIZE = 21;
+int erosion_val = 0;
+int dilation_val = 0;
 
 // Global Variables
 int low_H = 0, low_S = 0, low_V = 0;
@@ -64,6 +68,18 @@ static void high_V_callBack(int, void *)
 	high_V = max(high_V, low_V + 1);
 }
 
+static void erode_video(int , void *)
+{
+	Mat element = getStructuringElement(MORPH_ELLIPSE, Size(2 * erosion_val + 1, 2 * erosion_val + 1), Point(erosion_val, erosion_val));
+	erode(frame_threshold, frame_threshold, element);
+}
+
+static void dilute_video(int, void *)
+{
+	Mat element = getStructuringElement(MORPH_ELLIPSE, Size(2 * dilation_val + 1, 2 * dilation_val + 1), Point(dilation_val, dilation_val));
+	dilate(frame_threshold, frame_threshold, element);
+}
+
 // Creates HSV video Trackbars
 void hsv_trackbars()
 {
@@ -76,12 +92,18 @@ void hsv_trackbars()
 	createTrackbar("High V", HSV_WINDOW_NAME, &high_V, MAX_VALUE, high_V_callBack);
 }
 
-// Creates Erosion video Trackbards
-void erosion_trackbard()
+// Creates Erosion video Trackbars
+void erosion_trackbars()
 {
 	namedWindow(EROSION_WINDOW_NAME);
-	createTrackbar()
+	createTrackbar("Kernel Size [2n + 1]", EROSION_WINDOW_NAME, &erosion_val, MAX_KERNEL_SIZE, erode_video);
+}
 
+// Creates Dilusion video Trackbars
+void dilation_trackbars()
+{
+	namedWindow(DILUTION_WINDOW_NAME);
+	createTrackbar("Kernel Size [2n + 1]", DILUTION_WINDOW_NAME, &erosion_val, MAX_KERNEL_SIZE, dilute_video);
 }
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -132,9 +154,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 	/* CREATE TRACK BAR FOR HSV THRESHOLD VALUES*/
-	
 	hsv_trackbars();
+
+	/* CREATE TRACK BAR FOR EROSION THRESHOLD VALUES*/
 	erosion_trackbars();
+
+	/* CREATE TRACK BAR FOR DILUSION THRESHOLD VALUES*/
+	dilation_trackbars();
 	
 	while( 1 ) 
 	{
@@ -147,6 +173,27 @@ int _tmain(int argc, _TCHAR* argv[])
 		// Change the Threshold for HSV frame with TrackBards
 		inRange(current_frame, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), frame_threshold);
 
+		// Starting point to erode video
+		erode_video(0, 0);
+
+		// Starting point to dilute video
+		dilute_video(0, 0);
+
+		// Draw circle
+
+		GaussianBlur(frame_threshold, frame_threshold, Size(9, 9), 2, 2);
+		vector<Vec3f> circles;
+
+		HoughCircles(frame_threshold, circles, CV_HOUGH_GRADIENT, 1, frame_threshold.rows / 8, 200, 100, 0, 0);
+
+		for (int c1 = 0; c1 < circles.size(); c1++)
+		{
+			Point center(cvRound(circles[c1][0]), cvRound(circles[c1][1]));
+			int radius = cvRound(circles[c1][2]);
+			circle(Frame, center, 3, Scalar(0, 0, 255), -1, 8, 0);
+			circle(Frame, center, radius, Scalar(0, 0, 255), 3, 8, 0);
+		}
+		
 		//This will capture keypresses and do whatever you want if you assign the appropriate actions to the right key code
 		KeyPress = waitKey(1);
 		switch (KeyPress)
@@ -159,9 +206,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 
 		//Display the captured frame
-		imshow("PS3 Camera- RGB", Frame);
-		imshow("PS3 Camera - HSV", current_frame);
+		//imshow("PS3 Camera- RGB", Frame);
+		//imshow("PS3 Camera - HSV", current_frame);
 		imshow(CAMERA_WINDOW_NAME, frame_threshold);
+		imshow("Camera", Frame);
 	}
 	
 	CLEyeCameraStop(EyeCamera);

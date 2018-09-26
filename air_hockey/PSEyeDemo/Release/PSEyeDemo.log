@@ -1,10 +1,12 @@
-﻿  PSEyeDemo.cpp
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Release\) contains files shared from another project (PSEyeDemo.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  air_hockey.cpp
 c:\opencv\build\include\opencv2\flann\logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+air_hockey.cpp(189): warning C4018: '<': signed/unsigned mismatch
   Generating code
-  1 of 306 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  31 of 355 functions ( 8.7%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    23 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  PSEyeDemo.vcxproj -> C:\Users\Rorro\Downloads\VisionTutorialSP2018\PSEyeDemo_CPP_Core\Release\PSEyeDemo.exe
-  PSEyeDemo.vcxproj -> C:\Users\Rorro\Downloads\VisionTutorialSP2018\PSEyeDemo_CPP_Core\Release\PSEyeDemo.pdb (Full PDB)
+  PSEyeDemo.vcxproj -> C:\Users\Rorro\Documents\github\autonomous-air-hockey-robot\air_hockey\Release\air_hockey.exe
+  PSEyeDemo.vcxproj -> C:\Users\Rorro\Documents\github\autonomous-air-hockey-robot\air_hockey\Release\air_hockey.pdb (Full PDB)
