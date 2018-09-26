@@ -155,8 +155,30 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Start the eye camera
 	CLEyeCameraStart(EyeCamera);
 
+	CLEyeCameraGetFrame(EyeCamera, Frame.data);
 	/////////////////////////////////////MAIN CODE//////////////////////////////////////
-	
+	// Pick four points on Homography 
+	namedWindow("Homography Camera", CV_WINDOW_AUTOSIZE);
+	cvShowImage("Homography Camera", &(IplImage)Frame);
+	//MessageBoxA(NULL, "Please click four corners of the table", "Click", MB_OK);
+	cvSetMouseCallback("Homography Camera", MousCallback, (void *)&points);
+
+	while (1)
+	{
+		// wait for mouse clicks
+		waitKey(10);
+		if (points.size() == 4)
+		{
+			break;
+		}
+	}
+
+	// Calculate Homography matrix
+	points2.push_back(Point2f(0, 0));
+	points2.push_back(Point2f(640, 0));
+	points2.push_back(Point2f(0, 480));
+	points2.push_back(Point2f(640, 480));
+	H = findHomography(Mat(points), Mat(points2));
 
 	//Need to copy vars into one var to launch the second thread
 	ThreadPointer.CameraInstance = EyeCamera;
@@ -217,29 +239,6 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 
 	clock_t StartTime, EndTime; 
 
-	// Pick four points on Homography 
-	/*namedWindow("Homography Camera", CV_WINDOW_AUTOSIZE);
-	cvShowImage("Homography Camera", &(IplImage)CamImg);
-	MessageBoxA(NULL, "Please click four corners of the table", "Click", MB_OK);
-	cvSetMouseCallback("Homography Camera", MousCallback, &points);
-
-	while (1)
-	{
-		// wait for mouse clicks
-		waitKey(10);
-		if (points.size() == 4)
-		{
-			break;
-		}
-	}
-
-	// Calculate Homography matrix
-	points2.push_back(Point2f(0.0, 2000.0 / scale));
-	points2.push_back(Point2f(1200.0 / scale, 2000.0 / scale));
-	points2.push_back(Point2f(1200.0 / scale, 0.0));
-	points2.push_back(Point2f(0.0, 0.0));
-	H = findHomography(Mat(points), Mat(points2));*/
-
 	while(1)
 	{
 		//if (points.size() == 4)
@@ -248,10 +247,12 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 			CLEyeCameraGetFrame(Instance->CameraInstance, CamImg.data);
 
 			// Homography frame
-			//warpPerspective(CamImg, unwarp_frame, H, Size(1200.0 / scale, 2000.0 / scale));
+			warpPerspective(CamImg, unwarp_frame, H, Size(1200.0 / scale, 2000.0 / scale));
+
+			cvShowImage("Homography Camera", &(IplImage)unwarp_frame);
 
 			// DO YOUR IMAGE PROCESSING HERE
-			cvtColor(CamImg, hsv_frame, CV_RGB2HSV);
+			cvtColor(unwarp_frame, hsv_frame, CV_RGB2HSV);
 
 			inRange(hsv_frame, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), frame_threshold);
 
