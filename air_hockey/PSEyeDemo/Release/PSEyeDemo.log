@@ -3,9 +3,9 @@
 c:\opencv\build\include\opencv2\flann\logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
   Generating code
-  3 of 361 functions ( 0.8%) were compiled, the rest were copied from previous compilation.
+  1 of 394 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   PSEyeDemo.vcxproj -> C:\Users\Rorro\Documents\github\autonomous-air-hockey-robot\air_hockey\Release\air_hockey.exe
   PSEyeDemo.vcxproj -> C:\Users\Rorro\Documents\github\autonomous-air-hockey-robot\air_hockey\Release\air_hockey.pdb (Full PDB)
