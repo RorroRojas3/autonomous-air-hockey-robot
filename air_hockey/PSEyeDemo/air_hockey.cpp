@@ -1,9 +1,11 @@
 // Library Declaration Section
 #include "stdafx.h"
 #include "PSEyeDemo.h"
+#include <stdlib.h>
 
-using namespace std; //allows aceess to all std lib functions without using the namespace std::
-using namespace cv; // allows ... without using namespace cv::
+// Namespace Declaration Section
+using namespace std; 
+using namespace cv; 
 
 // Constant Variable Declaration Section
 const int MAX_VALUE_H = 180;
@@ -16,7 +18,6 @@ const String CAMERA_WINDOW_NAME = "PS3 Camera";
 int const MAX_KERNEL_SIZE = 21;
 double const scale = 5.0;
 
-
 // Typedefs
 typedef vector<Point2f> Point2fVector;
 
@@ -25,15 +26,19 @@ int low_H = 0, low_S = 0, low_V = 0;
 int high_H = MAX_VALUE_H, high_S = MAX_VALUE, high_V = MAX_VALUE;
 int erosion_val = 0;
 int dilation_val = 0;
+Mat frame;
 Mat current_frame;
 Mat hsv_frame;
 Mat frame_threshold;
 Mat blur_frame;
 Mat unwarp_frame;
 Mat_<double> H;
+Moments moment;
+Point2fVector centroid;
 Point2fVector points;
 Point2fVector points2;
-Mat Frame;
+vector<Vec3f> circles;
+
 
 #define FRAME_RATE 60
 #define RESOLUTION CLEYE_VGA
@@ -41,7 +46,7 @@ Mat Frame;
 typedef struct
 {
 	CLEyeCameraInstance CameraInstance;
-	Mat *Frame;
+	Mat *frame;
 	unsigned char *FramePtr;
 	int Threshold;
 } CAMERA_AND_FRAME;
@@ -96,7 +101,8 @@ static void dilute_video(int, void *)
 /*** CREATES TRACKBARS FOR HSV VALUES ***/
 void hsv_trackbars()
 {
-	namedWindow(HSV_WINDOW_NAME);
+	namedWindow(HSV_WINDOW_NAME, CV_WINDOW_NORMAL);
+	resizeWindow(HSV_WINDOW_NAME, 400, 400);
 	createTrackbar("Low H", HSV_WINDOW_NAME, &low_H, MAX_VALUE_H, low_H_callBack);
 	createTrackbar("High H", HSV_WINDOW_NAME, &high_H, MAX_VALUE_H, high_H_callBack);
 	createTrackbar("Low S", HSV_WINDOW_NAME, &low_S, MAX_VALUE, low_S_callBack);
@@ -108,14 +114,14 @@ void hsv_trackbars()
 /*** CREATES TRACKBAR FOR EROSION VALUE ***/
 void erosion_trackbars()
 {
-	namedWindow(EROSION_WINDOW_NAME);
+	namedWindow(EROSION_WINDOW_NAME, CV_WINDOW_NORMAL);
 	createTrackbar("Kernel Size [2n + 1]", EROSION_WINDOW_NAME, &erosion_val, MAX_KERNEL_SIZE, erode_video);
 }
 
 /*** CREATES DILATION FOR EROSION VALUE ***/
 void dilation_trackbars()
 {
-	namedWindow(DILUTION_WINDOW_NAME);
+	namedWindow(DILUTION_WINDOW_NAME, CV_WINDOW_NORMAL);
 	createTrackbar("Kernel Size [2n + 1]", DILUTION_WINDOW_NAME, &erosion_val, MAX_KERNEL_SIZE, dilute_video);
 }
 
@@ -133,11 +139,12 @@ void MousCallback(int mEvent, int x, int y, int flags, void* param)
 void calc_homography(CLEyeCameraInstance *ps3_camera)
 {
 	// Get current frame from PS3 camera
-	CLEyeCameraGetFrame(ps3_camera, Frame.data);
+	Sleep(5);
+	CLEyeCameraGetFrame(*ps3_camera, frame.data);
 
 	// Create a window and display the PS3 current frame
-	namedWindow("Homography Camera", CV_WINDOW_AUTOSIZE);
-	cvShowImage("Homography Camera", &(IplImage)Frame);
+	namedWindow("Homography Camera", CV_WINDOW_NORMAL);
+	imshow("Homography Camera", frame);
 
 	// Asks user to pick four points from Homography window (top-left, top-right, bottom-right, bottom-left)
 	MessageBoxA(NULL, "Please click four corners of the table", "Click", MB_OK);
@@ -188,11 +195,14 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	// Get camera frame dimensions;
 	CLEyeCameraGetFrameDimensions(ps3_camera, width, height);
+
 	// Create a window in which the captured images will be presented
-	namedWindow( "Camera", CV_WINDOW_AUTOSIZE );
-	namedWindow("Threshold", CV_WINDOW_AUTOSIZE);
+	namedWindow("PS3 Camera", CV_WINDOW_NORMAL);
+	namedWindow("Threshold Camera", CV_WINDOW_NORMAL);
+
 	//Make a image to hold the frames captured from the camera
-	Frame = Mat(height, width, CV_8UC4);//8 bit unsiged 4 channel image for Blue Green Red Alpa (8 bit elements per channel)
+	frame = Mat(height, width, CV_8UC4);//8 bit unsiged 4 channel image for Blue Green Red Alpa (8 bit elements per channel)
+	
 	//Start the eye camera
 	CLEyeCameraStart(ps3_camera);
 
@@ -203,7 +213,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	// Copies variables for the new thread to be created 
 	ThreadPointer.CameraInstance = ps3_camera;
-	ThreadPointer.Frame = &Frame;
+	ThreadPointer.frame = &frame;
 	ThreadPointer.Threshold = 0;
 
 	//Creates a new thread which continously works with the PS3 camera frames
@@ -237,8 +247,8 @@ int _tmain(int argc, _TCHAR* argv[])
 				break;
 		}
 
-		imshow("Camera", Frame);
-		imshow("Threshold", frame_threshold);
+		imshow("PS3 Camera", frame);
+		imshow("Threshold Camera", frame_threshold);
 	}
 	
 	/*** CLOSES CAMERA  ***/
@@ -247,29 +257,29 @@ int _tmain(int argc, _TCHAR* argv[])
 	return 0;
 }
 
-///////////////////////SUB THREAD///////////////////////////
 //for high frame rates you will process images here the main function will allow interactions and display only
 static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 {
 	CAMERA_AND_FRAME *Instance=(CAMERA_AND_FRAME*)ThreadPointer; //type cast the void pointer back to the proper type so we can access its elements
 
 	int FramerCounter=0;
-	Mat CamImg=Mat(*(Instance->Frame)).clone();
+	Mat CamImg=Mat(*(Instance->frame)).clone();
 
 	clock_t StartTime, EndTime; 
 
 	while(1)
 	{
-		//Get Frame From Camera
+		//Get frame From Camera
 		CLEyeCameraGetFrame(Instance->CameraInstance, CamImg.data);
 
 		// Homography frame
-		warpPerspective(CamImg, unwarp_frame, H, Size(1200.0 / scale, 2000.0 / scale));
+		//warpPerspective(CamImg, unwarp_frame, H, Size(1200.0 / scale, 2000.0 / scale));
 
-		cvShowImage("Homography Camera", &(IplImage)unwarp_frame);
+		//cvShowImage("Homography Camera", &(IplImage)unwarp_frame);
 
 		// DO YOUR IMAGE PROCESSING HERE
-		cvtColor(unwarp_frame, hsv_frame, CV_RGB2HSV);
+		//cvtColor(unwarp_frame, hsv_frame, CV_RGB2HSV);
+		cvtColor(CamImg, hsv_frame, CV_RGB2HSV);
 
 		inRange(hsv_frame, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), frame_threshold);
 
@@ -279,22 +289,25 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 		// Starting point to dilute video
 		dilute_video(0, 0);
 
+		// Blurr video
 		GaussianBlur(frame_threshold, blur_frame, Size(9, 9), 2, 2);
-		vector<Vec3f> circles;
-
+		
+		// Find circles in the Blur video
 		HoughCircles(blur_frame, circles, CV_HOUGH_GRADIENT, 1, frame_threshold.rows / 8, 200, 15, 125, 130);
-
 		if (circles.size() == 1)
 		{
-			cout << "Circle size: " << circles.size() << endl;
 			Point center(cvRound(circles[0][0]), cvRound(circles[0][1]));
 			int radius = cvRound(circles[0][2]);
 			circle(CamImg, center, 3, Scalar(0, 0, 255), -1, 8, 0);
 			circle(CamImg, center, radius, Scalar(0, 0, 255), 3, 8, 0);
+			moment = moments(blur_frame, true);
+			centroid.push_back(Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00));
+			// centroid coordinates
+			cout << Mat(centroid) << endl;
 		}
 
 		//copy it to main thread image.
-		*(Instance->Frame) = CamImg;
+		*(Instance->frame) = CamImg;
 
 		// Track FPS
 		if (FramerCounter == 0)
