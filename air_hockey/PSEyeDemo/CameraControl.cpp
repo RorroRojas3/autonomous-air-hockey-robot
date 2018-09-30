@@ -32,6 +32,7 @@ CLEyeCameraInstance StartCam(int FrameRate,CLEyeCameraResolution Resolution){
 	CLEyeSetCameraParameter(EyeCamera, CLEYE_AUTO_GAIN, 0);
 	CLEyeSetCameraParameter(EyeCamera, CLEYE_AUTO_EXPOSURE, 0);
 	CLEyeSetCameraParameter(EyeCamera, CLEYE_GAIN, 20);
+	CLEyeSetCameraParameter(EyeCamera, CLEYE_EXPOSURE, 90);
 	CLEyeSetCameraParameter(EyeCamera, CLEYE_AUTO_WHITEBALANCE, 1);
 	
 

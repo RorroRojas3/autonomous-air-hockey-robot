@@ -3,6 +3,7 @@
 #include "PSEyeDemo.h"
 #include <stdlib.h>
 
+
 // Namespace Declaration Section
 using namespace std; 
 using namespace cv; 
@@ -43,6 +44,7 @@ vector<Vec3f> circles;
 #define FRAME_RATE 60
 #define RESOLUTION CLEYE_VGA
 
+// Structure Definition Section
 typedef struct
 {
 	CLEyeCameraInstance CameraInstance;
@@ -50,6 +52,18 @@ typedef struct
 	unsigned char *FramePtr;
 	int Threshold;
 } CAMERA_AND_FRAME;
+
+/*** UDP PACKAGE STRUCTS ***/
+struct PACKIN
+{
+	float flt1;
+	float flt2;
+};
+struct PACKOUT
+{
+	float flt1;
+	float flt2;
+};
 
 static DWORD WINAPI CaptureThread(LPVOID ThreadPointer);
 
@@ -139,15 +153,17 @@ void MousCallback(int mEvent, int x, int y, int flags, void* param)
 void calc_homography(CLEyeCameraInstance *ps3_camera)
 {
 	// Get current frame from PS3 camera
-	Sleep(5);
-	CLEyeCameraGetFrame(*ps3_camera, frame.data);
+	for (int i = 0; i < 5; i++)
+	{
+		CLEyeCameraGetFrame(*ps3_camera, frame.data);
+	}
 
 	// Create a window and display the PS3 current frame
 	namedWindow("Homography Camera", CV_WINDOW_NORMAL);
 	imshow("Homography Camera", frame);
 
 	// Asks user to pick four points from Homography window (top-left, top-right, bottom-right, bottom-left)
-	MessageBoxA(NULL, "Please click four corners of the table", "Click", MB_OK);
+	//MessageBoxA(NULL, "Please click four corners of the table", "Click", MB_OK);
 	cvSetMouseCallback("Homography Camera", MousCallback, (void *)&points);
 
 	// Waits until the user has clicked the four points
@@ -273,13 +289,13 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 		CLEyeCameraGetFrame(Instance->CameraInstance, CamImg.data);
 
 		// Homography frame
-		//warpPerspective(CamImg, unwarp_frame, H, Size(1200.0 / scale, 2000.0 / scale));
+		warpPerspective(CamImg, unwarp_frame, H, Size(1200.0 / scale, 2000.0 / scale));
 
-		//cvShowImage("Homography Camera", &(IplImage)unwarp_frame);
+		cvShowImage("Homography Camera", &(IplImage)unwarp_frame);
 
 		// DO YOUR IMAGE PROCESSING HERE
-		//cvtColor(unwarp_frame, hsv_frame, CV_RGB2HSV);
-		cvtColor(CamImg, hsv_frame, CV_RGB2HSV);
+		cvtColor(unwarp_frame, hsv_frame, CV_RGB2HSV);
+		//cvtColor(CamImg, hsv_frame, CV_RGB2HSV);
 
 		inRange(hsv_frame, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), frame_threshold);
 
@@ -293,7 +309,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 		GaussianBlur(frame_threshold, blur_frame, Size(9, 9), 2, 2);
 		
 		// Find circles in the Blur video
-		HoughCircles(blur_frame, circles, CV_HOUGH_GRADIENT, 1, frame_threshold.rows / 8, 200, 15, 125, 130);
+		HoughCircles(blur_frame, circles, CV_HOUGH_GRADIENT, 1, frame_threshold.rows / 8, 200, 5, 125, 130);
 		if (circles.size() == 1)
 		{
 			Point center(cvRound(circles[0][0]), cvRound(circles[0][1]));
@@ -303,7 +319,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 			moment = moments(blur_frame, true);
 			centroid.push_back(Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00));
 			// centroid coordinates
-			cout << Mat(centroid) << endl;
+			//cout << Mat(centroid) << endl;
 		}
 
 		//copy it to main thread image.
