@@ -18,6 +18,8 @@ const String DILUTE_WINDOW_NAME = "Dilute Values";
 const String CAMERA_WINDOW_NAME = "PS3 Camera";
 int const MAX_KERNEL_SIZE = 21;
 double const scale = 5.0;
+RNG rng(12345);
+
 
 // Typedefs
 typedef vector<Point2f> Point2fVector;
@@ -27,12 +29,18 @@ int low_H = 0, low_S = 0, low_V = 0;
 int high_H = MAX_VALUE_H, high_S = MAX_VALUE, high_V = MAX_VALUE;
 int erosion_val = 0;
 int dilation_val = 0;
+int minThresh = 0;
+int maxTresh = 255;
 Mat frame;
 Mat current_frame;
 Mat hsv_frame;
 Mat frame_threshold;
 Mat blur_frame;
 Mat unwarp_frame;
+Mat binary;
+vector <vector<Point>> contour;
+vector<Vec4i> hierarchy;
+Mat drawing;
 Mat_<double> H;
 Moments moment;
 Point2fVector centroid;
@@ -102,14 +110,14 @@ static void high_V_callBack(int, void *)
 static void erode_video(int , void *)
 {
 	Mat element = getStructuringElement(MORPH_ELLIPSE, Size(2 * erosion_val + 1, 2 * erosion_val + 1), Point(erosion_val, erosion_val));
-	erode(frame_threshold, frame_threshold, element);
+	erode(binary, binary, element);
 }
 
 /*** DILUTE CALLBACK FUNCTION ***/
 static void dilute_video(int, void *)
 {
 	Mat element = getStructuringElement(MORPH_ELLIPSE, Size(2 * dilation_val + 1, 2 * dilation_val + 1), Point(dilation_val, dilation_val));
-	dilate(frame_threshold, frame_threshold, element);
+	dilate(binary, binary, element);
 }
 
 /*** CREATES TRACKBARS FOR HSV VALUES ***/
@@ -159,7 +167,7 @@ void calc_homography(CLEyeCameraInstance *ps3_camera)
 	}
 
 	// Create a window and display the PS3 current frame
-	namedWindow("Homography Camera", CV_WINDOW_NORMAL);
+	namedWindow("Homography Camera", CV_WINDOW_AUTOSIZE);
 	imshow("Homography Camera", frame);
 
 	// Asks user to pick four points from Homography window (top-left, top-right, bottom-right, bottom-left)
@@ -179,12 +187,12 @@ void calc_homography(CLEyeCameraInstance *ps3_camera)
 
 	// Calculate Homography matrix
 	points2.push_back(Point2f(0, 0));
-	points2.push_back(Point2f(640, 0));
 	points2.push_back(Point2f(0, 480));
 	points2.push_back(Point2f(640, 480));
+	points2.push_back(Point2f(640, 0));
 
 	// Calculate homography
-	H = findHomography(Mat(points), Mat(points2));
+	H = findHomography((points), (points2));
 }
 
 /*** TERMINATES PS3 CAMERA ***/
@@ -213,8 +221,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	CLEyeCameraGetFrameDimensions(ps3_camera, width, height);
 
 	// Create a window in which the captured images will be presented
-	namedWindow("PS3 Camera", CV_WINDOW_NORMAL);
-	namedWindow("Threshold Camera", CV_WINDOW_NORMAL);
+	namedWindow("PS3 Camera", CV_WINDOW_AUTOSIZE);
+	namedWindow("Threshold Camera", CV_WINDOW_AUTOSIZE);
+	namedWindow("Drawing", CV_WINDOW_AUTOSIZE);
 
 	//Make a image to hold the frames captured from the camera
 	frame = Mat(height, width, CV_8UC4);//8 bit unsiged 4 channel image for Blue Green Red Alpa (8 bit elements per channel)
@@ -264,7 +273,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 
 		imshow("PS3 Camera", frame);
-		imshow("Threshold Camera", frame_threshold);
+		imshow("Threshold Camera", binary);
+		imshow("Drawing", unwarp_frame);
 	}
 	
 	/*** CLOSES CAMERA  ***/
@@ -289,15 +299,20 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 		CLEyeCameraGetFrame(Instance->CameraInstance, CamImg.data);
 
 		// Homography frame
-		warpPerspective(CamImg, unwarp_frame, H, Size(1200.0 / scale, 2000.0 / scale));
+		warpPerspective(CamImg, unwarp_frame, H, CamImg.size());
 
-		cvShowImage("Homography Camera", &(IplImage)unwarp_frame);
+		//cvShowImage("Homography Camera", &(IplImage)unwarp_frame);
 
 		// DO YOUR IMAGE PROCESSING HERE
-		cvtColor(unwarp_frame, hsv_frame, CV_RGB2HSV);
+		cvtColor(unwarp_frame, hsv_frame, CV_BGR2HSV);
 		//cvtColor(CamImg, hsv_frame, CV_RGB2HSV);
 
+		// Changes value of HSV video
 		inRange(hsv_frame, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), frame_threshold);
+
+		// Blurr video
+		//GaussianBlur(frame_threshold, blur_frame, Size(9, 9), 2, 2);
+		threshold(frame_threshold, binary, minThresh, maxTresh, THRESH_BINARY);
 
 		// Starting point to erode video
 		erode_video(0, 0);
@@ -305,11 +320,9 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 		// Starting point to dilute video
 		dilute_video(0, 0);
 
-		// Blurr video
-		GaussianBlur(frame_threshold, blur_frame, Size(9, 9), 2, 2);
-		
 		// Find circles in the Blur video
-		HoughCircles(blur_frame, circles, CV_HOUGH_GRADIENT, 1, frame_threshold.rows / 8, 200, 5, 125, 130);
+		/*
+		HoughCircles(binary, circles, CV_HOUGH_GRADIENT, 1, frame_threshold.rows / 8, 50, 50, 8, 8);
 		if (circles.size() == 1)
 		{
 			Point center(cvRound(circles[0][0]), cvRound(circles[0][1]));
@@ -321,6 +334,16 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 			// centroid coordinates
 			//cout << Mat(centroid) << endl;
 		}
+		*/
+		findContours(binary.clone(), contour, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+		int i = 0;
+		for (i = 0; i < contour.size(); i++)
+		{
+			Scalar color = Scalar(255, 0, 0);
+			drawContours(unwarp_frame, contour, i, color, 2, 8, hierarchy, 0, Point());
+		}
+
+
 
 		//copy it to main thread image.
 		*(Instance->frame) = CamImg;
