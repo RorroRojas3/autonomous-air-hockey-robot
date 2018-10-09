@@ -31,6 +31,7 @@ int erosion_val = 0;
 int dilation_val = 0;
 int minThresh = 0;
 int maxTresh = 255;
+int i = 0;
 Mat frame;
 Mat current_frame;
 Mat hsv_frame;
@@ -38,12 +39,13 @@ Mat frame_threshold;
 Mat blur_frame;
 Mat unwarp_frame;
 Mat binary;
+Mat contour_out;
 vector <vector<Point>> contour;
 vector<Vec4i> hierarchy;
 Mat drawing;
 Mat_<double> H;
 Moments moment;
-Point2fVector centroid;
+Point2f centroid;
 Point2fVector points;
 Point2fVector points2;
 vector<Vec3f> circles;
@@ -290,7 +292,6 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 
 	int FramerCounter=0;
 	Mat CamImg=Mat(*(Instance->frame)).clone();
-
 	clock_t StartTime, EndTime; 
 
 	while(1)
@@ -300,8 +301,6 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 
 		// Homography frame
 		warpPerspective(CamImg, unwarp_frame, H, CamImg.size());
-
-		//cvShowImage("Homography Camera", &(IplImage)unwarp_frame);
 
 		// DO YOUR IMAGE PROCESSING HERE
 		cvtColor(unwarp_frame, hsv_frame, CV_BGR2HSV);
@@ -320,30 +319,22 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 		// Starting point to dilute video
 		dilute_video(0, 0);
 
-		// Find circles in the Blur video
-		/*
-		HoughCircles(binary, circles, CV_HOUGH_GRADIENT, 1, frame_threshold.rows / 8, 50, 50, 8, 8);
-		if (circles.size() == 1)
-		{
-			Point center(cvRound(circles[0][0]), cvRound(circles[0][1]));
-			int radius = cvRound(circles[0][2]);
-			circle(CamImg, center, 3, Scalar(0, 0, 255), -1, 8, 0);
-			circle(CamImg, center, radius, Scalar(0, 0, 255), 3, 8, 0);
-			moment = moments(blur_frame, true);
-			centroid.push_back(Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00));
-			// centroid coordinates
-			//cout << Mat(centroid) << endl;
-		}
-		*/
+		// Find the puck and draw contour on it
 		findContours(binary.clone(), contour, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
-		int i = 0;
-		for (i = 0; i < contour.size(); i++)
+		
+		if (contour.size() == 1)
 		{
-			Scalar color = Scalar(255, 0, 0);
-			drawContours(unwarp_frame, contour, i, color, 2, 8, hierarchy, 0, Point());
+			//contour_out = Mat(binary.clone().size(), CV_8UC3);
+			moment = moments(contour[0], false);
+			centroid = Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00);
+			//centroid coordinates
+			printf("%.2f %.2f\n", centroid.x, centroid.y);
+			for (i = 0; i < contour.size(); i++)
+			{
+				Scalar color = Scalar(255, 0, 0);
+				drawContours(unwarp_frame, contour, i, color, 2, 8, hierarchy, 0, Point());
+			}
 		}
-
-
 
 		//copy it to main thread image.
 		*(Instance->frame) = CamImg;
@@ -357,7 +348,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 		EndTime=clock();
 		if((EndTime-StartTime)/CLOCKS_PER_SEC>=1)
 		{
-			//cout << "FPS:" << FramerCounter << endl;
+			cout << "FPS:" << FramerCounter << endl;
 			FramerCounter=0;
 		}
 
