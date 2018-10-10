@@ -10,7 +10,7 @@
  *
  * Model version                  : 1.87
  * Simulink Coder version         : 8.12 (R2017a) 16-Feb-2017
- * C/C++ source code generated on : Wed Oct 10 10:33:41 2018
+ * C/C++ source code generated on : Wed Oct 10 10:54:26 2018
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -44,34 +44,34 @@
 
 /* Block signals and states (auto storage) for system '<Root>' */
 typedef struct {
-  real32_T Unpack[2];                  /* '<Root>/Unpack' */
-  int_T Unpack_IWORK[2];               /* '<Root>/Unpack' */
-  int_T Pack_IWORK[4];                 /* '<S1>/Pack' */
-  int_T Pack_IWORK_m[4];               /* '<Root>/Pack' */
-  uint8_T Pack[8];                     /* '<S1>/Pack' */
-  uint8_T Pack_i[8];                   /* '<Root>/Pack' */
-  uint8_T In1[8];                      /* '<S3>/In1' */
+  real32_T Unpack[2];                  /* '<S1>/Unpack' */
+  int_T Unpack_IWORK[2];               /* '<S1>/Unpack' */
+  int_T Pack_IWORK[4];                 /* '<S2>/Pack' */
+  int_T Pack_IWORK_o[4];               /* '<S1>/Pack' */
+  uint8_T Pack[8];                     /* '<S2>/Pack' */
+  uint8_T Pack_n[8];                   /* '<S1>/Pack' */
+  uint8_T In1[8];                      /* '<S4>/In1' */
 } DW_FullDuplex_UDP;
 
 /* Parameters (auto storage) */
 struct P_FullDuplex_UDP_ {
   int32_T SFunction_p1;                /* Computed Parameter: SFunction_p1
-                                        * Referenced by: '<S2>/S-Function'
+                                        * Referenced by: '<S3>/S-Function'
                                         */
   int32_T SFunction_p3;                /* Computed Parameter: SFunction_p3
-                                        * Referenced by: '<S2>/S-Function'
+                                        * Referenced by: '<S3>/S-Function'
                                         */
   int32_T MPComSend_p1;                /* Computed Parameter: MPComSend_p1
-                                        * Referenced by: '<Root>/MPComSend'
+                                        * Referenced by: '<S1>/MPComSend'
                                         */
   int32_T MPComSend_p2;                /* Computed Parameter: MPComSend_p2
-                                        * Referenced by: '<Root>/MPComSend'
+                                        * Referenced by: '<S1>/MPComSend'
                                         */
   uint8_T Out1_Y0;                     /* Computed Parameter: Out1_Y0
-                                        * Referenced by: '<S3>/Out1'
+                                        * Referenced by: '<S4>/Out1'
                                         */
   uint8_T DebugPrint2_sfcn_p1[15];     /* Expression: uint8([sprintf(strrep(fmt,'%','%%')) 0])
-                                        * Referenced by: '<S1>/DebugPrint2_sfcn'
+                                        * Referenced by: '<S2>/DebugPrint2_sfcn'
                                         */
 };
 
@@ -118,9 +118,10 @@ extern RT_MODEL_FullDuplex_UDP *const FullDuplex_UDP_M;
  * Here is the system hierarchy for this model
  *
  * '<Root>' : 'FullDuplex_UDP'
- * '<S1>'   : 'FullDuplex_UDP/Advanced Debug Print'
- * '<S2>'   : 'FullDuplex_UDP/MPComRecv'
- * '<S3>'   : 'FullDuplex_UDP/MPComRecv/Enabled Subsystem'
+ * '<S1>'   : 'FullDuplex_UDP/UDP RECEIVE'
+ * '<S2>'   : 'FullDuplex_UDP/UDP RECEIVE/Advanced Debug Print'
+ * '<S3>'   : 'FullDuplex_UDP/UDP RECEIVE/MPComRecv'
+ * '<S4>'   : 'FullDuplex_UDP/UDP RECEIVE/MPComRecv/Enabled Subsystem'
  */
 
 /*-

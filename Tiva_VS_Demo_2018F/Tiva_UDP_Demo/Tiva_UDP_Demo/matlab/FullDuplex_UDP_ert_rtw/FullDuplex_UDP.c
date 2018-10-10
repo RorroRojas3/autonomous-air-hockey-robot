@@ -10,7 +10,7 @@
  *
  * Model version                  : 1.87
  * Simulink Coder version         : 8.12 (R2017a) 16-Feb-2017
- * C/C++ source code generated on : Wed Oct 10 10:33:41 2018
+ * C/C++ source code generated on : Wed Oct 10 10:54:26 2018
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -61,13 +61,13 @@ void FullDuplex_UDP_step(void)
   uint8_T rtb_SFunction_o1[8];
   int32_T i;
   if (FullDuplex_UDP_M->Timing.TaskCounters.TID[1] == 0) {
-    /* S-Function (stellaris_lp_sfunc_DataPackin): '<S2>/S-Function' incorporates:
-     *  Inport: '<S3>/In1'
+    /* S-Function (stellaris_lp_sfunc_DataPackin): '<S3>/S-Function' incorporates:
+     *  Inport: '<S4>/In1'
      */
     tmp = datapacket_get(FullDuplex_UDP_P.SFunction_p1, 8, rtb_SFunction_o1);
 
-    /* Outputs for Enabled SubSystem: '<S2>/Enabled Subsystem' incorporates:
-     *  EnablePort: '<S3>/Enable'
+    /* Outputs for Enabled SubSystem: '<S3>/Enabled Subsystem' incorporates:
+     *  EnablePort: '<S4>/Enable'
      */
     if (((int32_T)tmp) > 0) {
       for (i = 0; i < 8; i++) {
@@ -75,36 +75,36 @@ void FullDuplex_UDP_step(void)
       }
     }
 
-    /* End of S-Function (stellaris_lp_sfunc_DataPackin): '<S2>/S-Function' */
-    /* End of Outputs for SubSystem: '<S2>/Enabled Subsystem' */
+    /* End of S-Function (stellaris_lp_sfunc_DataPackin): '<S3>/S-Function' */
+    /* End of Outputs for SubSystem: '<S3>/Enabled Subsystem' */
 
-    /* S-Function (xpcbytepacking): '<Root>/Unpack' */
+    /* S-Function (xpcbytepacking): '<S1>/Unpack' */
 
-    /* Byte Unpacking: <Root>/Unpack */
+    /* Byte Unpacking: <S1>/Unpack */
     (void)memcpy((uint8_T*)&FullDuplex_UDP_DW.Unpack[0], (uint8_T*)
                  &FullDuplex_UDP_DW.In1[0] + 0, 8);
 
-    /* S-Function (xpcbytepacking): '<S1>/Pack' */
+    /* S-Function (xpcbytepacking): '<S2>/Pack' */
 
-    /* Byte Packing: <S1>/Pack */
+    /* Byte Packing: <S2>/Pack */
     (void)memcpy((uint8_T*)&FullDuplex_UDP_DW.Pack[0] + 0, (uint8_T*)
                  &FullDuplex_UDP_DW.Unpack[0], 4);
     (void)memcpy((uint8_T*)&FullDuplex_UDP_DW.Pack[0] + 4, (uint8_T*)
                  &FullDuplex_UDP_DW.Unpack[1], 4);
 
-    /* S-Function (stellaris_lp_sfunc_DebugPrint2): '<S1>/DebugPrint2_sfcn' */
+    /* S-Function (stellaris_lp_sfunc_DebugPrint2): '<S2>/DebugPrint2_sfcn' */
     DebugPrint2(FullDuplex_UDP_P.DebugPrint2_sfcn_p1, FullDuplex_UDP_DW.Pack);
 
-    /* S-Function (xpcbytepacking): '<Root>/Pack' */
+    /* S-Function (xpcbytepacking): '<S1>/Pack' */
 
-    /* Byte Packing: <Root>/Pack */
-    (void)memcpy((uint8_T*)&FullDuplex_UDP_DW.Pack_i[0] + 0, (uint8_T*)
+    /* Byte Packing: <S1>/Pack */
+    (void)memcpy((uint8_T*)&FullDuplex_UDP_DW.Pack_n[0] + 0, (uint8_T*)
                  &FullDuplex_UDP_DW.Unpack[0], 4);
-    (void)memcpy((uint8_T*)&FullDuplex_UDP_DW.Pack_i[0] + 4, (uint8_T*)
+    (void)memcpy((uint8_T*)&FullDuplex_UDP_DW.Pack_n[0] + 4, (uint8_T*)
                  &FullDuplex_UDP_DW.Unpack[1], 4);
 
-    /* S-Function (stellaris_lp_sfunc_DataPackout): '<Root>/MPComSend' */
-    datapacket_put(FullDuplex_UDP_P.MPComSend_p1, 8, FullDuplex_UDP_DW.Pack_i);
+    /* S-Function (stellaris_lp_sfunc_DataPackout): '<S1>/MPComSend' */
+    datapacket_put(FullDuplex_UDP_P.MPComSend_p1, 8, FullDuplex_UDP_DW.Pack_n);
   }
 
   rate_scheduler();
@@ -126,22 +126,22 @@ void FullDuplex_UDP_initialize(void)
   {
     int32_T i;
 
-    /* Start for S-Function (stellaris_lp_sfunc_DataPackin): '<S2>/S-Function' */
+    /* Start for S-Function (stellaris_lp_sfunc_DataPackin): '<S3>/S-Function' */
     init_datapacket(FullDuplex_UDP_P.SFunction_p1, 8,
                     FullDuplex_UDP_P.SFunction_p3);
 
-    /* Start for S-Function (stellaris_lp_sfunc_DataPackout): '<Root>/MPComSend' */
+    /* Start for S-Function (stellaris_lp_sfunc_DataPackout): '<S1>/MPComSend' */
     init_datapacket(FullDuplex_UDP_P.MPComSend_p1, FullDuplex_UDP_P.MPComSend_p2,
                     8);
 
-    /* SystemInitialize for Enabled SubSystem: '<S2>/Enabled Subsystem' */
-    /* SystemInitialize for Outport: '<S3>/Out1' */
+    /* SystemInitialize for Enabled SubSystem: '<S3>/Enabled Subsystem' */
+    /* SystemInitialize for Outport: '<S4>/Out1' */
     for (i = 0; i < 8; i++) {
       FullDuplex_UDP_DW.In1[i] = FullDuplex_UDP_P.Out1_Y0;
     }
 
-    /* End of SystemInitialize for Outport: '<S3>/Out1' */
-    /* End of SystemInitialize for SubSystem: '<S2>/Enabled Subsystem' */
+    /* End of SystemInitialize for Outport: '<S4>/Out1' */
+    /* End of SystemInitialize for SubSystem: '<S3>/Enabled Subsystem' */
   }
 }
 
