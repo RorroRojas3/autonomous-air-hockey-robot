@@ -2,7 +2,7 @@
 ## Makefile generated for Simulink model 'FullDuplex_UDP'. 
 ## 
 ## Makefile     : FullDuplex_UDP.mk
-## Generated on : Wed Oct 10 10:33:47 2018
+## Generated on : Wed Oct 10 12:34:40 2018
 ## MATLAB Coder version: 3.3 (R2017a)
 ## 
 ## Build Info:
@@ -21,6 +21,7 @@
 # PRODUCT_NAME            Name of the system to build
 # MAKEFILE                Name of this makefile
 # COMPUTER                Computer type. See the MATLAB "computer" command.
+# SHARED_OBJS             Shared Object Names
 
 PRODUCT_NAME              = FullDuplex_UDP
 MAKEFILE                  = FullDuplex_UDP.mk
@@ -40,6 +41,12 @@ MODELREF_LINK_RSPFILE_NAME = FullDuplex_UDP_ref.rsp
 RELATIVE_PATH_TO_ANCHOR   = ..
 C_STANDARD_OPTS           = 
 CPP_STANDARD_OPTS         = 
+SHARED_SRC_DIR            = ../slprj/ert/_sharedutils
+SHARED_SRC                = $(SHARED_SRC_DIR)/*.c
+SHARED_BIN_DIR            = ../slprj/ert/_sharedutils
+SHARED_LIB                = $(SHARED_BIN_DIR)/rtwshared.lib
+SHARED_OBJS               =  \
+$(addprefix $(join $(SHARED_BIN_DIR),/), $(addsuffix .obj, $(basename $(notdir $(wildcard $(SHARED_SRC_DIR)/*.c)))))
 
 ###########################################################################
 ## TOOLCHAIN SPECIFICATIONS
@@ -256,7 +263,7 @@ BUILD_TYPE = "Top-Level Standalone Executable"
 ## INCLUDE PATHS
 ###########################################################################
 
-INCLUDES_BUILDINFO = -I$(START_DIR) -I$(START_DIR)/FullDuplex_UDP_ert_rtw -I$(MATLAB_ROOT)/extern/include -I$(MATLAB_ROOT)/simulink/include -I$(MATLAB_ROOT)/rtw/c/src -I$(MATLAB_ROOT)/rtw/c/src/ext_mode/common -I$(MATLAB_ROOT)/rtw/c/ert -I$(START_DIR)/slprj/ert/_sharedutils -I$(MATLAB_ROOT)/simulink/include/messages
+INCLUDES_BUILDINFO = -I$(START_DIR) -I$(START_DIR)/FullDuplex_UDP_ert_rtw -I$(MATLAB_ROOT)/extern/include -I$(MATLAB_ROOT)/simulink/include -I$(MATLAB_ROOT)/rtw/c/src -I$(MATLAB_ROOT)/rtw/c/src/ext_mode/common -I$(MATLAB_ROOT)/rtw/c/ert -I$(START_DIR)/slprj/ert/_sharedutils -I$(MATLAB_ROOT)/toolbox/dsp/include -I$(MATLAB_ROOT)/toolbox/dsp/extern/src/export/include/src -I$(MATLAB_ROOT)/toolbox/dsp/extern/src/export/include -I$(MATLAB_ROOT)/toolbox/shared/dsp/vision/matlab/include -I$(MATLAB_ROOT)/simulink/include/messages
 
 INCLUDES = $(INCLUDES_BUILDINFO)
 
@@ -302,7 +309,7 @@ PREBUILT_OBJS =
 ## LIBRARIES
 ###########################################################################
 
-LIBS = 
+LIBS = $(SHARED_LIB)
 
 ###########################################################################
 ## SYSTEM LIBRARIES
@@ -367,7 +374,7 @@ all : build postbuild
 build : prebuild $(PRODUCT)
 
 
-buildobj : prebuild $(OBJS) $(PREBUILT_OBJS)
+buildobj : prebuild $(OBJS) $(PREBUILT_OBJS) $(LIBS)
 	@echo "### Successfully generated all binary outputs."
 
 
@@ -397,9 +404,9 @@ execute : download
 # Create a standalone executable            
 #-------------------------------------------
 
-$(PRODUCT) : $(OBJS) $(PREBUILT_OBJS) $(MAIN_OBJ)
+$(PRODUCT) : $(OBJS) $(PREBUILT_OBJS) $(LIBS) $(MAIN_OBJ)
 	@echo "### Creating standalone executable "$(PRODUCT)" ..."
-	$(CPP_LD) $(CPP_LDFLAGS) --output_file=$(PRODUCT) $(OBJS) $(MAIN_OBJ) $(SYSTEM_LIBS) $(TOOLCHAIN_LIBS)
+	$(CPP_LD) $(CPP_LDFLAGS) --output_file=$(PRODUCT) $(OBJS) $(MAIN_OBJ) $(LIBS) $(SYSTEM_LIBS) $(TOOLCHAIN_LIBS)
 	@echo "### Created: $(PRODUCT)"
 
 
@@ -593,6 +600,21 @@ mpu6050.obj : C:/MATLAB/SupportPackages/Tiva_TM4C123G/target/../blocks/stellaris
 
 xdatapacket.obj : C:/MATLAB/SupportPackages/Tiva_TM4C123G/target/../blocks/stellaris_lp_lct/xdatapacket.c
 	$(CC) $(CFLAGS) --output_file=$@ $<
+
+
+$(SHARED_BIN_DIR)/%.obj : $(SHARED_SRC_DIR)/%.c
+	@echo "### Compiling $< ..."
+	$(CC) $(CFLAGS) --output_file=$@ $<
+
+
+#---------------------------
+# SHARED UTILITY LIBRARY
+#---------------------------
+
+$(SHARED_LIB) : $(SHARED_OBJS)
+	@echo "### Creating shared utilities library "$(SHARED_LIB)" ..."
+	$(AR) $(ARFLAGS)  $(SHARED_LIB) $(SHARED_OBJS)
+	@echo "### Created: $(SHARED_LIB)"
 
 
 ###########################################################################

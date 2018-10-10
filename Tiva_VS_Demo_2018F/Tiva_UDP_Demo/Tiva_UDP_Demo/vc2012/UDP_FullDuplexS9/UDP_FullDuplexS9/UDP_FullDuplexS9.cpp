@@ -55,8 +55,10 @@ int _tmain(int argc, TCHAR* argv[])
 			receiver.GetData(&pkin);
 			
 			// repack the data
-			pkout.flt1= 300;
-			pkout.flt2= 400;
+			printf("Enter X-Direction (0-Left, 1-Right): ");
+			scanf("%f", &pkout.flt1);
+			printf("Enter number of steps: ");
+			scanf("%f", &pkout.flt2);
 
 			// send the repacked data through sender
 			sender.SendData(&pkout);
