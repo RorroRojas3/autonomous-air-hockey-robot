@@ -290,7 +290,12 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 {
 	CAMERA_AND_FRAME *Instance=(CAMERA_AND_FRAME*)ThreadPointer; //type cast the void pointer back to the proper type so we can access its elements
 
-	int FramerCounter=0;
+	int FramerCounter = 0;
+	int num_frames = 0;
+	float x, y;
+	float velocity;
+	x = y = 0;
+
 	Mat CamImg=Mat(*(Instance->frame)).clone();
 	clock_t StartTime, EndTime; 
 
@@ -328,11 +333,29 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 			moment = moments(contour[0], false);
 			centroid = Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00);
 			//centroid coordinates
-			printf("%.2f %.2f\n", centroid.x, centroid.y);
+			//printf("%.2f %.2f\n", centroid.x, centroid.y);
 			for (i = 0; i < contour.size(); i++)
 			{
 				Scalar color = Scalar(255, 0, 0);
 				drawContours(unwarp_frame, contour, i, color, 2, 8, hierarchy, 0, Point());
+			}
+			if (num_frames == 0)
+			{
+				x = centroid.x;
+				y = centroid.y;
+			}
+			num_frames++;
+			if (num_frames == 10)
+			{
+				if ((centroid.x - x) > 2)
+				{
+					velocity = (centroid.x - x) / 9;
+					printf("Velocity: %f\n", velocity);
+				}
+				velocity = 0;
+				num_frames = 0;
+				x = 0;
+				y = 0;
 			}
 		}
 

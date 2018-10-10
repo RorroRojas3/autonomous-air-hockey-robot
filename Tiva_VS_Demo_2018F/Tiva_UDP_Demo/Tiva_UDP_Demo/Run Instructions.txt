@@ -1,0 +1,24 @@
+Using UDP Tiva Demo Instructions
+
+1) Enter realtime.internal.runStellarisLPCmd('editcommsvrcfg') into your Matlab command window.
+2) Add the following lines:
+
+[PORT2]
+TYPE=UDP
+SIZE=8
+
+[PORT3]
+TYPE=UDP
+SIZE=8
+
+This creates a new virtual port (port2) of type UDP that currently will handle data blocks of 8 bytes and a PORT 3 that will handle incoming blocks of 8 bytes.
+Note that the size will change depending on what data you try to send.
+
+4) Build Matlab model onto the Tiva.
+3) Run the the virtual server.
+5) Compile the Visual studio project and run it.
+6) Use Putty to look at the Debug Print output, you should see it printing a source number, a feedback number, the difference between the two, and a constant which is pi.
+
+What is happening? I am generating both a constant and a sine wave on the Tiva as singles, packing them and seeding them over udp to the VS program on port 3.
+The VS program then repacks them and sends them back to the Tiva on port 2, where they are then unpacked and everything is printed.
+Note: There seems to be an issue where errors will creep into the udp comunication if both the debug print and the udp blocks are attempted to be run quickly.  This is why it is printing slowly, so be careful of this in your own implimentation.

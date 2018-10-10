@@ -1,0 +1,7 @@
+﻿  stdafx.cpp
+  UDP_FullDuplexS9.cpp
+  LINK : C:\Users\Rorro\Documents\github\autonomous-air-hockey-robot\Tiva_VS_Demo_2018F\Tiva_UDP_Demo\Tiva_UDP_Demo\vc2012\UDP_FullDuplexS9\Debug\UDP_FullDuplexS9.exe not found or not built by the last incremental link; performing full link
+stdafx.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  UDP_FullDuplexS9.vcxproj -> C:\Users\Rorro\Documents\github\autonomous-air-hockey-robot\Tiva_VS_Demo_2018F\Tiva_UDP_Demo\Tiva_UDP_Demo\vc2012\UDP_FullDuplexS9\Debug\UDP_FullDuplexS9.exe
+  UDP_FullDuplexS9.vcxproj -> C:\Users\Rorro\Documents\github\autonomous-air-hockey-robot\Tiva_VS_Demo_2018F\Tiva_UDP_Demo\Tiva_UDP_Demo\vc2012\UDP_FullDuplexS9\Debug\UDP_FullDuplexS9.pdb (Full PDB)
