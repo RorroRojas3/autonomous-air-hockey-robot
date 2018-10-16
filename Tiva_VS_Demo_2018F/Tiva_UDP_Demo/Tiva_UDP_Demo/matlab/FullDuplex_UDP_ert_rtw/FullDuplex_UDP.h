@@ -8,9 +8,9 @@
  *
  * Code generated for Simulink model 'FullDuplex_UDP'.
  *
- * Model version                  : 1.89
+ * Model version                  : 1.93
  * Simulink Coder version         : 8.12 (R2017a) 16-Feb-2017
- * C/C++ source code generated on : Wed Oct 10 12:52:29 2018
+ * C/C++ source code generated on : Tue Oct 16 13:03:49 2018
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -126,7 +126,7 @@ struct P_FullDuplex_UDP_ {
   uint8_T GPIOSetup1_p4;               /* Computed Parameter: GPIOSetup1_p4
                                         * Referenced by: '<S3>/GPIO Setup1'
                                         */
-  uint8_T DebugPrint2_sfcn_p1[15];     /* Expression: uint8([sprintf(strrep(fmt,'%','%%')) 0])
+  uint8_T DebugPrint2_sfcn_p1[13];     /* Expression: uint8([sprintf(strrep(fmt,'%','%%')) 0])
                                         * Referenced by: '<S4>/DebugPrint2_sfcn'
                                         */
 };
@@ -164,6 +164,7 @@ extern RT_MODEL_FullDuplex_UDP *const FullDuplex_UDP_M;
  *
  * Block '<S2>/Scope' : Unused code path elimination
  * Block '<S3>/Scope' : Unused code path elimination
+ * Block '<Root>/Data Type Conversion1' : Eliminate redundant data type conversion
  */
 
 /*-

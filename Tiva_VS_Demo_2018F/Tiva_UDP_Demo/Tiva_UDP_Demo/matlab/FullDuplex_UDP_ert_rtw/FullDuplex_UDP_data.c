@@ -8,9 +8,9 @@
  *
  * Code generated for Simulink model 'FullDuplex_UDP'.
  *
- * Model version                  : 1.89
+ * Model version                  : 1.93
  * Simulink Coder version         : 8.12 (R2017a) 16-Feb-2017
- * C/C++ source code generated on : Wed Oct 10 12:52:29 2018
+ * C/C++ source code generated on : Tue Oct 16 13:03:49 2018
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -101,8 +101,7 @@ P_FullDuplex_UDP FullDuplex_UDP_P = {
   /*  Expression: uint8([sprintf(strrep(fmt,'%','%%')) 0])
    * Referenced by: '<S4>/DebugPrint2_sfcn'
    */
-  { 86U, 83U, 58U, 32U, 37U, 104U, 102U, 44U, 32U, 37U, 104U, 102U, 13U, 10U, 0U
-  }
+  { 88U, 58U, 32U, 37U, 104U, 102U, 32U, 37U, 104U, 102U, 13U, 10U, 0U }
 };
 
 /*

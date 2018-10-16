@@ -8,9 +8,9 @@
  *
  * Code generated for Simulink model 'FullDuplex_UDP'.
  *
- * Model version                  : 1.89
+ * Model version                  : 1.93
  * Simulink Coder version         : 8.12 (R2017a) 16-Feb-2017
- * C/C++ source code generated on : Wed Oct 10 12:52:29 2018
+ * C/C++ source code generated on : Tue Oct 16 13:03:49 2018
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -60,20 +60,20 @@ void FullDuplex_UDP_step(void)
 {
   uint8_T rtb_SFunction_o1[8];
   real_T rtb_PulseGenerator;
-  uint8_T rtb_DataTypeConversion_c;
+  uint8_T rtb_DataTypeConversion_b;
   real32_T rtb_Switch2;
   int32_T i;
 
   /* S-Function (stellaris_lp_sfunc_DataPackin): '<S5>/S-Function' incorporates:
    *  Inport: '<S6>/In1'
    */
-  rtb_DataTypeConversion_c = datapacket_get(FullDuplex_UDP_P.SFunction_p1, 8,
+  rtb_DataTypeConversion_b = datapacket_get(FullDuplex_UDP_P.SFunction_p1, 8,
     rtb_SFunction_o1);
 
   /* Outputs for Enabled SubSystem: '<S5>/Enabled Subsystem' incorporates:
    *  EnablePort: '<S6>/Enable'
    */
-  if (((int32_T)rtb_DataTypeConversion_c) > 0) {
+  if (((int32_T)rtb_DataTypeConversion_b) > 0) {
     for (i = 0; i < 8; i++) {
       FullDuplex_UDP_DW.In1[i] = rtb_SFunction_o1[i];
     }

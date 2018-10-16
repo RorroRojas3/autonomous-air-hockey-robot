@@ -15,6 +15,8 @@ struct PACKIN
 {
 	float flt1;
 	float flt2;
+	//float flt3;
+	//float flt4;
 };
 
 
@@ -22,6 +24,8 @@ struct PACKOUT
 {
 	float flt1;
 	float flt2;
+	//float flt3;
+	//float flt4;
 };
 
 #pragma pack(pop) // Fall back to previous setting
@@ -53,12 +57,18 @@ int _tmain(int argc, TCHAR* argv[])
 			Sleep(1);
 			// get latest data from receiver
 			receiver.GetData(&pkin);
+			//printf("X: %.2f %.2f\r\n", pkin.flt1, pkin.flt2);
+			//printf("Y: %.2f %.2f \r\n", pkin.flt3, pkin.flt4);
 			
 			// repack the data
 			printf("Enter X-Direction (0-Left, 1-Right): ");
 			scanf("%f", &pkout.flt1);
-			printf("Enter number of steps: ");
+			printf("Enter number of steps for X: ");
 			scanf("%f", &pkout.flt2);
+			/*printf("Enter Y-Direction (0-Left, 1-Right): ");
+			scanf("%f", &pkout.flt3);
+			printf("Enter numbers of steps for Y: ");
+			scanf("%f", &pkout.flt4); */
 
 			// send the repacked data through sender
 			sender.SendData(&pkout);
