@@ -8,9 +8,9 @@
  *
  * Code generated for Simulink model 'FullDuplex_UDP'.
  *
- * Model version                  : 1.93
+ * Model version                  : 1.103
  * Simulink Coder version         : 8.12 (R2017a) 16-Feb-2017
- * C/C++ source code generated on : Tue Oct 16 13:03:49 2018
+ * C/C++ source code generated on : Wed Oct 17 18:03:24 2018
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -29,6 +29,15 @@
 #ifndef RTW_HEADER_FullDuplex_UDP_private_h_
 #define RTW_HEADER_FullDuplex_UDP_private_h_
 #include "rtwtypes.h"
+#include "FullDuplex_UDP.h"
+
+extern void FullDuplex_UD_XSteptoPulse_Init(DW_XSteptoPulse_FullDuplex_UDP
+  *localDW, P_XSteptoPulse_FullDuplex_UDP *localP);
+extern void FullDuplex_U_XSteptoPulse_Start(DW_XSteptoPulse_FullDuplex_UDP
+  *localDW);
+extern real32_T FullDuplex_UDP_XSteptoPulse(real_T rtu_Steps, uint8_T rtu_In1,
+  DW_XSteptoPulse_FullDuplex_UDP *localDW, P_XSteptoPulse_FullDuplex_UDP *localP);
+
 #endif                                 /* RTW_HEADER_FullDuplex_UDP_private_h_ */
 
 /*

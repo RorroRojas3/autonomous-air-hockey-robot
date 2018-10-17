@@ -15,8 +15,10 @@ struct PACKIN
 {
 	float flt1;
 	float flt2;
-	//float flt3;
-	//float flt4;
+	float flt3;
+	float flt4;
+	float flt5;
+	float flt6;
 };
 
 
@@ -24,8 +26,10 @@ struct PACKOUT
 {
 	float flt1;
 	float flt2;
-	//float flt3;
-	//float flt4;
+	float flt3;
+	float flt4;
+	float flt5;
+	float flt6;
 };
 
 #pragma pack(pop) // Fall back to previous setting
@@ -33,6 +37,7 @@ struct PACKOUT
 int _tmain(int argc, TCHAR* argv[])
 {
 	int nRetCode = 0;
+	int wait = 0;
 
 	// Initialize the UDP lib. If failed, quit running.
 	if (!InitUDPLib())
@@ -57,21 +62,72 @@ int _tmain(int argc, TCHAR* argv[])
 			Sleep(1);
 			// get latest data from receiver
 			receiver.GetData(&pkin);
-			//printf("X: %.2f %.2f\r\n", pkin.flt1, pkin.flt2);
+			//printf("D1: %.2f, D2: %.2f, Steps: %.2f\r\n", pkin.flt1, pkin.flt2, pkin.flt3);
 			//printf("Y: %.2f %.2f \r\n", pkin.flt3, pkin.flt4);
 			
 			// repack the data
-			printf("Enter X-Direction (0-Left, 1-Right): ");
+
+			/* X-DIRECTION */
+			printf("Enter X-Direction (0-Left, 1-Right, 2-Stop): ");
 			scanf("%f", &pkout.flt1);
+			if (pkout.flt1 == 1)
+			{
+				pkout.flt2 = 0;
+			}
+			else if (pkout.flt1 == 0)
+			{
+				pkout.flt2 = 1;
+			}
+			else
+			{
+				pkout.flt2 = pkout.flt1;
+			}
 			printf("Enter number of steps for X: ");
-			scanf("%f", &pkout.flt2);
-			/*printf("Enter Y-Direction (0-Left, 1-Right): ");
 			scanf("%f", &pkout.flt3);
-			printf("Enter numbers of steps for Y: ");
-			scanf("%f", &pkout.flt4); */
+			
+			/* Y-DIRECTION */
+			printf("Enter Y-Direction (0-Forward, 1-Backward, 2-Stop): ");
+			scanf("%f", &pkout.flt4);
+			if (pkout.flt4 == 1)
+			{
+				pkout.flt5 = 0;
+			}
+			else if (pkout.flt4 == 0)
+			{
+				pkout.flt5 = 1;
+			}
+			else
+			{
+				pkout.flt5 = pkout.flt4;
+			}
+			printf("Enter number of steps for Y: ");
+			scanf("%f", &pkout.flt6);
 
 			// send the repacked data through sender
 			sender.SendData(&pkout);
+
+			if (pkout.flt3 > pkout.flt6)
+			{
+				wait = 100 * (pkout.flt3 + 3);
+			}
+			else
+			{
+				wait = 100 * (pkout.flt6 + 3);
+			}
+
+			Sleep(wait);
+
+			/* RESET */
+			pkout.flt1 = 2;
+			pkout.flt2 = 2;
+			pkout.flt3 = 0; // steps
+			pkout.flt4 = 2;
+			pkout.flt5 = 2;
+			pkout.flt6 = 0; // steps
+			sender.SendData(&pkout);
+			
+			
+
 		}		
 	}
 
