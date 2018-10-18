@@ -1,12 +1,13 @@
 // Library Declaration Section
 #include "stdafx.h"
 #include "PSEyeDemo.h"
+#include <math.h>
 #include <stdlib.h>
 
 
 // Namespace Declaration Section
-using namespace std; 
-using namespace cv; 
+using namespace std;
+using namespace cv;
 
 // Constant Variable Declaration Section
 const int MAX_VALUE_H = 180;
@@ -49,6 +50,13 @@ Point2f centroid;
 Point2fVector points;
 Point2fVector points2;
 vector<Vec3f> circles;
+
+float board_width = 26.25; //inches
+float board_length = 53.25; //inches 
+
+float yPixels_per_inch = 480.0 / board_width;
+
+float xPixels_per_inch = 640.0 / board_length;
 
 
 #define FRAME_RATE 60
@@ -109,7 +117,7 @@ static void high_V_callBack(int, void *)
 }
 
 /*** ERODE CALLBACK FUNCTION ***/
-static void erode_video(int , void *)
+static void erode_video(int, void *)
 {
 	Mat element = getStructuringElement(MORPH_ELLIPSE, Size(2 * erosion_val + 1, 2 * erosion_val + 1), Point(erosion_val, erosion_val));
 	erode(binary, binary, element);
@@ -181,17 +189,18 @@ void calc_homography(CLEyeCameraInstance *ps3_camera)
 	{
 		// wait for mouse clicks
 		waitKey(10);
-		if (points.size() == 4)
+		if (points.size() == 5)
 		{
 			break;
 		}
 	}
 
 	// Calculate Homography matrix
-	points2.push_back(Point2f(0, 0));
-	points2.push_back(Point2f(0, 480));
-	points2.push_back(Point2f(640, 480));
-	points2.push_back(Point2f(640, 0));
+	points2.push_back(Point2f((9.6 / board_length) * 640, (4.6 / board_width) * 480));
+	points2.push_back(Point2f((9.6 / board_length) * 640, (22.6 / board_width) * 480));
+	points2.push_back(Point2f((44.6 / board_length) * 640, (22.6 / board_width) * 480));
+	points2.push_back(Point2f((44.6 / board_length) * 640, (4.6 / board_width) * 480));
+	points2.push_back(Point2f((26.12 / board_length) * 640, (13.0 / board_width) * 480));
 
 	// Calculate homography
 	H = findHomography((points), (points2));
@@ -213,13 +222,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	CLEyeCameraInstance ps3_camera = NULL;
 	CAMERA_AND_FRAME ThreadPointer;
 	HANDLE _hThread;
-	CLEyeCameraParameter CamCurrentParam=(CLEyeCameraParameter)0;
-	bool CamParam=0;
+	CLEyeCameraParameter CamCurrentParam = (CLEyeCameraParameter)0;
+	bool CamParam = 0;
 
 	/*** PS3 CAMERA SETUP ***/
-	ps3_camera = StartCam(FRAME_RATE,RESOLUTION);//this does all the commented out code
+	ps3_camera = StartCam(FRAME_RATE, RESOLUTION);//this does all the commented out code
 
-	// Get camera frame dimensions;
+												  // Get camera frame dimensions;
 	CLEyeCameraGetFrameDimensions(ps3_camera, width, height);
 
 	// Create a window in which the captured images will be presented
@@ -229,8 +238,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	//Make a image to hold the frames captured from the camera
 	frame = Mat(height, width, CV_8UC4);//8 bit unsiged 4 channel image for Blue Green Red Alpa (8 bit elements per channel)
-	
-	//Start the eye camera
+
+										//Start the eye camera
 	CLEyeCameraStart(ps3_camera);
 
 	/*** ALGORITHM STARTS HERE ***/
@@ -245,7 +254,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	//Creates a new thread which continously works with the PS3 camera frames
 	_hThread = CreateThread(NULL, 0, &CaptureThread, &ThreadPointer, 0, 0);
-	if(_hThread == NULL)
+	if (_hThread == NULL)
 	{
 		printf("Failed to create thread...");
 		getchar();
@@ -260,25 +269,25 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	/* CREATE TRACK BAR FOR DILUSION THRESHOLD VALUES*/
 	dilation_trackbars();
-	
-	while( 1 ) 
+
+	while (1)
 	{
 		//This will capture keypresses and do whatever you want if you assign the appropriate actions to the right key code
 		press_key = waitKey(1);
 		switch (press_key)
 		{
-			case 27: //escape pressed
-				return 0;
-				break;
-			default: //do nothing
-				break;
+		case 27: //escape pressed
+			return 0;
+			break;
+		default: //do nothing
+			break;
 		}
 
 		imshow("PS3 Camera", frame);
 		imshow("Threshold Camera", binary);
 		imshow("Drawing", unwarp_frame);
 	}
-	
+
 	/*** CLOSES CAMERA  ***/
 	terminate_ps3camera(&ps3_camera);
 
@@ -288,18 +297,21 @@ int _tmain(int argc, _TCHAR* argv[])
 //for high frame rates you will process images here the main function will allow interactions and display only
 static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 {
-	CAMERA_AND_FRAME *Instance=(CAMERA_AND_FRAME*)ThreadPointer; //type cast the void pointer back to the proper type so we can access its elements
+	CAMERA_AND_FRAME *Instance = (CAMERA_AND_FRAME*)ThreadPointer; //type cast the void pointer back to the proper type so we can access its elements
 
 	int FramerCounter = 0;
 	int num_frames = 0;
+	int reference_frame = -1;
 	float x, y;
-	float velocity;
+	int matches = 0;
+	int not_found = 0;
+	int too_many = 0;
 	x = y = 0;
 
-	Mat CamImg=Mat(*(Instance->frame)).clone();
-	clock_t StartTime, EndTime; 
+	Mat CamImg = Mat(*(Instance->frame)).clone();
+	clock_t StartTime, EndTime;
 
-	while(1)
+	while (1)
 	{
 		//Get frame From Camera
 		CLEyeCameraGetFrame(Instance->CameraInstance, CamImg.data);
@@ -321,42 +333,92 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 		// Starting point to erode video
 		erode_video(0, 0);
 
+		// 4.72 inches from side &  9.5 inches from bottom
 		// Starting point to dilute video
 		dilute_video(0, 0);
 
 		// Find the puck and draw contour on it
 		findContours(binary.clone(), contour, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
-		
-		if (contour.size() == 1)
+
+		if (contour.size() >= 1)
 		{
 			//contour_out = Mat(binary.clone().size(), CV_8UC3);
-			moment = moments(contour[0], false);
-			centroid = Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00);
+
+
 			//centroid coordinates
 			//printf("%.2f %.2f\n", centroid.x, centroid.y);
 			for (i = 0; i < contour.size(); i++)
 			{
-				Scalar color = Scalar(255, 0, 0);
-				drawContours(unwarp_frame, contour, i, color, 2, 8, hierarchy, 0, Point());
-			}
-			if (num_frames == 0)
-			{
-				x = centroid.x;
-				y = centroid.y;
-			}
-			num_frames++;
-			if (num_frames == 10)
-			{
-				if ((centroid.x - x) > 2)
+
+				float area = contourArea(contour[i], false);
+				float perimeter = arcLength(contour[i], true);
+				if ((area > 400) && (perimeter > 60))
 				{
-					velocity = (centroid.x - x) / 9;
-					printf("Velocity: %f\n", velocity);
+					matches++;
+					moment = moments(contour[i], false);
+					centroid = Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00);
+
+					Scalar color = Scalar(255, 0, 0);
+					drawContours(unwarp_frame, contour, i, color, 2, 8, hierarchy, 0, Point());
+					//printf("%d: Perimeter %f, centroid.x %f centroid.y %f\n", i, perimeter, centroid.x/xPixels_per_inch, centroid.y/yPixels_per_inch);
+					//Sleep(1000);
+
+					if ((num_frames < 5) && (reference_frame < 0))
+					{
+						//printf("area: %.2f, perimeter: %.2f\n", area, perimeter);
+						x = centroid.x;
+						y = centroid.y;
+						reference_frame = num_frames;
+						//printf("Init x %.2f y: %.2f\n", x, y);
+						//printf("Init x %.2f y: %.2f, final x %.2f y: %.2f\n", x, y, centroid.x, centroid.y);
+					}
+					if (num_frames == 10)
+					{
+
+						float dist = sqrt(pow((centroid.x - x) / xPixels_per_inch, 2) + pow((centroid.y - y) / yPixels_per_inch, 2));
+						if (dist > 0.1)
+						{
+							float x_diff = (centroid.x - x) / xPixels_per_inch;
+							float y_diff = (centroid.y - y) / yPixels_per_inch;
+							float angle = atan(y_diff / x_diff)*180.0 / 3.145;
+							//float velocity = dist / ((num_frames-reference_frame)/60);
+							double velocity = (double)dist / ((double)(9.0 / 61.0));
+
+							printf("x_diff %.2f y_diff %.2f Distance Traveled: %.2f inches in %.2f seconds \nV: %.2f inches/second. (%d frames at FPS %d) at %.2f degrees\n", x_diff, y_diff, dist, (double)(10) / 60, velocity, num_frames - reference_frame, FramerCounter, angle);
+						}
+						else
+						{
+							printf("No distance traveled. x: %.2f y: %.2f\n", centroid.x / xPixels_per_inch, centroid.y / yPixels_per_inch);
+						}
+						num_frames = 0;
+						reference_frame = -1;
+						x = 0;
+						y = 0;
+					}
+					num_frames++;
 				}
-				velocity = 0;
-				num_frames = 0;
-				x = 0;
-				y = 0;
+
 			}
+			if ((matches > 1) && (too_many == 0))
+			{
+				too_many = 1;
+				not_found = 0;
+				printf("Error: more than one (%d) possible puck detected on the table!\n", matches);
+			}
+			else if ((matches == 0) && (not_found == 0))
+			{
+				printf("There is no puck detected!\n");
+				not_found = 1;
+				too_many = 0;
+			}
+			else if (not_found == 1)
+			{
+				printf("Found a possible puck!\n");
+				not_found = 0;
+				too_many = 0;
+			}
+			matches = 0;
+
 		}
 
 		//copy it to main thread image.
@@ -368,12 +430,14 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 			StartTime = clock();
 		}
 		FramerCounter++;
-		EndTime=clock();
-		if((EndTime-StartTime)/CLOCKS_PER_SEC>=1)
+		EndTime = clock();
+
+		if ((EndTime - StartTime) / CLOCKS_PER_SEC >= 1)
 		{
 			cout << "FPS:" << FramerCounter << endl;
-			FramerCounter=0;
+			FramerCounter = 0;
 		}
+
 
 	}
 	return 0;
