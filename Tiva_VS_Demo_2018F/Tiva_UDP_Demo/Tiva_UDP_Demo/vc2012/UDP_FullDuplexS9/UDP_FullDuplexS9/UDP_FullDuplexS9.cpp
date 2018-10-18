@@ -108,11 +108,11 @@ int _tmain(int argc, TCHAR* argv[])
 
 			if (pkout.flt3 > pkout.flt6)
 			{
-				wait = 100 * (pkout.flt3 + 3);
+				wait = 20 * (pkout.flt3);
 			}
 			else
 			{
-				wait = 100 * (pkout.flt6 + 3);
+				wait = 20 * (pkout.flt6);
 			}
 
 			Sleep(wait);
@@ -125,8 +125,6 @@ int _tmain(int argc, TCHAR* argv[])
 			pkout.flt5 = 2;
 			pkout.flt6 = 0; // steps
 			sender.SendData(&pkout);
-			
-			
 
 		}		
 	}

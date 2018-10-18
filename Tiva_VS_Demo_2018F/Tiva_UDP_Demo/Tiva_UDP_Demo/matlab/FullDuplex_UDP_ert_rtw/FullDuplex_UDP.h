@@ -8,9 +8,9 @@
  *
  * Code generated for Simulink model 'FullDuplex_UDP'.
  *
- * Model version                  : 1.104
+ * Model version                  : 1.106
  * Simulink Coder version         : 8.12 (R2017a) 16-Feb-2017
- * C/C++ source code generated on : Thu Oct 18 10:00:35 2018
+ * C/C++ source code generated on : Thu Oct 18 18:28:48 2018
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -239,7 +239,7 @@ struct P_FullDuplex_UDP_ {
   uint8_T GPIOSetup2_p4;               /* Computed Parameter: GPIOSetup2_p4
                                         * Referenced by: '<S8>/GPIO Setup2'
                                         */
-  uint8_T DebugPrint2_sfcn_p1[17];     /* Expression: uint8([sprintf(strrep(fmt,'%','%%')) 0])
+  uint8_T DebugPrint2_sfcn_p1[33];     /* Expression: uint8([sprintf(strrep(fmt,'%','%%')) 0])
                                         * Referenced by: '<S9>/DebugPrint2_sfcn'
                                         */
   uint8_T REDLED_Value;                /* Computed Parameter: REDLED_Value

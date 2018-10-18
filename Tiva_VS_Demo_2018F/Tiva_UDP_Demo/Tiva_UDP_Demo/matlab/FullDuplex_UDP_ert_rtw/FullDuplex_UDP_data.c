@@ -8,9 +8,9 @@
  *
  * Code generated for Simulink model 'FullDuplex_UDP'.
  *
- * Model version                  : 1.104
+ * Model version                  : 1.106
  * Simulink Coder version         : 8.12 (R2017a) 16-Feb-2017
- * C/C++ source code generated on : Thu Oct 18 10:00:35 2018
+ * C/C++ source code generated on : Thu Oct 18 18:28:48 2018
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -165,7 +165,8 @@ P_FullDuplex_UDP FullDuplex_UDP_P = {
    * Referenced by: '<S9>/DebugPrint2_sfcn'
    */
   { 88U, 58U, 32U, 37U, 104U, 102U, 32U, 37U, 104U, 102U, 32U, 37U, 104U, 102U,
-    13U, 10U, 0U },
+    44U, 32U, 89U, 58U, 32U, 37U, 104U, 102U, 32U, 37U, 104U, 102U, 32U, 37U,
+    104U, 102U, 13U, 10U, 0U },
   2U,                                  /* Computed Parameter: REDLED_Value
                                         * Referenced by: '<S1>/RED LED'
                                         */
@@ -190,10 +191,10 @@ P_FullDuplex_UDP FullDuplex_UDP_P = {
     50.0,                              /* Expression: 50
                                         * Referenced by: '<S16>/Pulse Generator'
                                         */
-    500.0,                             /* Computed Parameter: PulseGenerator_Period
+    50.0,                              /* Computed Parameter: PulseGenerator_Period
                                         * Referenced by: '<S16>/Pulse Generator'
                                         */
-    490.0,                             /* Computed Parameter: PulseGenerator_Duty
+    48.999999999999993,                /* Computed Parameter: PulseGenerator_Duty
                                         * Referenced by: '<S16>/Pulse Generator'
                                         */
     0.0,                               /* Expression: 0
@@ -224,10 +225,10 @@ P_FullDuplex_UDP FullDuplex_UDP_P = {
     50.0,                              /* Expression: 50
                                         * Referenced by: '<S13>/Pulse Generator'
                                         */
-    500.0,                             /* Computed Parameter: PulseGenerator_Period
+    50.0,                              /* Computed Parameter: PulseGenerator_Period
                                         * Referenced by: '<S13>/Pulse Generator'
                                         */
-    490.0,                             /* Computed Parameter: PulseGenerator_Duty
+    48.999999999999993,                /* Computed Parameter: PulseGenerator_Duty
                                         * Referenced by: '<S13>/Pulse Generator'
                                         */
     0.0,                               /* Expression: 0
