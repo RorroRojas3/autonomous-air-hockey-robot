@@ -59,7 +59,7 @@ int _tmain(int argc, TCHAR* argv[])
 		while(1)
 		{
 			// prevent from running to fast
-			Sleep(1);
+			//Sleep(1);
 			// get latest data from receiver
 			receiver.GetData(&pkin);
 			//printf("D1: %.2f, D2: %.2f, Steps: %.2f\r\n", pkin.flt1, pkin.flt2, pkin.flt3);
@@ -108,11 +108,11 @@ int _tmain(int argc, TCHAR* argv[])
 
 			if (pkout.flt3 > pkout.flt6)
 			{
-				wait = 20 * (pkout.flt3);
+				wait = 25 * (pkout.flt3);
 			}
 			else
 			{
-				wait = 20 * (pkout.flt6);
+				wait = 25 * (pkout.flt6);
 			}
 
 			Sleep(wait);

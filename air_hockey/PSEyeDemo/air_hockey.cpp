@@ -1,17 +1,44 @@
 // Library Declaration Section
 #include "stdafx.h"
+#include <winsock2.h>
 #include "PSEyeDemo.h"
 #include <math.h>
 #include <stdlib.h>
+#include "xPCUDPSock.h"
 
+#pragma pack(push,1) // Important! Tell the compiler to pack things up tightly 
+struct PACKIN
+{
+	float flt1;
+	float flt2;
+	float flt3;
+	float flt4;
+	float flt5;
+	float flt6;
+};
+
+struct PACKOUT
+{
+	float flt1;
+	float flt2;
+	float flt3;
+	float flt4;
+	float flt5;
+	float flt6;
+};
+#pragma pack(pop) // Fall back to previous setting
 
 // Namespace Declaration Section
 using namespace std;
 using namespace cv;
 
-// Constant Variable Declaration Section
+// Constant Declaration Section
 const int MAX_VALUE_H = 180;
 const int MAX_VALUE = 255;
+const	float	STEPS_WIDTH_X = 83.0;												// Number of steps to move across board in x-direction
+const float STEPS_LENGTH_Y = 68.0;											// Number of steps to move across board in y-direction
+const float BOARD_WIDTH = 26.25;												// board width in inches
+const float	BOARD_LENGTH = 53.25;												// board length in inches
 const String HSV_WINDOW_NAME = "HSV Values";
 const String EROSION_WINDOW_NAME = "Erosion Values";
 const String DILUTION_WINDOW_NAME = "Dilusion Values";
@@ -51,13 +78,11 @@ Point2fVector points;
 Point2fVector points2;
 vector<Vec3f> circles;
 
-float board_width = 26.25; //inches
-float board_length = 53.25; //inches 
+float xSteps_per_pixel = STEPS_WIDTH_X / ((26.0 / BOARD_WIDTH)*480.0);
+float ySteps_per_pixel = STEPS_LENGTH_Y / ((19.5 / BOARD_LENGTH)*640.0);
 
-float yPixels_per_inch = 480.0 / board_width;
-
-float xPixels_per_inch = 640.0 / board_length;
-
+float xPixels_per_inch = 480.0 / BOARD_WIDTH;
+float yPixels_per_inch = 640.0 / BOARD_LENGTH;
 
 #define FRAME_RATE 60
 #define RESOLUTION CLEYE_VGA
@@ -70,18 +95,6 @@ typedef struct
 	unsigned char *FramePtr;
 	int Threshold;
 } CAMERA_AND_FRAME;
-
-/*** UDP PACKAGE STRUCTS ***/
-struct PACKIN
-{
-	float flt1;
-	float flt2;
-};
-struct PACKOUT
-{
-	float flt1;
-	float flt2;
-};
 
 static DWORD WINAPI CaptureThread(LPVOID ThreadPointer);
 
@@ -196,11 +209,12 @@ void calc_homography(CLEyeCameraInstance *ps3_camera)
 	}
 
 	// Calculate Homography matrix
-	points2.push_back(Point2f((9.6 / board_length) * 640, (4.6 / board_width) * 480));
-	points2.push_back(Point2f((9.6 / board_length) * 640, (22.6 / board_width) * 480));
-	points2.push_back(Point2f((44.6 / board_length) * 640, (22.6 / board_width) * 480));
-	points2.push_back(Point2f((44.6 / board_length) * 640, (4.6 / board_width) * 480));
-	points2.push_back(Point2f((26.12 / board_length) * 640, (13.0 / board_width) * 480));
+	points2.push_back(Point2f((9.6 / BOARD_LENGTH) * 640, (4.6 / BOARD_WIDTH) * 480));
+	points2.push_back(Point2f((9.6 / BOARD_LENGTH) * 640, (22.6 / BOARD_WIDTH) * 480));
+	points2.push_back(Point2f((44.6 / BOARD_LENGTH) * 640, (22.6 / BOARD_WIDTH) * 480));
+	points2.push_back(Point2f((44.6 / BOARD_LENGTH) * 640, (4.6 / BOARD_WIDTH) * 480));
+	points2.push_back(Point2f((26.12 / BOARD_LENGTH) * 640, (13.0 / BOARD_WIDTH) * 480));
+
 
 	// Calculate homography
 	H = findHomography((points), (points2));
@@ -297,8 +311,8 @@ int _tmain(int argc, _TCHAR* argv[])
 //for high frame rates you will process images here the main function will allow interactions and display only
 static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 {
+	// Variable Declaration Section
 	CAMERA_AND_FRAME *Instance = (CAMERA_AND_FRAME*)ThreadPointer; //type cast the void pointer back to the proper type so we can access its elements
-
 	int FramerCounter = 0;
 	int num_frames = 0;
 	int reference_frame = -1;
@@ -307,9 +321,39 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 	int not_found = 0;
 	int too_many = 0;
 	x = y = 0;
+	float centroidx;
+	float centroidy;
+	int count_print = 0;
+	int moving = 0;
+	int xPaddle_position_steps = STEPS_WIDTH_X / 2;
+	int yPaddle_position_steps = 20;
+	float paddleX_pix;
+	float paddleY_pix;
+	float puckX_pix;
+	float puckY_pix;
+	int wait = 0;
 
 	Mat CamImg = Mat(*(Instance->frame)).clone();
 	clock_t StartTime, EndTime;
+
+	/* INITIALIZES UDP CONNECTION */
+	if (!InitUDPLib())
+	{
+		printf("Error, UDP could not be initialized\r\n");
+		exit(1);
+	}
+
+	// Create receiver, with packet size equal to that of PACKIN and port at 12403 or the output port for the Tiva in virtual port 3
+	CUDPReceiver receiver(sizeof(PACKIN), 12403);
+
+	// Create sender, with packet size equal to that of PACKOUT and port at port is 12302 or input port for the Tiva in virtual port 2, 
+	// and remote address 127.0.0.1(localhost)
+	CUDPSender sender(sizeof(PACKOUT), 12302, "127.0.0.1");
+
+	// Define buffers for input and output
+	PACKIN pkin;
+	PACKOUT pkout;
+
 
 	while (1)
 	{
@@ -344,7 +388,6 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 		{
 			//contour_out = Mat(binary.clone().size(), CV_8UC3);
 
-
 			//centroid coordinates
 			//printf("%.2f %.2f\n", centroid.x, centroid.y);
 			for (i = 0; i < contour.size(); i++)
@@ -362,33 +405,138 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 					drawContours(unwarp_frame, contour, i, color, 2, 8, hierarchy, 0, Point());
 					//printf("%d: Perimeter %f, centroid.x %f centroid.y %f\n", i, perimeter, centroid.x/xPixels_per_inch, centroid.y/yPixels_per_inch);
 					//Sleep(1000);
-
+					puckX_pix = centroid.y;
+					puckY_pix = centroid.x;
 					if ((num_frames < 5) && (reference_frame < 0))
 					{
 						//printf("area: %.2f, perimeter: %.2f\n", area, perimeter);
-						x = centroid.x;
-						y = centroid.y;
+
+						x = centroidx;
+						y = centroidy;
 						reference_frame = num_frames;
 						//printf("Init x %.2f y: %.2f\n", x, y);
 						//printf("Init x %.2f y: %.2f, final x %.2f y: %.2f\n", x, y, centroid.x, centroid.y);
 					}
-					if (num_frames == 10)
+					if (num_frames > 20)
 					{
-
-						float dist = sqrt(pow((centroid.x - x) / xPixels_per_inch, 2) + pow((centroid.y - y) / yPixels_per_inch, 2));
+						float dist = sqrt(pow((puckX_pix - x) / xPixels_per_inch, 2) + pow((puckY_pix - y) / yPixels_per_inch, 2));
 						if (dist > 0.1)
 						{
-							float x_diff = (centroid.x - x) / xPixels_per_inch;
-							float y_diff = (centroid.y - y) / yPixels_per_inch;
-							float angle = atan(y_diff / x_diff)*180.0 / 3.145;
+							double x_diff = (puckX_pix - x) / xPixels_per_inch;
+							double y_diff = (puckY_pix - y) / yPixels_per_inch;
+							float angle = atan2(y_diff, x_diff)*180.0 / 3.145;
 							//float velocity = dist / ((num_frames-reference_frame)/60);
-							double velocity = (double)dist / ((double)(9.0 / 61.0));
+							double velocity = (double)dist / (double)((num_frames - reference_frame) / 61.0);
+							int frames_passed = num_frames - reference_frame;
+							//printf("Velocity %.2f Angle %.2f\n", velocity, angle);
+							//Danger zone x > 8 && x < 18 x <  && y < 4.5
 
-							printf("x_diff %.2f y_diff %.2f Distance Traveled: %.2f inches in %.2f seconds \nV: %.2f inches/second. (%d frames at FPS %d) at %.2f degrees\n", x_diff, y_diff, dist, (double)(10) / 60, velocity, num_frames - reference_frame, FramerCounter, angle);
+							// Follow puck in x-direction
+							//printf("Puck position x,y (inches): %.2f %.2f\t\tx,y (pixels): %.2f %.2f\n", centroidx / xPixels_per_inch, centroidy / yPixels_per_inch, centroidx, centroidy);
+							float paddleX_steps = paddleX_pix * xSteps_per_pixel;
+							float paddleY_steps = paddleY_pix * ySteps_per_pixel;
+							float xDiff = puckX_pix * xSteps_per_pixel - paddleX_steps;
+							float yDiff = puckY_pix * ySteps_per_pixel - paddleY_steps;
+							printf("PaddleX_steps = %.3f PuckX_steps %.3f\n", paddleX_steps, puckX_pix*xSteps_per_pixel);
+							//printf("Paddle Position x,y (steps): %d %d\t\t\tSteps/Pixel x,y: %f %f\n", xPaddle_position_steps, yPaddle_position_steps, xSteps_per_pixel, ySteps_per_pixel);
+							//printf("Motor movement to puck x,y: %d %d\n", xDiff, yDiff);
+							// Move puck left or right depending on sign. Begin by sending stop command to motors
+							// Stop x motors
+							// Stop y motors
+							if (abs(xDiff) >= 1)
+							{
+
+								if (xDiff < 0 && paddleX_steps > 0) 
+								{
+									xDiff++;
+									// move left by 1 to allow for recalculations
+									printf("Move left\tStepPosition: %f\n", xDiff);
+									xPaddle_position_steps += xDiff;
+									
+									pkout.flt1 = 0;
+									pkout.flt2 = 1;
+									pkout.flt3 = xDiff * -1;
+									pkout.flt4 = 2;
+									pkout.flt5 = 2;
+									pkout.flt6 = 0;
+
+									sender.SendData(&pkout);
+
+									if (pkout.flt3 > pkout.flt6)
+									{
+										wait = 25 * (pkout.flt3);
+									}
+									else
+									{
+										wait = 25 * (pkout.flt6);
+									}
+
+									Sleep(wait);
+
+									/* RESET */
+									pkout.flt1 = 2;
+									pkout.flt2 = 2;
+									pkout.flt3 = 0; // steps
+									pkout.flt4 = 2;
+									pkout.flt5 = 2;
+									pkout.flt6 = 0; // steps
+									sender.SendData(&pkout);
+
+								}
+								else if (xDiff > 0 && paddleX_steps < STEPS_WIDTH_X) 
+								{
+									xDiff--;
+									// move right by 1 to allow for recalculations
+									printf("Move right\tStepPosition: %f\n", xDiff);
+									xPaddle_position_steps += xDiff;
+
+									pkout.flt1 = 1;
+									pkout.flt2 = 0;
+									pkout.flt3 = xDiff;
+									pkout.flt4 = 2;
+									pkout.flt5 = 2;
+									pkout.flt6 = 0;
+									sender.SendData(&pkout);
+
+									if (pkout.flt3 > pkout.flt6)
+									{
+										wait = 25 * (pkout.flt3);
+									}
+									else
+									{
+										wait = 25 * (pkout.flt6);
+									}
+
+									Sleep(wait);
+
+									/* RESET */
+									pkout.flt1 = 2;
+									pkout.flt2 = 2;
+									pkout.flt3 = 0; // steps
+									pkout.flt4 = 2;
+									pkout.flt5 = 2;
+									pkout.flt6 = 0; // steps
+									sender.SendData(&pkout);
+								}
+								else
+								{
+									printf("On the edge. Can't move\n");
+								}
+							}
+							else {
+								printf("No movement needed\n");
+							}
 						}
 						else
 						{
-							printf("No distance traveled. x: %.2f y: %.2f\n", centroid.x / xPixels_per_inch, centroid.y / yPixels_per_inch);
+							count_print++;
+							if (count_print == 15)
+							{
+								//printf("No distance traveled. x,y (inches): %.2f %.2f\t\tx,y (pixels): %.2f %.2f\n", centroidx / xPixels_per_inch, centroidy / yPixels_per_inch, centroidx, centroidy);
+								//printf("Paddle Position x,y (steps): %d %d\t\t\tSteps/Pixel x,y: %f %f\n", xPaddle_position_steps, yPaddle_position_steps, xSteps_per_pixel, ySteps_per_pixel);
+								//printf("Motor movement to puck x,y: %d %d\n", xDiff, yDiff);
+								count_print = 0;
+							}
 						}
 						num_frames = 0;
 						reference_frame = -1;
@@ -397,23 +545,31 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 					}
 					num_frames++;
 				}
-
+				else if ((area > 200) && (perimeter > 60))
+				{
+					moment = moments(contour[i], false);
+					centroid = Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00);
+					Scalar color = Scalar(255, 0, 0);
+					drawContours(unwarp_frame, contour, i, color, 2, 8, hierarchy, 0, Point());
+					paddleX_pix = centroid.y;
+					paddleY_pix = centroid.x;
+				}
 			}
 			if ((matches > 1) && (too_many == 0))
 			{
 				too_many = 1;
 				not_found = 0;
-				printf("Error: more than one (%d) possible puck detected on the table!\n", matches);
+				//printf("Error: more than one (%d) possible puck detected on the table!\n", matches);
 			}
 			else if ((matches == 0) && (not_found == 0))
 			{
-				printf("There is no puck detected!\n");
+				//printf("There is no puck detected!\n");
 				not_found = 1;
 				too_many = 0;
 			}
 			else if (not_found == 1)
 			{
-				printf("Found a possible puck!\n");
+				//printf("Found a possible puck!\n");
 				not_found = 0;
 				too_many = 0;
 			}
