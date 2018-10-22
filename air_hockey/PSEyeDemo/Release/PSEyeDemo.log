@@ -12,25 +12,29 @@ air_hockey.cpp(214): warning C4305: 'argument': truncation from 'double' to 'flo
 air_hockey.cpp(215): warning C4305: 'argument': truncation from 'double' to 'float'
 air_hockey.cpp(216): warning C4305: 'argument': truncation from 'double' to 'float'
 air_hockey.cpp(328): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(393): warning C4018: '<': signed/unsigned mismatch
-air_hockey.cpp(396): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(397): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(402): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(427): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(455): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(468): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(474): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(481): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(485): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(505): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(517): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(521): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(565): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(354): warning C4101: 'pkin': unreferenced local variable
+air_hockey.cpp(395): warning C4018: '<': signed/unsigned mismatch
+air_hockey.cpp(398): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(399): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(404): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(429): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(462): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+air_hockey.cpp(463): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+air_hockey.cpp(478): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(482): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(511): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+air_hockey.cpp(512): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+air_hockey.cpp(526): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(530): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(546): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+air_hockey.cpp(547): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+air_hockey.cpp(554): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(558): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(610): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(356): warning C4101: 'pkin': unreferenced local variable
 MSVCRT.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-c:\users\rorro\documents\github\autonomous-air-hockey-robot\air_hockey\pseyedemo\air_hockey.cpp(414): warning C4700: uninitialized local variable 'centroidx' used
-c:\users\rorro\documents\github\autonomous-air-hockey-robot\air_hockey\pseyedemo\air_hockey.cpp(415): warning C4700: uninitialized local variable 'centroidy' used
+c:\users\rorro\documents\github\autonomous-air-hockey-robot\air_hockey\pseyedemo\air_hockey.cpp(416): warning C4700: uninitialized local variable 'centroidx' used
+c:\users\rorro\documents\github\autonomous-air-hockey-robot\air_hockey\pseyedemo\air_hockey.cpp(417): warning C4700: uninitialized local variable 'centroidy' used
   1 of 534 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged

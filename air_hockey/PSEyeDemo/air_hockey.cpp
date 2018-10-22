@@ -53,8 +53,8 @@ RNG rng(12345);
 typedef vector<Point2f> Point2fVector;
 
 // Global Variables
-int low_H = 60, low_S = 72, low_V = 98;
-int high_H = 93, high_S = 146, high_V = 141;
+int low_H = 69, low_S = 84, low_V = 69;
+int high_H = 93, high_S = 137, high_V = 141;
 int erosion_val = 0;
 int dilation_val = 0;
 int minThresh = 0;
@@ -332,6 +332,8 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 	float puckX_pix;
 	float puckY_pix;
 	int wait = 0;
+	int enable_udp = 1;
+	int defense_mode = 0;
 
 	Mat CamImg = Mat(*(Instance->frame)).clone();
 	clock_t StartTime, EndTime;
@@ -438,124 +440,167 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 							float xDiff = puckX_pix * xSteps_per_pixel - paddleX_steps;
 							float yDiff = puckY_pix * ySteps_per_pixel - paddleY_steps;
 							printf("PaddleX_steps = %.3f PuckX_steps %.3f\n", paddleX_steps, puckX_pix*xSteps_per_pixel);
-							printf("PaddleY_steps = %.3f\t PuckY_steps %.3f\n", paddleY_steps, puckY_pix * ySteps_per_pixel);
 							//printf("Paddle Position x,y (steps): %d %d\t\t\tSteps/Pixel x,y: %f %f\n", xPaddle_position_steps, yPaddle_position_steps, xSteps_per_pixel, ySteps_per_pixel);
 							//printf("Motor movement to puck x,y: %d %d\n", xDiff, yDiff);
 							// Move puck left or right depending on sign. Begin by sending stop command to motors
 							// Stop x motors
 							// Stop y motors
-							if (abs(xDiff) >= 1)
+							if ((puckY_pix * ySteps_per_pixel) > 70 || (puckY_pix * ySteps_per_pixel) < 15)
+								yDiff = 0;
+
+							if (yDiff + paddleY_steps > 64)
 							{
+								yDiff = (64 - paddleY_steps);
 
-								if (xDiff < 0 && paddleX_steps > 0) 
+							}
+							if ((abs(xDiff) >= 1) || (abs(yDiff) >= 1))
+
+							{
+								if (abs(xDiff) >= 1)
 								{
-									xDiff++;
-									// move left by 1 to allow for recalculations
-									printf("Move left\tStepPosition: %f\n", xDiff);
-									xPaddle_position_steps += xDiff;
-									
-									pkout.flt1 = 0;
-									pkout.flt2 = 1;
-									pkout.flt3 = xDiff * -1;
+									// direction 
+									pkout.flt1 = xDiff < 0 ? 0 : 1;
+									pkout.flt2 = xDiff < 0 ? 1 : 0;
+									// value of steps
+									pkout.flt3 = abs(xDiff) + 1;
+									printf("Move X %.3f Steps\n", xDiff);
+
+									//set y to zero steps
 									pkout.flt4 = 2;
 									pkout.flt5 = 2;
+									// y steps
 									pkout.flt6 = 0;
-
-									if (yDiff < 0 && paddleY_steps > 0)
+									if (enable_udp)
 									{
-										yDiff++;
-										printf("Move forward\tStepPosition: %f\n", yDiff * -1);
-										yPaddle_position_steps += yDiff;
+										sender.SendData(&pkout);
+										if (pkout.flt3 > pkout.flt6)
+										{
+											wait = 25 * (pkout.flt3);
+										}
+										else
+										{
+											wait = 25 * (pkout.flt6);
+										}
+
+										Sleep(wait);
+
+										/* RESET */
+										pkout.flt1 = 2;
+										pkout.flt2 = 2;
+										pkout.flt3 = 0; // steps
+										pkout.flt4 = 2;
+										pkout.flt5 = 2;
+										pkout.flt6 = 0; // steps
+										sender.SendData(&pkout);
 									}
-									else if (yDiff > 0 && paddleX_steps < STEPS_LENGTH_Y)
-									{
-										yDiff--;
-										printf("Move backwards\tStepPosition: %f\n", yDiff);
-										yPaddle_position_steps += yDiff;
-									}
-
-									sender.SendData(&pkout);
-
-									if (pkout.flt3 > pkout.flt6)
-									{
-										wait = 25 * (pkout.flt3);
-									}
-									else
-									{
-										wait = 25 * (pkout.flt6);
-									}
-
-									Sleep(wait);
-
-									/* RESET */
-									pkout.flt1 = 2;
-									pkout.flt2 = 2;
-									pkout.flt3 = 0; // steps
-									pkout.flt4 = 2;
-									pkout.flt5 = 2;
-									pkout.flt6 = 0; // steps
-									sender.SendData(&pkout);
-
-								}
-								else if (xDiff > 0 && paddleX_steps < STEPS_WIDTH_X) 
-								{
-									xDiff--;
-									// move right by 1 to allow for recalculations
-									printf("Move right\tStepPosition: %f\n", xDiff);
-									xPaddle_position_steps += xDiff;
-
-									pkout.flt1 = 1;
-									pkout.flt2 = 0;
-									pkout.flt3 = xDiff;
-									pkout.flt4 = 2;
-									pkout.flt5 = 2;
-									pkout.flt6 = 0;
-									sender.SendData(&pkout);
-
-									if (pkout.flt3 > pkout.flt6)
-									{
-										wait = 25 * (pkout.flt3);
-									}
-									else
-									{
-										wait = 25 * (pkout.flt6);
-									}
-
-									Sleep(wait);
-
-									/* RESET */
-									pkout.flt1 = 2;
-									pkout.flt2 = 2;
-									pkout.flt3 = 0; // steps
-									pkout.flt4 = 2;
-									pkout.flt5 = 2;
-									pkout.flt6 = 0; // steps
-									sender.SendData(&pkout);
 								}
 								else
 								{
-									printf("On the edge. Can't move\n");
+									printf("No X movement needed\n");
+									//x - direction
+									pkout.flt1 = 2;
+									pkout.flt2 = 2;
+									//x steps
+									pkout.flt3 = 0;
+								}
+
+								if ((abs(yDiff) >= 1) && (!defense_mode))
+								{
+
+									//y - direction
+									pkout.flt4 = yDiff < 0 ? 1 : 0;
+									pkout.flt5 = yDiff < 0 ? 0 : 1;
+									// y steps
+									pkout.flt6 = abs(yDiff) + 1;
+									printf("Move Y %.3f Steps\n", yDiff);
+									//x - direction
+									pkout.flt1 = 2;
+									pkout.flt2 = 2;
+									//x steps
+									pkout.flt3 = 0;
+									if (enable_udp)
+									{
+										sender.SendData(&pkout);
+										if (pkout.flt3 > pkout.flt6)
+										{
+											wait = 25 * (pkout.flt3);
+										}
+										else
+										{
+											wait = 25 * (pkout.flt6);
+										}
+
+										Sleep(wait);
+
+										/* RESET */
+										pkout.flt1 = 2;
+										pkout.flt2 = 2;
+										pkout.flt3 = 0; // steps
+										pkout.flt4 = 2;
+										pkout.flt5 = 2;
+										pkout.flt6 = 0; // steps
+										sender.SendData(&pkout);
+
+										// return to original y spot
+										//y - direction
+										pkout.flt4 = yDiff < 0 ? 0 : 1;
+										pkout.flt5 = yDiff < 0 ? 1 : 0;
+										// y steps
+										pkout.flt6 = abs(yDiff) + 1;
+										printf("Move Back Y %.3f Steps\n", yDiff);
+										sender.SendData(&pkout);
+										if (pkout.flt3 > pkout.flt6)
+										{
+											wait = 25 * (pkout.flt3);
+										}
+										else
+										{
+											wait = 25 * (pkout.flt6);
+										}
+
+										Sleep(wait);
+
+										/* RESET */
+										pkout.flt1 = 2;
+										pkout.flt2 = 2;
+										pkout.flt3 = 0; // steps
+										pkout.flt4 = 2;
+										pkout.flt5 = 2;
+										pkout.flt6 = 0; // steps
+										sender.SendData(&pkout);
+									}
+
+								}
+								else
+								{
+									printf("No Y movement needed\n");
+									// y Direction
+									pkout.flt4 = 2;
+									pkout.flt5 = 2;
+									// y steps
+									pkout.flt6 = 0;
+								}
+
+
+
+							}
+							else
+							{
+								count_print++;
+								if (count_print == 15)
+								{
+									printf("No movement Needed\n");
+									//printf("No distance traveled. x,y (inches): %.2f %.2f\t\tx,y (pixels): %.2f %.2f\n", centroidx / xPixels_per_inch, centroidy / yPixels_per_inch, centroidx, centroidy);
+									//printf("Paddle Position x,y (steps): %d %d\t\t\tSteps/Pixel x,y: %f %f\n", xPaddle_position_steps, yPaddle_position_steps, xSteps_per_pixel, ySteps_per_pixel);
+									//printf("Motor movement to puck x,y: %d %d\n", xDiff, yDiff);
+									count_print = 0;
 								}
 							}
-							else {
-								printf("No movement needed\n");
-							}
+							num_frames = 0;
+							reference_frame = -1;
+							x = 0;
+							y = 0;
 						}
-						else
-						{
-							count_print++;
-							if (count_print == 15)
-							{
-								//printf("No distance traveled. x,y (inches): %.2f %.2f\t\tx,y (pixels): %.2f %.2f\n", centroidx / xPixels_per_inch, centroidy / yPixels_per_inch, centroidx, centroidy);
-								//printf("Paddle Position x,y (steps): %d %d\t\t\tSteps/Pixel x,y: %f %f\n", xPaddle_position_steps, yPaddle_position_steps, xSteps_per_pixel, ySteps_per_pixel);
-								//printf("Motor movement to puck x,y: %d %d\n", xDiff, yDiff);
-								count_print = 0;
-							}
-						}
-						num_frames = 0;
-						reference_frame = -1;
-						x = 0;
-						y = 0;
 					}
 					num_frames++;
 				}
