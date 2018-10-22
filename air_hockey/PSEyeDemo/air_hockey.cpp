@@ -53,8 +53,8 @@ RNG rng(12345);
 typedef vector<Point2f> Point2fVector;
 
 // Global Variables
-int low_H = 0, low_S = 0, low_V = 0;
-int high_H = MAX_VALUE_H, high_S = MAX_VALUE, high_V = MAX_VALUE;
+int low_H = 60, low_S = 72, low_V = 98;
+int high_H = 93, high_S = 146, high_V = 141;
 int erosion_val = 0;
 int dilation_val = 0;
 int minThresh = 0;
@@ -438,6 +438,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 							float xDiff = puckX_pix * xSteps_per_pixel - paddleX_steps;
 							float yDiff = puckY_pix * ySteps_per_pixel - paddleY_steps;
 							printf("PaddleX_steps = %.3f PuckX_steps %.3f\n", paddleX_steps, puckX_pix*xSteps_per_pixel);
+							printf("PaddleY_steps = %.3f\t PuckY_steps %.3f\n", paddleY_steps, puckY_pix * ySteps_per_pixel);
 							//printf("Paddle Position x,y (steps): %d %d\t\t\tSteps/Pixel x,y: %f %f\n", xPaddle_position_steps, yPaddle_position_steps, xSteps_per_pixel, ySteps_per_pixel);
 							//printf("Motor movement to puck x,y: %d %d\n", xDiff, yDiff);
 							// Move puck left or right depending on sign. Begin by sending stop command to motors
@@ -459,6 +460,19 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 									pkout.flt4 = 2;
 									pkout.flt5 = 2;
 									pkout.flt6 = 0;
+
+									if (yDiff < 0 && paddleY_steps > 0)
+									{
+										yDiff++;
+										printf("Move forward\tStepPosition: %f\n", yDiff * -1);
+										yPaddle_position_steps += yDiff;
+									}
+									else if (yDiff > 0 && paddleX_steps < STEPS_LENGTH_Y)
+									{
+										yDiff--;
+										printf("Move backwards\tStepPosition: %f\n", yDiff);
+										yPaddle_position_steps += yDiff;
+									}
 
 									sender.SendData(&pkout);
 
