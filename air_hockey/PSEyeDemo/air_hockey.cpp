@@ -1,4 +1,4 @@
-// Library Declaration Section
+/* LIBRARY DECLARATION SECTION*/
 #include "stdafx.h"
 #include <winsock2.h>
 #include "PSEyeDemo.h"
@@ -6,7 +6,9 @@
 #include <stdlib.h>
 #include "xPCUDPSock.h"
 
-#pragma pack(push,1) // Important! Tell the compiler to pack things up tightly 
+/* UDP STRUCTURES */
+#pragma pack(push,1) 
+
 struct PACKIN
 {
 	float flt1;
@@ -26,49 +28,37 @@ struct PACKOUT
 	float flt5;
 	float flt6;
 };
-#pragma pack(pop) // Fall back to previous setting
 
-// Namespace Declaration Section
+#pragma pack(pop) 
+
+/* NAMESPACE DECLARATION SECTION */
 using namespace std;
 using namespace cv;
 
-// Constant Declaration Section
+/* CONSTANT VARIABLE DECLARATION SECTION*/
 const int MAX_VALUE_H = 180;
 const int MAX_VALUE = 255;
-const	float	STEPS_WIDTH_X = 83.0;												// Number of steps to move across board in x-direction
+const	float	STEPS_WIDTH_X = 83.0;										// Number of steps to move across board in x-direction
 const float STEPS_LENGTH_Y = 68.0;											// Number of steps to move across board in y-direction
-const float BOARD_WIDTH = 26.25;												// board width in inches
-const float	BOARD_LENGTH = 53.25;												// board length in inches
-const String HSV_WINDOW_NAME = "HSV Values";
-const String EROSION_WINDOW_NAME = "Erosion Values";
-const String DILUTION_WINDOW_NAME = "Dilusion Values";
-const String DILUTE_WINDOW_NAME = "Dilute Values";
+const float BOARD_WIDTH = 26;												// board width in inches
+const float	BOARD_LENGTH = 53;												// board length in inches
 const String CAMERA_WINDOW_NAME = "PS3 Camera";
 int const MAX_KERNEL_SIZE = 21;
 double const scale = 5.0;
 RNG rng(12345);
 
-
-// Typedefs
+/* TYPEDEF DECLARATION SECTION */
 typedef vector<Point2f> Point2fVector;
-
 // Global Variables
-int low_H = 69, low_S = 84, low_V = 69;
-int high_H = 93, high_S = 137, high_V = 141;
-int erosion_val = 0;
-int dilation_val = 0;
+//int low_H = 60, low_S = 64, low_V = 93;
+//int high_H = 96, high_S = 146, high_V = 126;
 int minThresh = 0;
 int maxTresh = 255;
 int i = 0;
 Mat frame;
-Mat current_frame;
 Mat hsv_frame;
 Mat frame_threshold;
-Mat blur_frame;
 Mat unwarp_frame;
-Mat binary;
-Mat contour_out;
-vector <vector<Point>> contour;
 vector<Vec4i> hierarchy;
 Mat drawing;
 Mat_<double> H;
@@ -77,17 +67,28 @@ Point2f centroid;
 Point2fVector points;
 Point2fVector points2;
 vector<Vec3f> circles;
-
 float xSteps_per_pixel = STEPS_WIDTH_X / ((26.0 / BOARD_WIDTH)*480.0);
 float ySteps_per_pixel = STEPS_LENGTH_Y / ((19.5 / BOARD_LENGTH)*640.0);
-
 float xPixels_per_inch = 480.0 / BOARD_WIDTH;
 float yPixels_per_inch = 640.0 / BOARD_LENGTH;
 
+/* DEFINES DECLARATION SECTION*/
 #define FRAME_RATE 60
 #define RESOLUTION CLEYE_VGA
+#define M_PI   3.14159265358979323846264338327950288
+#define PUCK_HUE_INIT {94, 53}
+#define PUCK_SATURATION_INIT {140, 42}
+#define PUCK_VALUE_INIT {255, 50}
+#define PUCK_ERODE 1
+#define PUCK_DILUTE 5
 
-// Structure Definition Section
+#define PADDLE_HUE_INIT {112, 99}
+#define PADDLE_SATURATION_INIT {140, 54}
+#define PADDLE_VALUE_INIT {227, 0}
+#define PADDLE_ERODE 1
+#define PADDLE_DILUTE 1
+
+/* CAMERA STRCUTS (GIVEN TO US) */
 typedef struct
 {
 	CLEyeCameraInstance CameraInstance;
@@ -98,76 +99,54 @@ typedef struct
 
 static DWORD WINAPI CaptureThread(LPVOID ThreadPointer);
 
-/*** HSV TRACKBAR CALLBACK FUNCTIONS ***/
-static void low_H_callBack(int, void *)
+typedef struct track_bar_parameters
 {
-	low_H = min(high_H - 1, low_H);
-	setTrackbarPos("Low H", HSV_WINDOW_NAME, low_H);
-}
-static void high_H_callBack(int, void *)
+	int high_value;
+	int low_value;
+}hsv_params;
+
+/* STRUCTURE FOR TRACKBARS VALUES */
+struct image_info
 {
-	high_H = max(high_H, low_H + 1);
-	setTrackbarPos("High H", HSV_WINDOW_NAME, high_H);
-}
-static void low_S_callBack(int, void *)
-{
-	low_S = min(high_S - 1, low_S);
-	setTrackbarPos("Low S", HSV_WINDOW_NAME, low_S);
-}
-static void high_S_Callback(int, void *)
-{
-	high_S = max(high_S, low_S + 1);
-	setTrackbarPos("High S", HSV_WINDOW_NAME, high_S);
-}
-static void low_V_callBack(int, void *)
-{
-	low_V = min(high_V - 1, low_V);
-	setTrackbarPos("Low V", HSV_WINDOW_NAME, low_V);
-}
-static void high_V_callBack(int, void *)
-{
-	high_V = max(high_V, low_V + 1);
-}
+	Mat binary;
+	Mat unwarp_frame;
+	vector <vector<Point>> contour;
+	hsv_params hue;
+	hsv_params sat;
+	hsv_params value;
+	int erode_val = 0;
+	int dilate_val = 0;
+};
+struct image_info puck;
+struct image_info paddle;
 
 /*** ERODE CALLBACK FUNCTION ***/
-static void erode_video(int, void *)
+static void erode_video(Mat binary, int erosion_val)
 {
 	Mat element = getStructuringElement(MORPH_ELLIPSE, Size(2 * erosion_val + 1, 2 * erosion_val + 1), Point(erosion_val, erosion_val));
 	erode(binary, binary, element);
 }
 
 /*** DILUTE CALLBACK FUNCTION ***/
-static void dilute_video(int, void *)
+static void dilute_video(Mat binary, int dilation_val)
 {
 	Mat element = getStructuringElement(MORPH_ELLIPSE, Size(2 * dilation_val + 1, 2 * dilation_val + 1), Point(dilation_val, dilation_val));
 	dilate(binary, binary, element);
 }
 
-/*** CREATES TRACKBARS FOR HSV VALUES ***/
-void hsv_trackbars()
+/* CREATES TRACKBAR FOR HSV VALUES*/
+static void create_hsv_trackbars(const char* window_name, struct image_info *block)
 {
-	namedWindow(HSV_WINDOW_NAME, CV_WINDOW_NORMAL);
-	resizeWindow(HSV_WINDOW_NAME, 400, 400);
-	createTrackbar("Low H", HSV_WINDOW_NAME, &low_H, MAX_VALUE_H, low_H_callBack);
-	createTrackbar("High H", HSV_WINDOW_NAME, &high_H, MAX_VALUE_H, high_H_callBack);
-	createTrackbar("Low S", HSV_WINDOW_NAME, &low_S, MAX_VALUE, low_S_callBack);
-	createTrackbar("High S", HSV_WINDOW_NAME, &high_S, MAX_VALUE, high_S_Callback);
-	createTrackbar("Low V", HSV_WINDOW_NAME, &low_V, MAX_VALUE, low_V_callBack);
-	createTrackbar("High V", HSV_WINDOW_NAME, &high_V, MAX_VALUE, high_V_callBack);
-}
-
-/*** CREATES TRACKBAR FOR EROSION VALUE ***/
-void erosion_trackbars()
-{
-	namedWindow(EROSION_WINDOW_NAME, CV_WINDOW_NORMAL);
-	createTrackbar("Kernel Size [2n + 1]", EROSION_WINDOW_NAME, &erosion_val, MAX_KERNEL_SIZE, erode_video);
-}
-
-/*** CREATES DILATION FOR EROSION VALUE ***/
-void dilation_trackbars()
-{
-	namedWindow(DILUTION_WINDOW_NAME, CV_WINDOW_NORMAL);
-	createTrackbar("Kernel Size [2n + 1]", DILUTION_WINDOW_NAME, &erosion_val, MAX_KERNEL_SIZE, dilute_video);
+	namedWindow(window_name, CV_WINDOW_NORMAL);
+	resizeWindow(window_name, 400, 400);
+	createTrackbar("Low H", window_name, &block->hue.low_value, MAX_VALUE_H, NULL);
+	createTrackbar("High H", window_name, &block->hue.high_value, MAX_VALUE_H, NULL);
+	createTrackbar("Low S", window_name, &block->sat.low_value, MAX_VALUE, NULL);
+	createTrackbar("High S", window_name, &block->sat.high_value, MAX_VALUE, NULL);
+	createTrackbar("Low V", window_name, &block->value.low_value, MAX_VALUE, NULL);
+	createTrackbar("High V", window_name, &block->value.high_value, MAX_VALUE, NULL);
+	createTrackbar("Erosion", window_name, &block->erode_val, MAX_KERNEL_SIZE, NULL);
+	createTrackbar("Dilation", window_name, &block->dilate_val, MAX_KERNEL_SIZE, NULL);
 }
 
 /*** ALLOWS USER TO PICK FOUR POINTS FROM PS3 CAMERA FRAME ***/
@@ -207,17 +186,100 @@ void calc_homography(CLEyeCameraInstance *ps3_camera)
 			break;
 		}
 	}
+	double x_point = 4.0 + (7.0 / 16.0);
+	double y_point = 9.5;
 
 	// Calculate Homography matrix
-	points2.push_back(Point2f((9.6 / BOARD_LENGTH) * 640, (4.6 / BOARD_WIDTH) * 480));
-	points2.push_back(Point2f((9.6 / BOARD_LENGTH) * 640, (22.6 / BOARD_WIDTH) * 480));
-	points2.push_back(Point2f((44.6 / BOARD_LENGTH) * 640, (22.6 / BOARD_WIDTH) * 480));
-	points2.push_back(Point2f((44.6 / BOARD_LENGTH) * 640, (4.6 / BOARD_WIDTH) * 480));
-	points2.push_back(Point2f((26.12 / BOARD_LENGTH) * 640, (13.0 / BOARD_WIDTH) * 480));
-
+	points2.push_back(Point2f((y_point / BOARD_LENGTH) * 640, (x_point / BOARD_WIDTH) * 480));
+	points2.push_back(Point2f((y_point / BOARD_LENGTH) * 640, ((BOARD_WIDTH - x_point) / BOARD_WIDTH) * 480));
+	points2.push_back(Point2f(((BOARD_LENGTH - y_point) / BOARD_LENGTH) * 640, ((BOARD_WIDTH - x_point) / BOARD_WIDTH) * 480));
+	points2.push_back(Point2f(((BOARD_LENGTH - y_point) / BOARD_LENGTH) * 640, (x_point / BOARD_WIDTH) * 480));
+	points2.push_back(Point2f((26.0 / BOARD_LENGTH) * 640, (13.0 / BOARD_WIDTH) * 480));
 
 	// Calculate homography
 	H = findHomography((points), (points2));
+}
+
+/* SETS PACKET VALUES IN UDP PACKET IN ORDER TO RESET MOTORS */
+void reset_motor(CUDPSender sender, PACKOUT *pkout)
+{
+	pkout->flt1 = 2;
+	pkout->flt2 = 2;
+	pkout->flt3 = 0; // steps
+	pkout->flt4 = 2;
+	pkout->flt5 = 2;
+	pkout->flt6 = 0; // steps
+}
+
+/* SETS PACKET VALUES IN UDP IN ORDER TO MOVE MOTORS IN STEPS*/
+void set_motor_steps(PACKOUT *pkout, int steps, char axis)
+{
+	if (axis == 'x')
+	{
+		// direction
+		pkout->flt1 = steps < 0 ? 0 : 1;
+		pkout->flt2 = steps < 0 ? 1 : 0;
+		// value of steps
+		pkout->flt3 = abs(steps) + 1;
+	}
+	else if (axis == 'y')
+	{
+		//y - direction
+		if (steps == 0)
+		{
+			pkout->flt4 = 2;
+			pkout->flt5 = 2;
+			pkout->flt6 = 0; 
+		}
+		else
+		{
+			pkout->flt4 = steps < 0 ? 0 : 1;
+			pkout->flt5 = steps < 0 ? 1 : 0;
+			// y steps
+			pkout->flt6 = abs(steps) + 1;
+		}
+		
+	}
+	else
+	{
+		printf("Please specify which axis to set (X or Y)\n");
+	}
+}
+
+/* DETERMINES THE X-VALUE COORDINATE OF THE PUCK */
+float find_x_position(float angle, float target_y, float current_x, float current_y)
+{
+	float LEFT_WALL = 20 / xPixels_per_inch;
+	float RIGHT_WALL = 460 / xPixels_per_inch;
+	float x_diff, y_diff, y_wall, new_x;
+
+	do
+	{
+		x_diff = (target_y - current_y) / tanf(angle);
+		new_x = current_x + x_diff;
+		//printf("New x:  %f  Current x: %f x_diff:  %f\n", new_x, current_x, x_diff);
+
+		// is the new x off of the table
+		if (new_x < LEFT_WALL)
+		{
+			y_diff = (LEFT_WALL - current_x) * tanf(angle);
+			y_wall = current_y + y_diff;
+			//printf("Hit the left wall at %f\n", y_wall);
+			current_x = LEFT_WALL;
+		}
+		else if (new_x > RIGHT_WALL)
+		{
+			y_diff = (RIGHT_WALL - current_x) * tanf(angle);
+			y_wall = current_y + y_diff;
+			//printf("Hit the right wall at %f\n", y_wall);
+			current_x = RIGHT_WALL;
+		}
+		angle = -M_PI - angle;
+		current_y = y_wall;
+
+	} while (new_x < LEFT_WALL || new_x > RIGHT_WALL);
+
+	return new_x;
 }
 
 /*** TERMINATES PS3 CAMERA ***/
@@ -240,20 +302,21 @@ int _tmain(int argc, _TCHAR* argv[])
 	bool CamParam = 0;
 
 	/*** PS3 CAMERA SETUP ***/
-	ps3_camera = StartCam(FRAME_RATE, RESOLUTION);//this does all the commented out code
+	ps3_camera = StartCam(FRAME_RATE, RESOLUTION);
 
-												  // Get camera frame dimensions;
+	// Get camera frame dimensions;
 	CLEyeCameraGetFrameDimensions(ps3_camera, width, height);
 
 	// Create a window in which the captured images will be presented
 	namedWindow("PS3 Camera", CV_WINDOW_AUTOSIZE);
-	namedWindow("Threshold Camera", CV_WINDOW_AUTOSIZE);
-	namedWindow("Drawing", CV_WINDOW_AUTOSIZE);
+	namedWindow("Paddle Binary Image", CV_WINDOW_AUTOSIZE);
+	namedWindow("Puck Binary Image", CV_WINDOW_AUTOSIZE);
+	namedWindow("Paddle/Puck Contours", CV_WINDOW_AUTOSIZE);
 
 	//Make a image to hold the frames captured from the camera
-	frame = Mat(height, width, CV_8UC4);//8 bit unsiged 4 channel image for Blue Green Red Alpa (8 bit elements per channel)
+	frame = Mat(height, width, CV_8UC4);
 
-										//Start the eye camera
+	//Start the eye camera
 	CLEyeCameraStart(ps3_camera);
 
 	/*** ALGORITHM STARTS HERE ***/
@@ -275,31 +338,37 @@ int _tmain(int argc, _TCHAR* argv[])
 		return false;
 	}
 
-	/* CREATE TRACK BAR FOR HSV THRESHOLD VALUES*/
-	hsv_trackbars();
-
-	/* CREATE TRACK BAR FOR EROSION THRESHOLD VALUES*/
-	erosion_trackbars();
-
-	/* CREATE TRACK BAR FOR DILUSION THRESHOLD VALUES*/
-	dilation_trackbars();
+	// Sets value of Puck and Paddle structures and creates it's trackbars
+	puck.hue = PUCK_HUE_INIT;
+	puck.sat = PUCK_SATURATION_INIT;
+	puck.value = PUCK_VALUE_INIT;
+	puck.erode_val = PUCK_ERODE;
+	puck.dilate_val = PUCK_DILUTE;
+	paddle.hue = PADDLE_HUE_INIT;
+	paddle.sat = PADDLE_SATURATION_INIT;
+	paddle.value = PADDLE_VALUE_INIT;
+	paddle.erode_val = PADDLE_ERODE;
+	paddle.dilate_val = PADDLE_DILUTE;
+	create_hsv_trackbars("Puck Values", &puck);
+	create_hsv_trackbars("Paddle Values", &paddle);
 
 	while (1)
 	{
-		//This will capture keypresses and do whatever you want if you assign the appropriate actions to the right key code
 		press_key = waitKey(1);
 		switch (press_key)
 		{
-		case 27: //escape pressed
+		case 27:
 			return 0;
 			break;
-		default: //do nothing
+		default:
 			break;
 		}
 
+		// SHOWS CURRENT VIDEO FOR DIFFERENT FRAMES
 		imshow("PS3 Camera", frame);
-		imshow("Threshold Camera", binary);
-		imshow("Drawing", unwarp_frame);
+		imshow("Puck Binary Image", puck.binary);
+		imshow("Paddle Binary Image", paddle.binary);
+		imshow("Paddle/Puck Contours", unwarp_frame);
 	}
 
 	/*** CLOSES CAMERA  ***/
@@ -315,8 +384,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 	CAMERA_AND_FRAME *Instance = (CAMERA_AND_FRAME*)ThreadPointer; //type cast the void pointer back to the proper type so we can access its elements
 	int FramerCounter = 0;
 	int num_frames = 0;
-	int reference_frame = -1;
-	float x, y;
+	float x, y, x_in, y_in;
 	int matches = 0;
 	int not_found = 0;
 	int too_many = 0;
@@ -327,16 +395,29 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 	int moving = 0;
 	int xPaddle_position_steps = STEPS_WIDTH_X / 2;
 	int yPaddle_position_steps = 20;
-	float paddleX_pix;
-	float paddleY_pix;
-	float puckX_pix;
-	float puckY_pix;
+	float paddleX_pix, paddleY_pix, puckX_pix, puckY_pix, puckX_in, puckY_in;
 	int wait = 0;
 	int enable_udp = 1;
-	int defense_mode = 0;
+	int defense_mode = 1;
+	float x_motor_steps = 0, y_motor_steps = 0;
+	int new_move_values;
+	float avg_angle = 0;
+	int total_angles = 0;
+	float angle_sum = 0, avg_prediction, prediction_sum;
+	int total_predictions;
+	float paddleX_steps, paddleY_steps, puckX_steps, puckY_steps;
+	double velocity, y_diff, x_diff, xDiff, yDiff;
+	float angle, target_yy, predicted_puckX, dist, paddle_area, paddle_perimeter, puck_area, puck_perimeter;
+	FILE *fpt;
+
+	fpt = fopen("debug_output.txt", "w");
+
+	// puck xrange (24.5 -26) - (456-460)
+	//paddle xrange (
 
 	Mat CamImg = Mat(*(Instance->frame)).clone();
 	clock_t StartTime, EndTime;
+	clock_t motor_start, motor_end;
 
 	/* INITIALIZES UDP CONNECTION */
 	if (!InitUDPLib())
@@ -356,284 +437,331 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 	PACKIN pkin;
 	PACKOUT pkout;
 
-
 	while (1)
 	{
+		
 		//Get frame From Camera
 		CLEyeCameraGetFrame(Instance->CameraInstance, CamImg.data);
 
 		// Homography frame
 		warpPerspective(CamImg, unwarp_frame, H, CamImg.size());
-
-		// DO YOUR IMAGE PROCESSING HERE
 		cvtColor(unwarp_frame, hsv_frame, CV_BGR2HSV);
-		//cvtColor(CamImg, hsv_frame, CV_RGB2HSV);
 
-		// Changes value of HSV video
-		inRange(hsv_frame, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), frame_threshold);
-
+		// Changes value of HSV of Puck 
+		inRange(hsv_frame, Scalar(puck.hue.low_value,
+			puck.sat.low_value,
+			puck.value.low_value),
+			Scalar(puck.hue.high_value,
+				puck.sat.high_value,
+				puck.value.high_value), frame_threshold);
 		// Blurr video
-		//GaussianBlur(frame_threshold, blur_frame, Size(9, 9), 2, 2);
-		threshold(frame_threshold, binary, minThresh, maxTresh, THRESH_BINARY);
-
+		threshold(frame_threshold, puck.binary, minThresh, maxTresh, THRESH_BINARY);
 		// Starting point to erode video
-		erode_video(0, 0);
-
-		// 4.72 inches from side &  9.5 inches from bottom
+		erode_video(puck.binary, puck.erode_val);
 		// Starting point to dilute video
-		dilute_video(0, 0);
-
+		dilute_video(puck.binary, puck.dilate_val);
 		// Find the puck and draw contour on it
-		findContours(binary.clone(), contour, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+		findContours(puck.binary.clone(), puck.contour, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
-		if (contour.size() >= 1)
+		// Changes HSV values of the Paddle
+		inRange(hsv_frame, Scalar(paddle.hue.low_value,
+			paddle.sat.low_value,
+			paddle.value.low_value),
+			Scalar(paddle.hue.high_value,
+				paddle.sat.high_value,
+				paddle.value.high_value), frame_threshold);
+		// Blurr video
+		threshold(frame_threshold, paddle.binary, minThresh, maxTresh, THRESH_BINARY);
+		// Starting point to erode video
+		erode_video(paddle.binary, paddle.erode_val);
+		// Starting point to dilute video
+		dilute_video(paddle.binary, paddle.dilate_val);
+		// Find the puck and draw contour on it
+		findContours(paddle.binary.clone(), paddle.contour, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+		
+		// If Paddle found
+		if (paddle.contour.size() >= 1)
 		{
-			//contour_out = Mat(binary.clone().size(), CV_8UC3);
-
 			//centroid coordinates
 			//printf("%.2f %.2f\n", centroid.x, centroid.y);
-			for (i = 0; i < contour.size(); i++)
+			for (i = 0; i < paddle.contour.size(); i++)
 			{
 
-				float area = contourArea(contour[i], false);
-				float perimeter = arcLength(contour[i], true);
-				if ((area > 400) && (perimeter > 60))
+				paddle_area = contourArea(paddle.contour[i], false);
+				paddle_perimeter = arcLength(paddle.contour[i], true);
+				//printf("Area: %.2f, Perimeter: %.2f\r\n", paddle_area, paddle_perimeter);
+				if ((paddle_area > 500) && (paddle_perimeter > 120))
 				{
-					matches++;
-					moment = moments(contour[i], false);
+					//printf("Area: %.2f, Perimeter: %.2f\r\n", area, perimeter);
+					moment = moments(paddle.contour[i], false);
+					centroid = Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00);
+					Scalar color = Scalar(255, 0, 0);
+					drawContours(unwarp_frame, paddle.contour, i, color, 2, 8, hierarchy, 0, Point());
+					paddleX_pix = centroid.y;
+					paddleY_pix = centroid.x;
+					
+				}
+
+			}
+		}
+
+		// If Puck found
+		if (puck.contour.size() >= 1)
+		{
+			//centroid coordinates
+			//printf("%.2f %.2f\n", centroid.x, centroid.y);
+			for (i = 0; i < puck.contour.size(); i++)
+			{
+				puck_area = contourArea(puck.contour[i], false);
+				puck_perimeter = arcLength(puck.contour[i], true);
+				//printf("Area: %.2f, Perimeter: %.2f\r\n", puck_area, puck_perimeter);
+				if ((puck_area > 800) && (puck_perimeter > 100))
+				{
+				
+					moment = moments(puck.contour[i], false);
 					centroid = Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00);
 
+					// Draws red contour around Puck
 					Scalar color = Scalar(255, 0, 0);
-					drawContours(unwarp_frame, contour, i, color, 2, 8, hierarchy, 0, Point());
-					//printf("%d: Perimeter %f, centroid.x %f centroid.y %f\n", i, perimeter, centroid.x/xPixels_per_inch, centroid.y/yPixels_per_inch);
-					//Sleep(1000);
+					drawContours(unwarp_frame, puck.contour, i, color, 2, 8, hierarchy, 0, Point());
+
+					// Gets the X-Y centroid values of the Puck
 					puckX_pix = centroid.y;
 					puckY_pix = centroid.x;
-					if ((num_frames < 5) && (reference_frame < 0))
-					{
-						//printf("area: %.2f, perimeter: %.2f\n", area, perimeter);
+					puckY_in = puckY_pix / yPixels_per_inch;
+					puckX_in = puckX_pix / xPixels_per_inch;
 
-						x = centroidx;
-						y = centroidy;
-						reference_frame = num_frames;
-						//printf("Init x %.2f y: %.2f\n", x, y);
-						//printf("Init x %.2f y: %.2f, final x %.2f y: %.2f\n", x, y, centroid.x, centroid.y);
-					}
-					if (num_frames > 20)
+					// Displays Puck information every 15 Frames
+					if (count_print == 60)
 					{
-						float dist = sqrt(pow((puckX_pix - x) / xPixels_per_inch, 2) + pow((puckY_pix - y) / yPixels_per_inch, 2));
+						//	printf("[X: %f Y: %f] Area: %.2f, Perimeter: %.2f\r\n", puckX_in, puckY_in, puck_area, puck_perimeter);
+						count_print = 0;
+					}
+					count_print++;
+
+					if (abs(9.5 - puckY_in) < 0.5)
+					{
+						fprintf(fpt, "CROSSED THE LINE AT [%.2f, %.2f]\n\n", puckX_in, puckY_in);
+						//printf("CROSSED THE LINE AT [%.2f, %.2f]\n\n", puckX_in, puckY_in);
+					}
+
+					// Resets X and Y value at start of new FPS
+					if (num_frames == 0)
+					{
+						x_in = puckX_in;
+						y_in = puckY_in;
+					}
+
+					// Every 10 frames, calculate where Puck is
+					if (num_frames > 5)
+					{
+						dist = sqrt(pow((puckX_in - x_in), 2) + pow((puckY_in - y_in), 2));
+						//printf("puckx %.3f, pucky %.3f\n Paddlex %.3f, Paddley %.3f\n", puckX_pix, puckY_pix, paddleX_pix, paddleY_pix);
 						if (dist > 0.1)
 						{
-							double x_diff = (puckX_pix - x) / xPixels_per_inch;
-							double y_diff = (puckY_pix - y) / yPixels_per_inch;
-							float angle = atan2(y_diff, x_diff)*180.0 / 3.145;
-							//float velocity = dist / ((num_frames-reference_frame)/60);
-							double velocity = (double)dist / (double)((num_frames - reference_frame) / 61.0);
-							int frames_passed = num_frames - reference_frame;
-							//printf("Velocity %.2f Angle %.2f\n", velocity, angle);
-							//Danger zone x > 8 && x < 18 x <  && y < 4.5
+							x_diff = (puckX_in - x_in);
+							y_diff = (puckY_in - y_in);
 
-							// Follow puck in x-direction
-							//printf("Puck position x,y (inches): %.2f %.2f\t\tx,y (pixels): %.2f %.2f\n", centroidx / xPixels_per_inch, centroidy / yPixels_per_inch, centroidx, centroidy);
-							float paddleX_steps = paddleX_pix * xSteps_per_pixel;
-							float paddleY_steps = paddleY_pix * ySteps_per_pixel;
-							float xDiff = puckX_pix * xSteps_per_pixel - paddleX_steps;
-							float yDiff = puckY_pix * ySteps_per_pixel - paddleY_steps;
-							printf("PaddleX_steps = %.3f PuckX_steps %.3f\n", paddleX_steps, puckX_pix*xSteps_per_pixel);
-							//printf("Paddle Position x,y (steps): %d %d\t\t\tSteps/Pixel x,y: %f %f\n", xPaddle_position_steps, yPaddle_position_steps, xSteps_per_pixel, ySteps_per_pixel);
-							//printf("Motor movement to puck x,y: %d %d\n", xDiff, yDiff);
-							// Move puck left or right depending on sign. Begin by sending stop command to motors
-							// Stop x motors
-							// Stop y motors
-							if ((puckY_pix * ySteps_per_pixel) > 70 || (puckY_pix * ySteps_per_pixel) < 15)
-								yDiff = 0;
-
-							if (yDiff + paddleY_steps > 64)
+							angle = atan2(y_diff, x_diff)*180.0 / M_PI;
+							printf("Angle: %.2f\n", angle);
+							if (angle < 0)
 							{
-								yDiff = (64 - paddleY_steps);
+								total_angles++;
+								angle_sum += angle;
+								avg_angle = angle_sum / (float)total_angles;
 
-							}
-							if ((abs(xDiff) >= 1) || (abs(yDiff) >= 1))
-
-							{
-								if (abs(xDiff) >= 1)
-								{
-									// direction 
-									pkout.flt1 = xDiff < 0 ? 0 : 1;
-									pkout.flt2 = xDiff < 0 ? 1 : 0;
-									// value of steps
-									pkout.flt3 = abs(xDiff) + 1;
-									printf("Move X %.3f Steps\n", xDiff);
-
-									//set y to zero steps
-									pkout.flt4 = 2;
-									pkout.flt5 = 2;
-									// y steps
-									pkout.flt6 = 0;
-									if (enable_udp)
-									{
-										sender.SendData(&pkout);
-										if (pkout.flt3 > pkout.flt6)
-										{
-											wait = 25 * (pkout.flt3);
-										}
-										else
-										{
-											wait = 25 * (pkout.flt6);
-										}
-
-										Sleep(wait);
-
-										/* RESET */
-										pkout.flt1 = 2;
-										pkout.flt2 = 2;
-										pkout.flt3 = 0; // steps
-										pkout.flt4 = 2;
-										pkout.flt5 = 2;
-										pkout.flt6 = 0; // steps
-										sender.SendData(&pkout);
-									}
-								}
-								else
-								{
-									printf("No X movement needed\n");
-									//x - direction
-									pkout.flt1 = 2;
-									pkout.flt2 = 2;
-									//x steps
-									pkout.flt3 = 0;
-								}
-
-								if ((abs(yDiff) >= 1) && (!defense_mode))
-								{
-
-									//y - direction
-									pkout.flt4 = yDiff < 0 ? 1 : 0;
-									pkout.flt5 = yDiff < 0 ? 0 : 1;
-									// y steps
-									pkout.flt6 = abs(yDiff) + 1;
-									printf("Move Y %.3f Steps\n", yDiff);
-									//x - direction
-									pkout.flt1 = 2;
-									pkout.flt2 = 2;
-									//x steps
-									pkout.flt3 = 0;
-									if (enable_udp)
-									{
-										sender.SendData(&pkout);
-										if (pkout.flt3 > pkout.flt6)
-										{
-											wait = 25 * (pkout.flt3);
-										}
-										else
-										{
-											wait = 25 * (pkout.flt6);
-										}
-
-										Sleep(wait);
-
-										/* RESET */
-										pkout.flt1 = 2;
-										pkout.flt2 = 2;
-										pkout.flt3 = 0; // steps
-										pkout.flt4 = 2;
-										pkout.flt5 = 2;
-										pkout.flt6 = 0; // steps
-										sender.SendData(&pkout);
-
-										// return to original y spot
-										//y - direction
-										pkout.flt4 = yDiff < 0 ? 0 : 1;
-										pkout.flt5 = yDiff < 0 ? 1 : 0;
-										// y steps
-										pkout.flt6 = abs(yDiff) + 1;
-										printf("Move Back Y %.3f Steps\n", yDiff);
-										sender.SendData(&pkout);
-										if (pkout.flt3 > pkout.flt6)
-										{
-											wait = 25 * (pkout.flt3);
-										}
-										else
-										{
-											wait = 25 * (pkout.flt6);
-										}
-
-										Sleep(wait);
-
-										/* RESET */
-										pkout.flt1 = 2;
-										pkout.flt2 = 2;
-										pkout.flt3 = 0; // steps
-										pkout.flt4 = 2;
-										pkout.flt5 = 2;
-										pkout.flt6 = 0; // steps
-										sender.SendData(&pkout);
-									}
-
-								}
-								else
-								{
-									printf("No Y movement needed\n");
-									// y Direction
-									pkout.flt4 = 2;
-									pkout.flt5 = 2;
-									// y steps
-									pkout.flt6 = 0;
-								}
-
-
-
+								target_yy = 9.5;
+								predicted_puckX = find_x_position(angle, target_yy, puckX_in, puckY_in);
+								total_predictions++;
+								prediction_sum += predicted_puckX;
+								avg_prediction = prediction_sum / (float)total_predictions;
+								fprintf(fpt, "[%.2f, %.2f] -> [%.2f, %.2f] Dist: %.3f  Angle: %.2f  Prediction: %.2f\n", x_in, y_in, puckX_in, puckY_in, dist, angle, predicted_puckX);
+								//printf("Angle %.2f AvG_Angle %.2f Dist: %.3f Curr_X %.2f Curr_Y %.2f Pred. Position %.2f Avg Pred %.2f\n", angle, avg_angle, dist, puckX_in, puckY_in, predicted_puckX, avg_prediction);
 							}
 							else
 							{
-								count_print++;
+								//printf("Reset avg. angle\n");
+								total_angles = angle_sum = avg_angle = 0;
+								total_predictions = prediction_sum = avg_prediction = 0;
+							}
+							//float velocity = dist / ((num_frames-reference_frame)/60);
+							velocity = (double)dist / (double)((num_frames) / 61.0);
+							//Danger zone x > 8 && x < 18 x <  && y < 4.5
+
+							// Follow puck in x-direction
+							
+							// DETERMINES X-Y VALUES OF WHERE PADDLE IS
+							paddleX_steps = paddleX_pix * xSteps_per_pixel;
+							paddleY_steps = paddleY_pix * ySteps_per_pixel;
+							
+							// DETERMINES X-Y VALUES OF WHERE PUCK WILL BE
+							predicted_puckX *= xPixels_per_inch * xSteps_per_pixel;
+							puckX_steps = puckX_pix * xSteps_per_pixel;
+							puckY_steps = puckY_pix * ySteps_per_pixel;
+							
+							// DETERMINES X-Y VALUES FOR MOTOR TO BE SENT THROUGH UDP 
+							xDiff = puckX_steps - paddleX_steps;
+							//yDiff = puckY_steps - paddleY_steps;
+							yDiff = 0; // -> FOR DEBUGGIN 
+
+							// PROTECTS FROM GOING TO FAR IN THE Y-DIRECTION 
+							if (puckY_steps > 64 || puckY_steps < 15)
+							{
+								yDiff = 0;
+							}
+							if (puckX_steps < 0 || puckX_steps > 82) // (MIGHT NOT BE NEEDED)
+							{
+								xDiff = 0;
+							}
+
+							// DETERMINES IF MOTOR IS DONE MOVING TO ITS POSITION
+							if (abs(xDiff) > 0.5 || abs(yDiff) > 0.5)
+							{
+								//check to see if motor is still moving
+								if (clock() - motor_start <= wait)
+								{
+									// if the puck has changed positions since last move
+									if ((xDiff <= 0) != (x_motor_steps <= 0)
+										|| (yDiff <= 0) != (y_motor_steps <= 0))
+									{
+										new_move_values = 1;
+										//printf("Changed puck Position!\n");
+									}
+									else
+									{
+										//printf("Same Position!\n");
+										new_move_values = 0;
+									}
+								}
+								else
+								{
+									//printf("Timer expired!\n");
+									new_move_values = 1;
+								}
+							}
+							
+
+							// if we need to update the motor moving values
+							if (new_move_values)
+							{
+								//reset_motor(sender, &pkout);
+								//sender.SendData(&pkout);
+
+								pkout.flt1 = 2;
+								pkout.flt2 = 2;
+								pkout.flt3 = 0; // steps
+								pkout.flt4 = 2;
+								pkout.flt5 = 2;
+								pkout.flt6 = 0; // steps
+								sender.SendData(&pkout);
+								
+								if (defense_mode)
+								{
+									
+									//move x and y at the same									
+									x_motor_steps = xDiff;
+									//x_motor_steps = 0;
+									set_motor_steps(&pkout, x_motor_steps, 'x');
+									//y_motor_steps = yDiff;
+									y_motor_steps = 0;
+									set_motor_steps(&pkout, y_motor_steps, 'y');
+									wait = abs(x_motor_steps) * 25;
+									printf("SENT: X: %.2f %.2f %.2f, Y: %.2f %.2f %.2f\n", pkout.flt1, pkout.flt2, pkout.flt3, pkout.flt4, pkout.flt5, pkout.flt6);
+									printf("Wait: %d\n", wait);
+									
+									sender.SendData(&pkout);
+									
+									
+									
+								
+									
+								}
+								else // attack_mode
+								{
+									// move x and then y
+									if (abs(xDiff) >= 1)
+									{
+
+										//move x and y at the same time
+										x_motor_steps = xDiff;
+										set_motor_steps(&pkout, x_motor_steps, 'x');
+										printf("Move X %.3f Steps\n", xDiff);
+										if (enable_udp)
+										{
+											sender.SendData(&pkout);
+											wait = (pkout.flt3 > pkout.flt6 ? (pkout.flt3) : (pkout.flt6)) * 25;
+											motor_start = clock();
+											Sleep(wait);
+
+							
+											reset_motor(sender, &pkout);
+										}
+									}
+									else
+									{
+										printf("No X movement needed\n");
+										x_motor_steps = 0;
+									}
+
+									if ((abs(yDiff) >= 1) && (!defense_mode))
+									{
+
+										y_motor_steps = yDiff;
+										set_motor_steps(&pkout, y_motor_steps, 'y');
+										printf("Move Y %.3f Steps\n", yDiff);
+										if (enable_udp)
+										{
+											sender.SendData(&pkout);
+											wait = pkout.flt3 > pkout.flt6 ? (pkout.flt3) : (pkout.flt6);
+											wait *= 25;
+											Sleep(wait);
+											reset_motor(sender, &pkout);
+
+											// return to original y spot
+											//y - direction
+											set_motor_steps(&pkout, yDiff*(-1), 'y');
+											printf("Move Back Y %.3f Steps\n", yDiff);
+											sender.SendData(&pkout);
+											wait = pkout.flt3 > pkout.flt6 ? (pkout.flt3) : (pkout.flt6);
+											wait *= 25;
+											Sleep(wait);
+											reset_motor(sender, &pkout);
+										}
+
+									}
+									else
+									{
+										printf("No Y movement needed\n");
+										y_motor_steps = 0;
+									}
+								}
+							}
+							else
+							{
+								//count_print++;
 								if (count_print == 15)
 								{
 									printf("No movement Needed\n");
 									//printf("No distance traveled. x,y (inches): %.2f %.2f\t\tx,y (pixels): %.2f %.2f\n", centroidx / xPixels_per_inch, centroidy / yPixels_per_inch, centroidx, centroidy);
 									//printf("Paddle Position x,y (steps): %d %d\t\t\tSteps/Pixel x,y: %f %f\n", xPaddle_position_steps, yPaddle_position_steps, xSteps_per_pixel, ySteps_per_pixel);
 									//printf("Motor movement to puck x,y: %d %d\n", xDiff, yDiff);
-									count_print = 0;
+									//count_print = 0;
 								}
 							}
+
+							// RESET VALUES
 							num_frames = 0;
-							reference_frame = -1;
 							x = 0;
 							y = 0;
 						}
+
+						x_in = puckX_in;
+						y_in = puckY_in;
 					}
 					num_frames++;
 				}
-				else if ((area > 200) && (perimeter > 60))
-				{
-					moment = moments(contour[i], false);
-					centroid = Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00);
-					Scalar color = Scalar(255, 0, 0);
-					drawContours(unwarp_frame, contour, i, color, 2, 8, hierarchy, 0, Point());
-					paddleX_pix = centroid.y;
-					paddleY_pix = centroid.x;
-				}
-			}
-			if ((matches > 1) && (too_many == 0))
-			{
-				too_many = 1;
-				not_found = 0;
-				//printf("Error: more than one (%d) possible puck detected on the table!\n", matches);
-			}
-			else if ((matches == 0) && (not_found == 0))
-			{
-				//printf("There is no puck detected!\n");
-				not_found = 1;
-				too_many = 0;
-			}
-			else if (not_found == 1)
-			{
-				//printf("Found a possible puck!\n");
-				not_found = 0;
-				too_many = 0;
-			}
-			matches = 0;
 
+			}
 		}
 
 		//copy it to main thread image.
@@ -649,12 +777,16 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 
 		if ((EndTime - StartTime) / CLOCKS_PER_SEC >= 1)
 		{
-			cout << "FPS:" << FramerCounter << endl;
+			//cout << "FPS:" << FramerCounter << endl;
 			FramerCounter = 0;
 		}
+		
 
+		//X-DIRECTION 
+		/*
+		
+		*/
 
 	}
 	return 0;
 }
-
