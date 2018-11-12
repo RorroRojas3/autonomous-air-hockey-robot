@@ -1,0 +1,58 @@
+New x:  349.463806  Current x: 20.959845 Current y: 35.189487 x_diff:  328.503967 Angle -0.08
+Hit the right wall at 34.880058
+New x:  -299.630341  Current x: 24.916666 Current y: 34.880058 x_diff:  -324.546997 Angle -3.06
+Hit the left wall at 33.016254
+New x:  301.796997  Current x: 1.083333 Current y: 33.016254 x_diff:  300.713654 Angle -0.08
+Hit the right wall at 31.152452
+New x:  -251.963638  Current x: 24.916666 Current y: 31.152452 x_diff:  -276.880310 Angle -3.06
+Hit the left wall at 29.288651
+New x:  254.130310  Current x: 1.083333 Current y: 29.288651 x_diff:  253.046982 Angle -0.08
+Hit the right wall at 27.424849
+New x:  -204.296982  Current x: 24.916666 Current y: 27.424849 x_diff:  -229.213654 Angle -3.06
+Hit the left wall at 25.561047
+New x:  206.463654  Current x: 1.083333 Current y: 25.561047 x_diff:  205.380325 Angle -0.08
+Hit the right wall at 23.697245
+New x:  -156.630310  Current x: 24.916666 Current y: 23.697245 x_diff:  -181.546982 Angle -3.06
+Hit the left wall at 21.833443
+New x:  158.796982  Current x: 1.083333 Current y: 21.833443 x_diff:  157.713654 Angle -0.08
+Hit the right wall at 19.969641
+New x:  -108.963661  Current x: 24.916666 Current y: 19.969641 x_diff:  -133.880325 Angle -3.06
+Hit the left wall at 18.105839
+New x:  111.130333  Current x: 1.083333 Current y: 18.105839 x_diff:  110.046997 Angle -0.08
+Hit the right wall at 16.242037
+New x:  -61.296997  Current x: 24.916666 Current y: 16.242037 x_diff:  -86.213661 Angle -3.06
+Hit the left wall at 14.378235
+New x:  63.463665  Current x: 1.083333 Current y: 14.378235 x_diff:  62.380333 Angle -0.08
+Hit the right wall at 12.514433
+New x:  -13.630335  Current x: 24.916666 Current y: 12.514433 x_diff:  -38.547001 Angle -3.06
+Hit the left wall at 10.650631
+New x:  15.797004  Current x: 1.083333 Current y: 10.650631 x_diff:  14.713671 Angle -0.08
+[20.96, 35.19] -> [20.96, 35.19] Dist: 0.028  Angle: -0.08  Prediction: 15.80
+New x:  -0.381273  Current x: 20.923059 Current y: 35.038357 x_diff:  -21.304333 Angle -2.27
+Hit the left wall at 11.255684
+New x:  2.547941  Current x: 1.083333 Current y: 11.255684 x_diff:  1.464608 Angle -0.88
+[20.92, 35.04] -> [20.92, 35.04] Dist: 0.015  Angle: -2.27  Prediction: 2.55
+New x:  35.731552  Current x: 21.419119 Current y: 34.182865 x_diff:  14.312433 Angle -1.05
+Hit the right wall at 28.151083
+New x:  14.101781  Current x: 24.916666 Current y: 28.151083 x_diff:  -10.814885 Angle -2.10
+[21.42, 34.18] -> [21.42, 34.18] Dist: 0.099  Angle: -1.05  Prediction: 14.10
+New x:  63.121315  Current x: 23.131796 Current y: 33.169159 x_diff:  39.989521 Angle -0.53
+Hit the right wall at 32.112724
+New x:  -13.287996  Current x: 24.916666 Current y: 32.112724 x_diff:  -38.204662 Angle -2.61
+Hit the left wall at 18.006159
+New x:  15.454661  Current x: 1.083333 Current y: 18.006159 x_diff:  14.371328 Angle -0.53
+[23.13, 33.17] -> [23.13, 33.17] Dist: 0.199  Angle: -0.53  Prediction: 15.45
+New x:  16.745794  Current x: 23.734636 Current y: 33.168488 x_diff:  -6.988842 Angle -1.86
+[23.73, 33.17] -> [23.73, 33.17] Dist: 0.035  Angle: -1.86  Prediction: 16.75
+New x:  3.279711  Current x: 21.131016 Current y: 30.155827 x_diff:  -17.851305 Angle -2.28
+[21.13, 30.16] -> [21.13, 30.16] Dist: 0.398  Angle: -2.28  Prediction: 3.28
+New x:  4.999284  Current x: 18.257980 Current y: 26.477057 x_diff:  -13.258697 Angle -2.23
+[18.26, 26.48] -> [18.26, 26.48] Dist: 0.467  Angle: -2.23  Prediction: 5.00
+New x:  6.945228  Current x: 16.088316 Current y: 23.221039 x_diff:  -9.143088 Angle -2.16
+[16.09, 23.22] -> [16.09, 23.22] Dist: 0.391  Angle: -2.16  Prediction: 6.95
+New x:  9.093980  Current x: 14.813944 Current y: 20.721058 x_diff:  -5.719964 Angle -2.04
+[14.81, 20.72] -> [14.81, 20.72] Dist: 0.281  Angle: -2.04  Prediction: 9.09
+New x:  11.198458  Current x: 14.219802 Current y: 18.877073 x_diff:  -3.021345 Angle -1.88
+[14.22, 18.88] -> [14.22, 18.88] Dist: 0.194  Angle: -1.88  Prediction: 11.20
+New x:  13.116993  Current x: 14.078790 Current y: 17.678061 x_diff:  -0.961797 Angle -1.69
+[14.08, 17.68] -> [14.08, 17.68] Dist: 0.121  Angle: -1.69 

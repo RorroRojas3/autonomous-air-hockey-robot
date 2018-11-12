@@ -2,57 +2,73 @@
   air_hockey.cpp
 c:\opencv\build\include\opencv2\flann\logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-air_hockey.cpp(67): warning C4305: 'initializing': truncation from 'double' to 'float'
-air_hockey.cpp(68): warning C4305: 'initializing': truncation from 'double' to 'float'
-air_hockey.cpp(69): warning C4305: 'initializing': truncation from 'double' to 'float'
 air_hockey.cpp(70): warning C4305: 'initializing': truncation from 'double' to 'float'
-air_hockey.cpp(190): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(191): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(192): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(71): warning C4305: 'initializing': truncation from 'double' to 'float'
+air_hockey.cpp(72): warning C4305: 'initializing': truncation from 'double' to 'float'
+air_hockey.cpp(73): warning C4305: 'initializing': truncation from 'double' to 'float'
 air_hockey.cpp(193): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(194): warning C4305: 'argument': truncation from 'double' to 'float'
-air_hockey.cpp(217): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-air_hockey.cpp(218): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+air_hockey.cpp(194): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(195): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(196): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(197): warning C4305: 'argument': truncation from 'double' to 'float'
 air_hockey.cpp(220): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-air_hockey.cpp(233): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-air_hockey.cpp(234): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+air_hockey.cpp(221): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+air_hockey.cpp(223): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 air_hockey.cpp(236): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-air_hockey.cpp(251): warning C4101: 'y_diff': unreferenced local variable
-air_hockey.cpp(251): warning C4101: 'y_wall': unreferenced local variable
-air_hockey.cpp(393): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(484): warning C4018: '<': signed/unsigned mismatch
-air_hockey.cpp(487): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(488): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(494): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(508): warning C4018: '<': signed/unsigned mismatch
-air_hockey.cpp(510): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(511): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(517): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(560): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(648): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(650): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(653): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(654): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(673): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(674): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(679): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(696): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-air_hockey.cpp(697): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(702): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(709): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-air_hockey.cpp(712): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(742): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(743): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-air_hockey.cpp(410): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+air_hockey.cpp(237): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+air_hockey.cpp(239): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+air_hockey.cpp(252): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(253): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(265): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(266): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(281): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(284): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(285): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(406): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(501): warning C4018: '<': signed/unsigned mismatch
+air_hockey.cpp(504): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(505): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(511): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(527): warning C4018: '<': signed/unsigned mismatch
+air_hockey.cpp(529): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(530): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(536): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(568): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(614): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(615): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(616): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(617): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(622): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(708): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(710): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(713): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(734): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(735): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(740): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(754): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(770): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(784): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+air_hockey.cpp(785): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(788): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(801): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+air_hockey.cpp(804): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(831): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(832): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+air_hockey.cpp(427): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-air_hockey.cpp(390): warning C4101: 'centroidy': unreferenced local variable
-air_hockey.cpp(417): warning C4101: 'motor_end': unreferenced local variable
-air_hockey.cpp(400): warning C4101: 'new_move_values': unreferenced local variable
-air_hockey.cpp(389): warning C4101: 'centroidx': unreferenced local variable
-air_hockey.cpp(434): warning C4101: 'pkin': unreferenced local variable
+air_hockey.cpp(621): warning C4477: 'printf' : format string '%f' requires an argument of type 'double', but variadic argument 1 has type 'int'
+air_hockey.cpp(621): warning C4477: 'printf' : format string '%f' requires an argument of type 'double', but variadic argument 2 has type 'int'
+air_hockey.cpp(621): warning C4477: 'printf' : format string '%f' requires an argument of type 'double', but variadic argument 3 has type 'int'
+air_hockey.cpp(621): warning C4477: 'printf' : format string '%f' requires an argument of type 'double', but variadic argument 4 has type 'int'
+air_hockey.cpp(403): warning C4101: 'centroidy': unreferenced local variable
+air_hockey.cpp(434): warning C4101: 'motor_end': unreferenced local variable
+air_hockey.cpp(402): warning C4101: 'centroidx': unreferenced local variable
+air_hockey.cpp(451): warning C4101: 'pkin': unreferenced local variable
 MSVCRT.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  1 of 518 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+c:\users\rorro\documents\github\autonomous-air-hockey-robot\air_hockey\pseyedemo\air_hockey.cpp(570): warning C4700: uninitialized local variable 'total_xdiff' used
+c:\users\rorro\documents\github\autonomous-air-hockey-robot\air_hockey\pseyedemo\air_hockey.cpp(571): warning C4700: uninitialized local variable 'total_ydiff' used
+  1 of 564 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
