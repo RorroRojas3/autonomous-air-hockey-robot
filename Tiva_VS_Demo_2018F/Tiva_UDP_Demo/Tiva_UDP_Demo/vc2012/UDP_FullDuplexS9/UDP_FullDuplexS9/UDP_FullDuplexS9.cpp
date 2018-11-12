@@ -59,11 +59,11 @@ int _tmain(int argc, TCHAR* argv[])
 		while(1)
 		{
 			// prevent from running to fast
-			//Sleep(1);
+			Sleep(1);
 			// get latest data from receiver
 			receiver.GetData(&pkin);
-			//printf("D1: %.2f, D2: %.2f, Steps: %.2f\r\n", pkin.flt1, pkin.flt2, pkin.flt3);
-			//printf("Y: %.2f %.2f \r\n", pkin.flt3, pkin.flt4);
+			printf("X: %.2f,%.2f, Steps: %.2f\r\n", pkin.flt1, pkin.flt2, pkin.flt3);
+			printf("Y: %.2f %.2f Steps: %.2f \r\n", pkin.flt3, pkin.flt4, pkin.flt6);
 			
 			// repack the data
 
