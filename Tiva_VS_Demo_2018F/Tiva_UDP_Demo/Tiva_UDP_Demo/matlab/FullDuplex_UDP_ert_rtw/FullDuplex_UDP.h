@@ -8,9 +8,9 @@
  *
  * Code generated for Simulink model 'FullDuplex_UDP'.
  *
- * Model version                  : 1.106
+ * Model version                  : 1.107
  * Simulink Coder version         : 8.12 (R2017a) 16-Feb-2017
- * C/C++ source code generated on : Thu Oct 18 18:28:48 2018
+ * C/C++ source code generated on : Tue Nov 13 19:06:57 2018
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex

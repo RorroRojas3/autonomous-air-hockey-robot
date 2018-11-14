@@ -68,7 +68,7 @@ Point2fVector points;
 Point2fVector points2;
 vector<Vec3f> circles;
 float xSteps_per_pixel = STEPS_WIDTH_X / ((26.0 / BOARD_WIDTH)*480.0);
-float ySteps_per_pixel = STEPS_LENGTH_Y / ((19.5 / BOARD_LENGTH)*640.0);
+float ySteps_per_pixel = STEPS_LENGTH_Y / ((19.0 / BOARD_LENGTH)*640.0);
 float xPixels_per_inch = 480.0 / BOARD_WIDTH;
 float yPixels_per_inch = 640.0 / BOARD_LENGTH;
 
@@ -233,8 +233,8 @@ void set_motor_steps(PACKOUT *pkout, int steps, char axis)
 		}
 		else
 		{
-			pkout->flt4 = steps < 0 ? 0 : 1;
-			pkout->flt5 = steps < 0 ? 1 : 0;
+			pkout->flt4 = steps < 0 ? 1 : 0;
+			pkout->flt5 = steps < 0 ? 0 : 1;
 			// y steps
 			pkout->flt6 = abs(steps) + 1;
 		}
@@ -417,12 +417,13 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 	int total_predictions;
 	float paddleX_steps, paddleY_steps, puckX_steps, puckY_steps;
 	double velocity, y_diff, x_diff, xDiff, yDiff;
-	float angle, target_yy, predicted_puckX, dist, paddle_area, paddle_perimeter, puck_area, puck_perimeter;
+	float angle, target_yy, predicted_puckX, predicted_puckX_steps, dist, paddle_area, paddle_perimeter, puck_area, puck_perimeter;
 	FILE *fpt;
 	Point start, predicted;
 	float avg_xdiff, avg_ydiff, total_ydiff, total_xdiff;
 	vector<Point> points;
 	Mat outputLine;
+	int go_home = 0;
 
 	fpt = fopen("debug_output.txt", "w");
 
@@ -514,6 +515,11 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 					paddleX_pix = centroid.y;
 					paddleY_pix = centroid.x;
 
+					paddleX_steps = paddleX_pix * xSteps_per_pixel;
+					paddleY_steps = paddleY_pix * ySteps_per_pixel;
+					printf("Paddle X Steps: %.2f\r\n", paddleX_steps);
+					printf("Paddle Y Steps: %.2f\r\n", paddleY_steps);
+
 				}
 
 			}
@@ -573,9 +579,56 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 					y_diff = (puckY_in - y_in);
 					x_in = puckX_in;
 					y_in = puckY_in;
+
+					puckX_steps = puckX_pix * xSteps_per_pixel;
+					puckY_steps = puckY_pix * ySteps_per_pixel;
+
 					//angle = atan2(y_diff, x_diff)*180.0 / M_PI;
 					// Every 10 frames, calculate where Puck is
-					if (num_frames > 10)
+					/*if (puckX_in < 18 && puckX_in > 9)
+					{
+						if (angle < 0)
+						{
+							if (angle < -90)
+							{
+								x_motor_steps = puckX_steps - paddleX_steps - 5;
+								y_motor_steps = puckY_steps - paddleY_steps - 10;
+								// RESET MOTOR
+								pkout.flt1 = 2;
+								pkout.flt2 = 2;
+								pkout.flt3 = 0; // steps
+								pkout.flt4 = 2;
+								pkout.flt5 = 2;
+								pkout.flt6 = 0; // steps
+								sender.SendData(&pkout);
+
+								set_motor_steps(&pkout, x_motor_steps, 'x');
+								set_motor_steps(&pkout, y_motor_steps, 'y');
+								sender.SendData(&pkout);
+								Sleep(25);
+
+							}
+							else
+							{
+								x_motor_steps = puckX_steps - paddleX_steps + 5;
+								y_motor_steps = puckY_steps - paddleY_steps + 10;
+								// RESET MOTOR
+								pkout.flt1 = 2;
+								pkout.flt2 = 2;
+								pkout.flt3 = 0; // steps
+								pkout.flt4 = 2;
+								pkout.flt5 = 2;
+								pkout.flt6 = 0; // steps
+								sender.SendData(&pkout);
+								set_motor_steps(&pkout, x_motor_steps, 'x');
+								set_motor_steps(&pkout, y_motor_steps, 'y');
+								sender.SendData(&pkout);
+								Sleep(25);
+							}
+						}
+						//defense_mode = 0;
+					}*/
+					if (num_frames > 5)
 					{
 						avg_xdiff = total_xdiff / ((float)num_frames - 1);
 						avg_ydiff = total_ydiff / ((float)num_frames - 1);
@@ -587,8 +640,8 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 						{
 
 
-							printf("Avg Xdiff vs xdiff %.2f\t %.2f\n", avg_xdiff, x_diff);
-							printf("Avg Ydiff vs ydiff %.2f\t%.2f\n", avg_ydiff, y_diff);
+							//printf("Avg Xdiff vs xdiff %.2f\t %.2f\n", avg_xdiff, x_diff);
+							//printf("Avg Ydiff vs ydiff %.2f\t%.2f\n", avg_ydiff, y_diff);
 
 							angle = atan2(avg_ydiff, avg_xdiff);
 							printf("Avg Angle %.2f\t", angle);
@@ -596,6 +649,12 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 							angle = atan2((float)y_diff, (float)x_diff)*180.0 / M_PI;
 							printf("Angle %.2f\n", angle);
 							*/
+							// DETERMINES X-Y VALUES OF WHERE PADDLE IS
+							paddleX_steps = paddleX_pix * xSteps_per_pixel;
+							paddleY_steps = paddleY_pix * ySteps_per_pixel;
+
+							puckX_steps = puckX_pix * xSteps_per_pixel;
+							puckY_steps = puckY_pix * ySteps_per_pixel;
 							if (angle < 0)
 							{
 								total_angles++;
@@ -628,29 +687,44 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 								line(unwarp_frame, start, predicted, Scalar(255, 0, 0), 2, 8, 0);
 								*/
 								// Follow puck in x-direction
-
-								// DETERMINES X-Y VALUES OF WHERE PADDLE IS
-								paddleX_steps = paddleX_pix * xSteps_per_pixel;
-								paddleY_steps = paddleY_pix * ySteps_per_pixel;
-
 								// DETERMINES X-Y VALUES OF WHERE PUCK WILL BE
-								predicted_puckX *= xPixels_per_inch * xSteps_per_pixel;
-								puckX_steps = puckX_pix * xSteps_per_pixel;
-								puckY_steps = puckY_pix * ySteps_per_pixel;
+								predicted_puckX_steps = predicted_puckX * xPixels_per_inch * xSteps_per_pixel;
+
 
 								// DETERMINES X-Y VALUES FOR MOTOR TO BE SENT THROUGH UDP 
-								xDiff = predicted_puckX - paddleX_steps;
-								//yDiff = puckY_steps - paddleY_steps;
-								yDiff = 0; // -> FOR DEBUGGIN 
+								xDiff = predicted_puckX_steps - paddleX_steps;
+								yDiff = puckY_steps - (paddleY_steps - 13);
+								//yDiff = 0; // -> FOR DEBUGGIN 
 
-										   // PROTECTS FROM GOING TO FAR IN THE Y-DIRECTION 
+								// PROTECTS FROM GOING TO FAR IN THE Y-DIRECTION 
 								if (puckY_steps > 64 || puckY_steps < 15)
 								{
 									yDiff = 0;
 								}
-								if (puckX_steps < 0 || puckX_steps > 82) // (MIGHT NOT BE NEEDED)
+								if (predicted_puckX < 3 || predicted_puckX > 25) // (MIGHT NOT BE NEEDED)
 								{
 									xDiff = 0;
+
+									// go to center of board!
+									// RESET MOTOR
+									/*
+									pkout.flt1 = 2;
+									pkout.flt2 = 2;
+									pkout.flt3 = 0; // steps
+									pkout.flt4 = 2;
+									pkout.flt5 = 2;
+									pkout.flt6 = 0; // steps
+									sender.SendData(&pkout);
+
+									x_motor_steps = (13 * xPixels_per_inch * xSteps_per_pixel) - paddleX_steps;
+									y_motor_steps = (9 * yPixels_per_inch * ySteps_per_pixel) - (paddleY_steps - 13);
+									printf("Y motor steps: %.2f\n\r", y_motor_steps);
+									set_motor_steps(&pkout, y_motor_steps, 'y');
+									set_motor_steps(&pkout, x_motor_steps, 'x');
+									sender.SendData(&pkout);
+									continue;
+									*/
+									continue;
 								}
 
 								// DETERMINES IF MOTOR IS DONE MOVING TO ITS POSITION
@@ -681,7 +755,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 
 
 								// if we need to update the motor moving values
-								if (1)
+								if (new_move_values)
 								{
 									// RESET MOTOR
 									pkout.flt1 = 2;
@@ -692,18 +766,17 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 									pkout.flt6 = 0; // steps
 									sender.SendData(&pkout);
 
-									if (abs(paddleX_steps - predicted_puckX) < 5)
+									/*if (abs(paddleX_steps - puckX_steps) < 3)
 									{
 										defense_mode = 0;
 									}
 									else
 									{
 										defense_mode = 1;
-									}
+									}*/
 
 									if (defense_mode)
 									{
-
 										//move x and y at the same									
 										x_motor_steps = xDiff;
 										//x_motor_steps = 0;
@@ -716,101 +789,55 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 										printf("Wait: %d\n", wait);
 										motor_start = clock();
 										sender.SendData(&pkout);
+										defense_mode = 0;
 									}
-									else // attack_mode
+									
+									else if (!go_home)// attack_mode
 									{
+										// GO BACK IN THE Y-DIRECTION
+										printf("OFFENSE\n\r");
 										// RESET MOTOR
 										pkout.flt1 = 2;
 										pkout.flt2 = 2;
-										pkout.flt3 = 0; 
+										pkout.flt3 = 0;
 										pkout.flt4 = 2;
 										pkout.flt5 = 2;
-										pkout.flt6 = 0; 
+										pkout.flt6 = 0;
 										sender.SendData(&pkout);
 
-										if (abs(xDiff) >= 1)
-										{
-											//move x and y at the same time
-											x_motor_steps = xDiff;
-											set_motor_steps(&pkout, x_motor_steps, 'x');
-											set_motor_steps(&pkout, 0, 'y');
-											printf("Move X %.3f Steps\n", xDiff);
-											sender.SendData(&pkout);
-											//wait = (pkout.flt3 > pkout.flt6 ? (pkout.flt3) : (pkout.flt6)) * 25;
-											wait = abs(x_motor_steps);
-											//motor_start = clock();
-											//Sleep(wait);
+										// GO TO CURRENT X-VALUE
+										x_motor_steps = puckX_steps - paddleX_steps;
+										set_motor_steps(&pkout, x_motor_steps, 'x');
+										//sender.SendData(&pkout);
+										// HIT THE PUCK Y-DIRECTION
+										y_motor_steps = yDiff + 10;
+										set_motor_steps(&pkout, y_motor_steps, 'y');
+										printf("Move Y %.3f Steps\n", yDiff);
+										sender.SendData(&pkout);
+										motor_start = clock();
+										sender.SendData(&pkout);
 
-										}
-										else
-										{
-											printf("No X movement needed\n");
-											x_motor_steps = 0;
-										}
-										if ((abs(yDiff) >= 1) && (!defense_mode))
-										{
-											// GO BACK IN THE Y-DIRECTION
-											y_motor_steps = -10;
-											set_motor_steps(&pkout, y_motor_steps, 'y');
-											//printf("Move Y %.3f Steps\n", yDiff);
-											sender.SendData(&pkout);
-											Sleep(10);
-
-											// RESET MOTOR
-											pkout.flt1 = 2;
-											pkout.flt2 = 2;
-											pkout.flt3 = 0;
-											pkout.flt4 = 2;
-											pkout.flt5 = 2;
-											pkout.flt6 = 0;
-											sender.SendData(&pkout);
-
-											// GO TO CURRENT X-VALUE
-											x_motor_steps = puckX_steps;
-											set_motor_steps(&pkout, x_motor_steps, 'x');
-											sender.SendData(&pkout);
-											Sleep(10);
-
-											// RESET MOTOR
-											pkout.flt1 = 2;
-											pkout.flt2 = 2;
-											pkout.flt3 = 0;
-											pkout.flt4 = 2;
-											pkout.flt5 = 2;
-											pkout.flt6 = 0;
-											sender.SendData(&pkout);
-
-											// HIT THE PUCK Y-DIRECTION
-											y_motor_steps = yDiff + 10;
-											set_motor_steps(&pkout, y_motor_steps, 'y');
-											printf("Move Y %.3f Steps\n", yDiff);
-											sender.SendData(&pkout);
-											wait = abs(x_motor_steps);
-											Sleep(10);
-
-											// RESET MOTOR
-											pkout.flt1 = 2;
-											pkout.flt2 = 2;
-											pkout.flt3 = 0;
-											pkout.flt4 = 2;
-											pkout.flt5 = 2;
-											pkout.flt6 = 0;
-											sender.SendData(&pkout);
-
-											// MOVE BACK TO ORIGINAL SPOT
-											set_motor_steps(&pkout, yDiff*(-1), 'y');
-											printf("Move Back Y %.3f Steps\n", yDiff);
-											sender.SendData(&pkout);
-											wait = abs(x_motor_steps);
-
-											defense_mode = 1;
-										}
-										else
-										{
-											printf("No Y movement needed\n");
-											y_motor_steps = 0;
-										}
+										defense_mode = 1;
+										
 									}
+									/*else
+									{
+										pkout.flt1 = 2;
+										pkout.flt2 = 2;
+										pkout.flt3 = 0; // steps
+										pkout.flt4 = 2;
+										pkout.flt5 = 2;
+										pkout.flt6 = 0; // steps
+										sender.SendData(&pkout);
+
+										x_motor_steps = 39 - paddleX_steps;
+										y_motor_steps = 32 - (paddleY_steps);
+										printf("Y motor steps: %.2f\n\r", y_motor_steps);
+										set_motor_steps(&pkout, y_motor_steps, 'y');
+										set_motor_steps(&pkout, x_motor_steps, 'x');
+										sender.SendData(&pkout);
+										defense_mode = 1;
+									}*/
 								}
 								else
 								{
@@ -831,6 +858,23 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 								total_angles = angle_sum = avg_angle = 0;
 								total_predictions = prediction_sum = avg_prediction = 0;
 								predicted_puckX = -1;
+								//defense_mode = 1;
+								// move to the center of the board
+								// RESET MOTOR
+								pkout.flt1 = 2;
+								pkout.flt2 = 2;
+								pkout.flt3 = 0; // steps
+								pkout.flt4 = 2;
+								pkout.flt5 = 2;
+								pkout.flt6 = 0; // steps
+								sender.SendData(&pkout);
+
+								x_motor_steps = 39 - paddleX_steps;
+								y_motor_steps = 32 - (paddleY_steps);
+								printf("Y motor steps: %.2f\n\r", y_motor_steps);
+								set_motor_steps(&pkout, y_motor_steps, 'y');
+								set_motor_steps(&pkout, x_motor_steps, 'x');
+								sender.SendData(&pkout);
 							}
 
 
