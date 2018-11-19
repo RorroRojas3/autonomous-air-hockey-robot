@@ -8,9 +8,9 @@
  *
  * Code generated for Simulink model 'FullDuplex_UDP'.
  *
- * Model version                  : 1.135
+ * Model version                  : 1.136
  * Simulink Coder version         : 8.12 (R2017a) 16-Feb-2017
- * C/C++ source code generated on : Sun Nov 18 17:23:53 2018
+ * C/C++ source code generated on : Mon Nov 19 16:13:03 2018
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -270,7 +270,7 @@ struct tag_RTM_FullDuplex_UDP {
    */
   struct {
     struct {
-      uint16_T TID[2];
+      uint16_T TID[3];
     } TaskCounters;
   } Timing;
 };

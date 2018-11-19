@@ -8,9 +8,9 @@
  *
  * Code generated for Simulink model 'FullDuplex_UDP'.
  *
- * Model version                  : 1.135
+ * Model version                  : 1.136
  * Simulink Coder version         : 8.12 (R2017a) 16-Feb-2017
- * C/C++ source code generated on : Sun Nov 18 17:23:53 2018
+ * C/C++ source code generated on : Mon Nov 19 16:13:03 2018
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -59,6 +59,11 @@ static void rate_scheduler(void)
   (FullDuplex_UDP_M->Timing.TaskCounters.TID[1])++;
   if ((FullDuplex_UDP_M->Timing.TaskCounters.TID[1]) > 999) {/* Sample time: [0.2s, 0.0s] */
     FullDuplex_UDP_M->Timing.TaskCounters.TID[1] = 0;
+  }
+
+  (FullDuplex_UDP_M->Timing.TaskCounters.TID[2])++;
+  if ((FullDuplex_UDP_M->Timing.TaskCounters.TID[2]) > 4999) {/* Sample time: [1.0s, 0.0s] */
+    FullDuplex_UDP_M->Timing.TaskCounters.TID[2] = 0;
   }
 }
 
@@ -596,9 +601,10 @@ void FullDuplex_UDP_step(void)
                &FullDuplex_UDP_DW.Unpack[4], 4);
   (void)memcpy((uint8_T*)&FullDuplex_UDP_DW.Pack[0] + 20, (uint8_T*)
                &FullDuplex_UDP_DW.Unpack[5], 4);
-
-  /* S-Function (stellaris_lp_sfunc_DebugPrint2): '<S9>/DebugPrint2_sfcn' */
-  DebugPrint2(FullDuplex_UDP_P.DebugPrint2_sfcn_p1, FullDuplex_UDP_DW.Pack);
+  if (FullDuplex_UDP_M->Timing.TaskCounters.TID[2] == 0) {
+    /* S-Function (stellaris_lp_sfunc_DebugPrint2): '<S9>/DebugPrint2_sfcn' */
+    DebugPrint2(FullDuplex_UDP_P.DebugPrint2_sfcn_p1, FullDuplex_UDP_DW.Pack);
+  }
 
   /* S-Function (xpcbytepacking): '<S2>/Pack' */
 

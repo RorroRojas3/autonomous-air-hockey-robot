@@ -218,11 +218,21 @@ void set_motor_steps(PACKOUT *pkout, int steps, char axis)
 {
 	if (axis == 'x')
 	{
-		// direction
-		pkout->flt1 = steps < 0 ? 0 : 1;
-		pkout->flt2 = steps < 0 ? 1 : 0;
-		// value of steps
-		pkout->flt3 = abs(steps) + 1;
+		if (steps == 0)
+		{
+			pkout->flt1 = 2;
+			pkout->flt2 = 2;
+			// value of steps
+			pkout->flt3 = 0;
+		}
+		else
+		{
+			// direction
+			pkout->flt1 = steps < 0 ? 0 : 1;
+			pkout->flt2 = steps < 0 ? 1 : 0;
+			// value of steps
+			pkout->flt3 = abs(steps) + 1;
+		}
 	}
 	else if (axis == 'y')
 	{
@@ -493,11 +503,12 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 			pkout.flt5 = 2;
 			pkout.flt6 = 0; // steps
 			sender.SendData(&pkout);
+
 			x_motor_steps = 0;
 			set_motor_steps(&pkout, x_motor_steps, 'x');
-			y_motor_steps = target_yy*ySteps_per_pixel - (paddleY_steps - 13);
-			set_motor_steps(&pkout, y_motor_steps + 10, 'y');
-		//	motor_start = clock() / CLOCKS_PER_SEC * 1000;
+			y_motor_steps = target_yy*ySteps_per_pixel*yPixels_per_inch - (paddleY_steps - 13);
+			set_motor_steps(&pkout, y_motor_steps, 'y');
+			motor_start = clock() / CLOCKS_PER_SEC * 1000;
 			wait = 25.0;
 			sender.SendData(&pkout);
 			printf("MOVE TO HIT PUCK\n");
@@ -627,7 +638,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 					// LOGIC AFTER 5 FRAMES 
 					if (num_frames > 3)
 					{
-						printf("Y Paddle Steps: %.2f\n\r", paddleY_steps);
+						printf("Y Paddle Steps: %.2f\n\r", paddleX_steps);
 						avg_xdiff = total_xdiff / ((float)num_frames - 1);
 						avg_ydiff = total_ydiff / ((float)num_frames - 1);
 						dist = sqrt(pow((avg_xdiff), 2) + pow((avg_ydiff), 2));
@@ -678,7 +689,8 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 								paddle_travel_time = (double)(target_yy*ySteps_per_pixel*yPixels_per_inch - (paddleY_steps - 13)) / (double)Y_STEPS_PER_SECOND;
 								frames_elapsed = 0;
 								time_valid = 1;
-								// RESET MOTOR
+
+
 								printf("Puck Travel Time %.f.  Paddle Travel_time %.f \n", puck_prediction.travel_time, paddle_travel_time);
 								printf("Prediction_X: %f Current X: %f\n", puck_prediction.x, puckX_in);
 								/*
@@ -702,15 +714,15 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 								}
 								*/
 
-								pkout.flt1 = 2;
+								/*pkout.flt1 = 2;
 								pkout.flt2 = 2;
 								pkout.flt3 = 0; // steps
 								pkout.flt4 = 2;
 								pkout.flt5 = 2;
 								pkout.flt6 = 0; // steps
-								sender.SendData(&pkout);
+								sender.SendData(&pkout);*/
 
-								printf("Elapsed time: %.2f, Wait time: %d\n\r", (clock() - motor_start) / CLOCKS_PER_SEC * 1000, wait);
+								//printf("Elapsed time: %.2f, Wait time: %d\n\r", (clock() - motor_start) / CLOCKS_PER_SEC * 1000, wait);
 								if ((double)((clock() - motor_start) / CLOCKS_PER_SEC) * 1000 >= (double)wait)
 								{
 									pkout.flt1 = 2;
@@ -722,12 +734,12 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 									sender.SendData(&pkout);
 
 									x_motor_steps = xDiff;
-									//set_motor_steps(&pkout, x_motor_steps, 'x');
+									set_motor_steps(&pkout, x_motor_steps, 'x');
 									y_motor_steps = target_yy * yPixels_per_inch * ySteps_per_pixel - paddleY_steps - 10;
-									//set_motor_steps(&pkout, y_motor_steps, 'y');*/
+									set_motor_steps(&pkout, y_motor_steps, 'y');
 
 
-									// direction
+									/*// direction
 									pkout.flt1 = x_motor_steps < 0 ? 0 : 1;
 									pkout.flt2 = x_motor_steps < 0 ? 1 : 0;
 									// value of steps
@@ -737,14 +749,14 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 									pkout.flt4 = y_motor_steps < 0 ? 1 : 0;
 									pkout.flt5 = y_motor_steps < 0 ? 0 : 1;
 									// y steps
-									pkout.flt6 = abs(y_motor_steps);
-					
+									pkout.flt6 = abs(y_motor_steps);*/
+
 									motor_start = clock();
 									wait = 25;
-									//Sleep(3 * abs(x_motor_steps));
+
 									temp = 1;
 									sender.SendData(&pkout);
-									//Sleep(4 * abs(x_motor_steps));
+
 									printf("MOVE TO PREDICTED %.2f (x_motor_steps)\n", x_motor_steps);
 								}
 								/*
@@ -755,6 +767,21 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 								motor_start = clock();
 								sender.SendData(&pkout);
 								*/
+							}
+							else
+							{
+								pkout.flt1 = 2;
+								pkout.flt2 = 2;
+								pkout.flt3 = 0; // steps
+								pkout.flt4 = 2;
+								pkout.flt5 = 2;
+								pkout.flt6 = 0; // steps
+								sender.SendData(&pkout);
+
+								x_motor_steps = 0;
+								set_motor_steps(&pkout, x_motor_steps, 'x');
+								y_motor_steps = 0;
+								set_motor_steps(&pkout, y_motor_steps, 'y');
 							}
 						}
 						// IF PUCK IS COMING TOWARDS OUR DIRECTION
@@ -783,25 +810,19 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 						line(unwarp_frame, Point(outputLine.data[2] * yPixels_per_inch, outputLine.data[3] * xPixels_per_inch), Point((outputLine.data[2] + outputLine.data[0] * 10)*yPixels_per_inch, (outputLine.data[3] + outputLine.data[1] * 10)*xPixels_per_inch), Scalar(0, 0, 255), 2, 8, 0);
 						points.clear();
 						//Danger zone x > 8 && x < 18 x <  && y < 4.5
-
 						//predicted.x = target_yy * yPixels_per_inch;
 						//predicted.y = avg_prediction * xPixels_per_inch;
 						//line(unwarp_frame, start, predicted, Scalar(255, 0, 0), 2, 8, 0);
-
-
 						// DETERMINES X-Y VALUES OF WHERE PUCK WILL BE
 						predicted_puckX_steps = predicted_puckX * xPixels_per_inch * xSteps_per_pixel;
-
 						// DETERMINES X-Y VALUES FOR MOTOR TO BE SENT THROUGH UDP
 						xDiff = predicted_puckX_steps - paddleX_steps;
 						yDiff = puckY_steps - paddleY_steps;
-
 						// PROTECTS FROM GOING TO FAR IN THE Y-DIRECTION
 						if (puckY_steps > 70 || puckY_steps < 15)
 						{
 						yDiff = 0;
 						}
-
 						// DETERMINES IF MOTOR IS DONE MOVING TO ITS POSITION
 						if (abs(xDiff) > 0.5 || abs(yDiff) > 0.5)
 						{
@@ -827,7 +848,6 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 						new_move_values = 1;
 						}
 						}
-
 						// if we need to update the motor moving values
 						if (new_move_values)
 						{
@@ -839,7 +859,6 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 						pkout.flt5 = 2;
 						pkout.flt6 = 0; // steps
 						sender.SendData(&pkout);
-
 						if (puckY_in > 17)
 						{
 						defense_mode = 1;
@@ -848,8 +867,6 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 						{
 						defense_mode = 0;
 						}
-
-
 						if (defense_mode)
 						{
 						// MOVES ONLY ON X-DIRECTION ON DEFENSE MODE
@@ -875,7 +892,6 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 						motor_start = clock();
 						sender.SendData(&pkout);
 						Sleep(50);
-
 						x_motor_steps = xDiff;
 						set_motor_steps(&pkout, x_motor_steps, 'x');
 						y_motor_steps = yDiff - 20;
@@ -901,11 +917,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 						// PUCK IS ON THE OTHER SIDE OF THE TABLE OR BEHIND US
 						else
 						{
-
 						}
-
-
-
 						}*/
 
 						// RESET VALUES
@@ -942,7 +954,6 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 
 		//X-DIRECTION 
 		/*
-
 		*/
 
 	}
