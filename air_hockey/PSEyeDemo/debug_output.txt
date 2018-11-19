@@ -1,549 +1,810 @@
-New x:  270.752747  Current x: 23.785023 Current y: 33.893559 x_diff:  246.967728 Angle -0.10
-Hit the right wall at 33.781784
-New x:  -220.919312  Current x: 24.916666 Current y: 33.781784 x_diff:  -245.835983 Angle -3.04
-Hit the left wall at 31.427711
-New x:  223.085983  Current x: 1.083333 Current y: 31.427711 x_diff:  222.002655 Angle -0.10
-Hit the right wall at 29.073639
-New x:  -173.252655  Current x: 24.916666 Current y: 29.073639 x_diff:  -198.169327 Angle -3.04
-Hit the left wall at 26.719566
-New x:  175.419327  Current x: 1.083333 Current y: 26.719566 x_diff:  174.335999 Angle -0.10
-Hit the right wall at 24.365494
-New x:  -125.586006  Current x: 24.916666 Current y: 24.365494 x_diff:  -150.502670 Angle -3.04
-Hit the left wall at 22.011421
-New x:  127.752670  Current x: 1.083333 Current y: 22.011421 x_diff:  126.669334 Angle -0.10
-Hit the right wall at 19.657349
-New x:  -77.919342  Current x: 24.916666 Current y: 19.657349 x_diff:  -102.836006 Angle -3.04
-Hit the left wall at 17.303276
-New x:  80.086014  Current x: 1.083333 Current y: 17.303276 x_diff:  79.002678 Angle -0.10
-Hit the right wall at 14.949203
-New x:  -30.252687  Current x: 24.916666 Current y: 14.949203 x_diff:  -55.169353 Angle -3.04
-Hit the left wall at 12.595131
-New x:  32.419357  Current x: 1.083333 Current y: 12.595131 x_diff:  31.336023 Angle -0.10
-Hit the right wall at 10.241058
-New x:  17.413971  Current x: 24.916666 Current y: 10.241058 x_diff:  -7.502695 Angle -3.04
-[23.79, 33.89] -> [23.79, 33.89] Dist: 0.136  Angle: -0.10  Prediction: 17.41
-New x:  328.301910  Current x: 24.366425 Current y: 33.846985 x_diff:  303.935486 Angle -0.08
-Hit the right wall at 33.802906
-New x:  -278.468903  Current x: 24.916666 Current y: 33.802906 x_diff:  -303.385559 Angle -3.06
-Hit the left wall at 31.893721
-New x:  280.635590  Current x: 1.083333 Current y: 31.893721 x_diff:  279.552246 Angle -0.08
-Hit the right wall at 29.984535
-New x:  -230.802216  Current x: 24.916666 Current y: 29.984535 x_diff:  -255.718887 Angle -3.06
-Hit the left wall at 28.075350
-New x:  232.968903  Current x: 1.083333 Current y: 28.075350 x_diff:  231.885574 Angle -0.08
-Hit the right wall at 26.166164
-New x:  -183.135559  Current x: 24.916666 Current y: 26.166164 x_diff:  -208.052231 Angle -3.06
-Hit the left wall at 24.256979
-New x:  185.302231  Current x: 1.083333 Current y: 24.256979 x_diff:  184.218903 Angle -0.08
-Hit the right wall at 22.347794
-New x:  -135.468887  Current x: 24.916666 Current y: 22.347794 x_diff:  -160.385559 Angle -3.06
-Hit the left wall at 20.438608
-New x:  137.635559  Current x: 1.083333 Current y: 20.438608 x_diff:  136.552231 Angle -0.08
-Hit the right wall at 18.529423
-New x:  -87.802223  Current x: 24.916666 Current y: 18.529423 x_diff:  -112.718887 Angle -3.06
-Hit the left wall at 16.620237
-New x:  89.968895  Current x: 1.083333 Current y: 16.620237 x_diff:  88.885559 Angle -0.08
-Hit the right wall at 14.711052
-New x:  -40.135551  Current x: 24.916666 Current y: 14.711052 x_diff:  -65.052216 Angle -3.06
-Hit the left wall at 12.801867
-New x:  42.302219  Current x: 1.083333 Current y: 12.801867 x_diff:  41.218887 Angle -0.08
-Hit the right wall at 10.892681
-New x:  7.531118  Current x: 24.916666 Current y: 10.892681 x_diff:  -17.385548 Angle -3.06
-[24.37, 33.85] -> [24.37, 33.85] Dist: 0.117  Angle: -0.08  Prediction: 7.53
-New x:  134.986954  Current x: 24.469221 Current y: 33.824360 x_diff:  110.517738 Angle -0.22
-Hit the right wall at 33.725880
-New x:  -85.153595  Current x: 24.916666 Current y: 33.725880 x_diff:  -110.070259 Angle -2.92
-Hit the left wall at 28.480289
-New x:  87.320259  Current x: 1.083333 Current y: 28.480289 x_diff:  86.236923 Angle -0.22
-Hit the right wall at 23.234699
-New x:  -37.486923  Current x: 24.916666 Current y: 23.234699 x_diff:  -62.403591 Angle -2.92
-Hit the left wall at 17.989109
-New x:  39.653591  Current x: 1.083333 Current y: 17.989109 x_diff:  38.570259 Angle -0.22
-Hit the right wall at 12.743519
-New x:  10.179742  Current x: 24.916666 Current y: 12.743519 x_diff:  -14.736924 Angle -2.92
-[24.47, 33.82] -> [24.47, 33.82] Dist: 0.021  Angle: -0.22  Prediction: 10.18
-New x:  -24.105370  Current x: 24.030094 Current y: 33.599854 x_diff:  -48.135464 Angle -2.68
-Hit the left wall at 22.111160
-New x:  26.272036  Current x: 1.083333 Current y: 22.111160 x_diff:  25.188702 Angle -0.46
-Hit the right wall at 10.178590
-New x:  23.561295  Current x: 24.916666 Current y: 10.178590 x_diff:  -1.355371 Angle -2.68
-[24.03, 33.60] -> [24.03, 33.60] Dist: 0.095  Angle: -2.68  Prediction: 23.56
-New x:  22.607777  Current x: 20.951805 Current y: 32.052376 x_diff:  1.655971 Angle -1.50
-[20.95, 32.05] -> [20.95, 32.05] Dist: 0.381  Angle: -1.50  Prediction: 22.61
-New x:  24.041424  Current x: 21.206078 Current y: 30.196339 x_diff:  2.835347 Angle -1.43
-[21.21, 30.20] -> [21.21, 30.20] Dist: 0.375  Angle: -1.43  Prediction: 24.04
-New x:  24.174484  Current x: 21.512712 Current y: 28.058418 x_diff:  2.661773 Angle -1.43
-[21.51, 28.06] -> [21.51, 28.06] Dist: 0.432  Angle: -1.43  Prediction: 24.17
-New x:  24.346684  Current x: 21.833677 Current y: 25.956562 x_diff:  2.513006 Angle -1.42
-[21.83, 25.96] -> [21.83, 25.96] Dist: 0.425  Angle: -1.42  Prediction: 24.35
-New x:  24.833918  Current x: 22.156916 Current y: 24.183573 x_diff:  2.677002 Angle -1.39
-[22.16, 24.18] -> [22.16, 24.18] Dist: 0.360  Angle: -1.39  Prediction: 24.83
-New x:  25.240133  Current x: 22.571882 Current y: 22.207329 x_diff:  2.668252 Angle -1.36
-Hit the right wall at 11.040489
-New x:  24.593199  Current x: 24.916666 Current y: 11.040489 x_diff:  -0.323468 Angle -1.78
-[22.57, 22.21] -> [22.57, 22.21] Dist: 0.404  Angle: -1.36  Prediction: 24.59
-New x:  25.240501  Current x: 22.923407 Current y: 20.533453 x_diff:  2.317094 Angle -1.36
-Hit the right wall at 11.042024
-New x:  24.592831  Current x: 24.916666 Current y: 11.042024 x_diff:  -0.323835 Angle -1.78
-[22.92, 20.53] -> [22.92, 20.53] Dist: 0.342  Angle: -1.36  Prediction: 24.59
-New x:  25.766611  Current x: 23.417280 Current y: 18.616907 x_diff:  2.349331 Angle -1.32
-Hit the right wall at 12.798330
-New x:  24.066721  Current x: 24.916666 Current y: 12.798330 x_diff:  -0.849945 Angle -1.82
-[23.42, 18.62] -> [23.42, 18.62] Dist: 0.396  Angle: -1.32  Prediction: 24.07
-New x:  25.857883  Current x: 23.833994 Current y: 17.060266 x_diff:  2.023889 Angle -1.31
-Hit the right wall at 13.015928
-New x:  23.975449  Current x: 24.916666 Current y: 13.015928 x_diff:  -0.941216 Angle -1.83
-[23.83, 17.06] -> [23.83, 17.06] Dist: 0.322  Angle: -1.31  Prediction: 23.98
-New x:  26.181513  Current x: 24.387281 Current y: 15.278385 x_diff:  1.794232 Angle -1.27
-Hit the right wall at 13.573484
-New x:  23.651819  Current x: 24.916666 Current y: 13.573484 x_diff:  -1.264847 Angle -1.87
-[24.39, 15.28] -> [24.39, 15.28] Dist: 0.373  Angle: -1.27  Prediction: 23.65
-New x:  25.719439  Current x: 24.887211 Current y: 13.109884 x_diff:  0.832228 Angle -1.34
-Hit the right wall at 12.982119
-New x:  24.113894  Current x: 24.916666 Current y: 12.982119 x_diff:  -0.802773 Angle -1.80
-[24.89, 13.11] -> [24.89, 13.11] Dist: 0.445  Angle: -1.34  Prediction: 24.11
-CROSSED THE LINE AT [24.31, 9.63]
+New x:  -451.997467  Current x: 4.682258 Current y: 44.944130 x_diff:  -456.679718 Angle -3.08
+Hit the left wall at 44.731792
+New x:  454.164124  Current x: 1.083333 Current y: 44.731792 x_diff:  453.080780 Angle -0.06
+Hit the right wall at 43.325623
+New x:  -404.330780  Current x: 24.916666 Current y: 43.325623 x_diff:  -429.247437 Angle -3.08
+Hit the left wall at 41.919456
+New x:  406.497437  Current x: 1.083333 Current y: 41.919456 x_diff:  405.414093 Angle -0.06
+Hit the right wall at 40.513290
+New x:  -356.664185  Current x: 24.916666 Current y: 40.513290 x_diff:  -381.580841 Angle -3.08
+Hit the left wall at 39.107124
+New x:  358.830841  Current x: 1.083333 Current y: 39.107124 x_diff:  357.747498 Angle -0.06
+Hit the right wall at 37.700958
+New x:  -308.997559  Current x: 24.916666 Current y: 37.700958 x_diff:  -333.914215 Angle -3.08
+Hit the left wall at 36.294792
+New x:  311.164246  Current x: 1.083333 Current y: 36.294792 x_diff:  310.080902 Angle -0.06
+Hit the right wall at 34.888626
+New x:  -261.330963  Current x: 24.916666 Current y: 34.888626 x_diff:  -286.247620 Angle -3.08
+Hit the left wall at 33.482460
+New x:  263.497650  Current x: 1.083333 Current y: 33.482460 x_diff:  262.414307 Angle -0.06
+Hit the right wall at 32.076294
+New x:  -213.664352  Current x: 24.916666 Current y: 32.076294 x_diff:  -238.581024 Angle -3.08
+Hit the left wall at 30.670126
+New x:  215.831009  Current x: 1.083333 Current y: 30.670126 x_diff:  214.747681 Angle -0.06
+Hit the right wall at 29.263958
+New x:  -165.997681  Current x: 24.916666 Current y: 29.263958 x_diff:  -190.914352 Angle -3.08
+Hit the left wall at 27.857790
+New x:  168.164337  Current x: 1.083333 Current y: 27.857790 x_diff:  167.081009 Angle -0.06
+Hit the right wall at 26.451622
+New x:  -118.331032  Current x: 24.916666 Current y: 26.451622 x_diff:  -143.247696 Angle -3.08
+Hit the left wall at 25.045454
+New x:  120.497688  Current x: 1.083333 Current y: 25.045454 x_diff:  119.414352 Angle -0.06
+Hit the right wall at 23.639286
+New x:  -70.664368  Current x: 24.916666 Current y: 23.639286 x_diff:  -95.581032 Angle -3.08
+Hit the left wall at 22.233118
+New x:  72.831024  Current x: 1.083333 Current y: 22.233118 x_diff:  71.747688 Angle -0.06
+Hit the right wall at 20.826950
+New x:  -22.997698  Current x: 24.916666 Current y: 20.826950 x_diff:  -47.914364 Angle -3.08
+Hit the left wall at 19.420782
+New x:  25.164362  Current x: 1.083333 Current y: 19.420782 x_diff:  24.081028 Angle -0.06
+Hit the right wall at 18.014614
+New x:  24.668970  Current x: 24.916666 Current y: 18.014614 x_diff:  -0.247696 Angle -3.08
+New x:  553.503845  Current x: 5.472544 Current y: 44.882973 x_diff:  548.031311 Angle -0.05
+Hit the right wall at 43.929165
+New x:  -503.669952  Current x: 24.916666 Current y: 43.929165 x_diff:  -528.586609 Angle -3.09
+Hit the left wall at 42.760052
+New x:  505.836609  Current x: 1.083333 Current y: 42.760052 x_diff:  504.753265 Angle -0.05
+Hit the right wall at 41.590939
+New x:  -456.003326  Current x: 24.916666 Current y: 41.590939 x_diff:  -480.919983 Angle -3.09
+Hit the left wall at 40.421825
+New x:  458.170013  Current x: 1.083333 Current y: 40.421825 x_diff:  457.086670 Angle -0.05
+Hit the right wall at 39.252712
+New x:  -408.336731  Current x: 24.916666 Current y: 39.252712 x_diff:  -433.253387 Angle -3.09
+Hit the left wall at 38.083599
+New x:  410.503418  Current x: 1.083333 Current y: 38.083599 x_diff:  409.420074 Angle -0.05
+Hit the right wall at 36.914486
+New x:  -360.670135  Current x: 24.916666 Current y: 36.914486 x_diff:  -385.586792 Angle -3.09
+Hit the left wall at 35.745373
+New x:  362.836823  Current x: 1.083333 Current y: 35.745373 x_diff:  361.753479 Angle -0.05
+Hit the right wall at 34.576260
+New x:  -313.003540  Current x: 24.916666 Current y: 34.576260 x_diff:  -337.920197 Angle -3.09
+Hit the left wall at 33.407146
+New x:  315.170227  Current x: 1.083333 Current y: 33.407146 x_diff:  314.086884 Angle -0.05
+Hit the right wall at 32.238033
+New x:  -265.336945  Current x: 24.916666 Current y: 32.238033 x_diff:  -290.253601 Angle -3.09
+Hit the left wall at 31.068918
+New x:  267.503601  Current x: 1.083333 Current y: 31.068918 x_diff:  266.420258 Angle -0.05
+Hit the right wall at 29.899803
+New x:  -217.670258  Current x: 24.916666 Current y: 29.899803 x_diff:  -242.586929 Angle -3.09
+Hit the left wall at 28.730688
+New x:  219.836899  Current x: 1.083333 Current y: 28.730688 x_diff:  218.753571 Angle -0.05
+Hit the right wall at 27.561573
+New x:  -170.003586  Current x: 24.916666 Current y: 27.561573 x_diff:  -194.920258 Angle -3.09
+Hit the left wall at 26.392458
+New x:  172.170227  Current x: 1.083333 Current y: 26.392458 x_diff:  171.086899 Angle -0.05
+Hit the right wall at 25.223343
+New x:  -122.336906  Current x: 24.916666 Current y: 25.223343 x_diff:  -147.253571 Angle -3.09
+Hit the left wall at 24.054228
+New x:  124.503563  Current x: 1.083333 Current y: 24.054228 x_diff:  123.420227 Angle -0.05
+Hit the right wall at 22.885113
+New x:  -74.670235  Current x: 24.916666 Current y: 22.885113 x_diff:  -99.586899 Angle -3.09
+Hit the left wall at 21.715998
+New x:  76.836891  Current x: 1.083333 Current y: 21.715998 x_diff:  75.753555 Angle -0.05
+Hit the right wall at 20.546883
+New x:  -27.003557  Current x: 24.916666 Current y: 20.546883 x_diff:  -51.920223 Angle -3.09
+Hit the left wall at 19.377768
+New x:  29.170216  Current x: 1.083333 Current y: 19.377768 x_diff:  28.086882 Angle -0.05
+Hit the right wall at 18.208652
+New x:  20.663120  Current x: 24.916666 Current y: 18.208652 x_diff:  -4.253547 Angle -3.09
+New x:  326.602264  Current x: 6.549370 Current y: 44.792828 x_diff:  320.052887 Angle -0.08
+Hit the right wall at 43.255234
+New x:  -276.769379  Current x: 24.916666 Current y: 43.255234 x_diff:  -301.686035 Angle -3.06
+Hit the left wall at 41.260059
+New x:  278.936066  Current x: 1.083333 Current y: 41.260059 x_diff:  277.852722 Angle -0.08
+Hit the right wall at 39.264885
+New x:  -229.102722  Current x: 24.916666 Current y: 39.264885 x_diff:  -254.019394 Angle -3.06
+Hit the left wall at 37.269711
+New x:  231.269394  Current x: 1.083333 Current y: 37.269711 x_diff:  230.186066 Angle -0.08
+Hit the right wall at 35.274536
+New x:  -181.436066  Current x: 24.916666 Current y: 35.274536 x_diff:  -206.352737 Angle -3.06
+Hit the left wall at 33.279362
+New x:  183.602737  Current x: 1.083333 Current y: 33.279362 x_diff:  182.519409 Angle -0.08
+Hit the right wall at 31.284187
+New x:  -133.769409  Current x: 24.916666 Current y: 31.284187 x_diff:  -158.686081 Angle -3.06
+Hit the left wall at 29.289013
+New x:  135.936081  Current x: 1.083333 Current y: 29.289013 x_diff:  134.852753 Angle -0.08
+Hit the right wall at 27.293839
+New x:  -86.102753  Current x: 24.916666 Current y: 27.293839 x_diff:  -111.019417 Angle -3.06
+Hit the left wall at 25.298664
+New x:  88.269424  Current x: 1.083333 Current y: 25.298664 x_diff:  87.186089 Angle -0.08
+Hit the right wall at 23.303490
+New x:  -38.436096  Current x: 24.916666 Current y: 23.303490 x_diff:  -63.352764 Angle -3.06
+Hit the left wall at 21.308315
+New x:  40.602768  Current x: 1.083333 Current y: 21.308315 x_diff:  39.519436 Angle -0.08
+Hit the right wall at 19.313141
+New x:  9.230559  Current x: 24.916666 Current y: 19.313141 x_diff:  -15.686107 Angle -3.06
+New x:  139.812042  Current x: 7.943456 Current y: 44.512543 x_diff:  131.868591 Angle -0.20
+Hit the right wall at 41.100033
+New x:  -89.978752  Current x: 24.916666 Current y: 41.100033 x_diff:  -114.895416 Angle -2.94
+Hit the left wall at 36.308277
+New x:  92.145416  Current x: 1.083333 Current y: 36.308277 x_diff:  91.062080 Angle -0.20
+Hit the right wall at 31.516521
+New x:  -42.312088  Current x: 24.916666 Current y: 31.516521 x_diff:  -67.228752 Angle -2.94
+Hit the left wall at 26.724766
+New x:  44.478748  Current x: 1.083333 Current y: 26.724766 x_diff:  43.395416 Angle -0.20
+Hit the right wall at 21.933010
+New x:  5.354580  Current x: 24.916666 Current y: 21.933010 x_diff:  -19.562086 Angle -2.94
+New x:  136.374741  Current x: 9.764289 Current y: 44.136662 x_diff:  126.610458 Angle -0.20
+Hit the right wall at 41.008701
+New x:  -86.541397  Current x: 24.916666 Current y: 41.008701 x_diff:  -111.458061 Angle -2.94
+Hit the left wall at 36.088699
+New x:  88.708076  Current x: 1.083333 Current y: 36.088699 x_diff:  87.624741 Angle -0.20
+Hit the right wall at 31.168697
+New x:  -38.874741  Current x: 24.916666 Current y: 31.168697 x_diff:  -63.791409 Angle -2.94
+Hit the left wall at 26.248693
+New x:  41.041409  Current x: 1.083333 Current y: 26.248693 x_diff:  39.958076 Angle -0.20
+Hit the right wall at 21.328690
+New x:  8.791927  Current x: 24.916666 Current y: 21.328690 x_diff:  -16.124739 Angle -2.94
+New x:  882.831970  Current x: 11.471669 Current y: 44.085548 x_diff:  871.360291 Angle -0.03
+Hit the right wall at 43.683052
+New x:  -832.998657  Current x: 24.916666 Current y: 43.683052 x_diff:  -857.915344 Angle -3.11
+Hit the left wall at 42.969563
+New x:  835.165283  Current x: 1.083333 Current y: 42.969563 x_diff:  834.081970 Angle -0.03
+Hit the right wall at 42.256073
+New x:  -785.331909  Current x: 24.916666 Current y: 42.256073 x_diff:  -810.248596 Angle -3.11
+Hit the left wall at 41.542583
+New x:  787.498535  Current x: 1.083333 Current y: 41.542583 x_diff:  786.415222 Angle -0.03
+Hit the right wall at 40.829094
+New x:  -737.665161  Current x: 24.916666 Current y: 40.829094 x_diff:  -762.581848 Angle -3.11
+Hit the left wall at 40.115604
+New x:  739.831787  Current x: 1.083333 Current y: 40.115604 x_diff:  738.748474 Angle -0.03
+Hit the right wall at 39.402115
+New x:  -689.998413  Current x: 24.916666 Current y: 39.402115 x_diff:  -714.915100 Angle -3.11
+Hit the left wall at 38.688625
+New x:  692.165039  Current x: 1.083333 Current y: 38.688625 x_diff:  691.081726 Angle -0.03
+Hit the right wall at 37.975136
+New x:  -642.331665  Current x: 24.916666 Current y: 37.975136 x_diff:  -667.248352 Angle -3.11
+Hit the left wall at 37.261646
+New x:  644.498352  Current x: 1.083333 Current y: 37.261646 x_diff:  643.415039 Angle -0.03
+Hit the right wall at 36.548157
+New x:  -594.664978  Current x: 24.916666 Current y: 36.548157 x_diff:  -619.581665 Angle -3.11
+Hit the left wall at 35.834667
+New x:  596.831604  Current x: 1.083333 Current y: 35.834667 x_diff:  595.748291 Angle -0.03
+Hit the right wall at 35.121178
+New x:  -546.998230  Current x: 24.916666 Current y: 35.121178 x_diff:  -571.914917 Angle -3.11
+Hit the left wall at 34.407688
+New x:  549.164856  Current x: 1.083333 Current y: 34.407688 x_diff:  548.081543 Angle -0.03
+Hit the right wall at 33.694199
+New x:  -499.331512  Current x: 24.916666 Current y: 33.694199 x_diff:  -524.248169 Angle -3.11
+Hit the left wall at 32.980709
+New x:  501.498169  Current x: 1.083333 Current y: 32.980709 x_diff:  500.414825 Angle -0.03
+Hit the right wall at 32.267220
+New x:  -451.664795  Current x: 24.916666 Current y: 32.267220 x_diff:  -476.581451 Angle -3.11
+Hit the left wall at 31.553732
+New x:  453.831482  Current x: 1.083333 Current y: 31.553732 x_diff:  452.748138 Angle -0.03
+Hit the right wall at 30.840244
+New x:  -403.998199  Current x: 24.916666 Current y: 30.840244 x_diff:  -428.914856 Angle -3.11
+Hit the left wall at 30.126757
+New x:  406.164886  Current x: 1.083333 Current y: 30.126757 x_diff:  405.081543 Angle -0.03
+Hit the right wall at 29.413269
+New x:  -356.331573  Current x: 24.916666 Current y: 29.413269 x_diff:  -381.248230 Angle -3.11
+Hit the left wall at 28.699781
+New x:  358.498291  Current x: 1.083333 Current y: 28.699781 x_diff:  357.414948 Angle -0.03
+Hit the right wall at 27.986294
+New x:  -308.664978  Current x: 24.916666 Current y: 27.986294 x_diff:  -333.581635 Angle -3.11
+Hit the left wall at 27.272806
+New x:  310.831665  Current x: 1.083333 Current y: 27.272806 x_diff:  309.748322 Angle -0.03
+Hit the right wall at 26.559319
+New x:  -260.998383  Current x: 24.916666 Current y: 26.559319 x_diff:  -285.915039 Angle -3.11
+Hit the left wall at 25.845831
+New x:  263.165070  Current x: 1.083333 Current y: 25.845831 x_diff:  262.081726 Angle -0.03
+Hit the right wall at 25.132343
+New x:  -213.331741  Current x: 24.916666 Current y: 25.132343 x_diff:  -238.248413 Angle -3.11
+Hit the left wall at 24.418856
+New x:  215.498444  Current x: 1.083333 Current y: 24.418856 x_diff:  214.415115 Angle -0.03
+Hit the right wall at 23.705368
+New x:  -165.665146  Current x: 24.916666 Current y: 23.705368 x_diff:  -190.581818 Angle -3.11
+Hit the left wall at 22.991880
+New x:  167.831833  Current x: 1.083333 Current y: 22.991880 x_diff:  166.748505 Angle -0.03
+Hit the right wall at 22.278393
+New x:  -117.998543  Current x: 24.916666 Current y: 22.278393 x_diff:  -142.915207 Angle -3.11
+Hit the left wall at 21.564905
+New x:  120.165237  Current x: 1.083333 Current y: 21.564905 x_diff:  119.081902 Angle -0.03
+Hit the right wall at 20.851418
+New x:  -70.331940  Current x: 24.916666 Current y: 20.851418 x_diff:  -95.248604 Angle -3.11
+Hit the left wall at 20.137930
+New x:  72.498634  Current x: 1.083333 Current y: 20.137930 x_diff:  71.415298 Angle -0.03
+Hit the right wall at 19.424442
+New x:  -22.665331  Current x: 24.916666 Current y: 19.424442 x_diff:  -47.581997 Angle -3.11
+Hit the left wall at 18.710955
+New x:  24.832026  Current x: 1.083333 Current y: 18.710955 x_diff:  23.748692 Angle -0.03
+New x:  179.692200  Current x: 13.511833 Current y: 44.252758 x_diff:  166.180359 Angle -0.16
+Hit the right wall at 42.451050
+New x:  -129.858826  Current x: 24.916666 Current y: 42.451050 x_diff:  -154.775497 Angle -2.98
+Hit the left wall at 38.685921
+New x:  132.025513  Current x: 1.083333 Current y: 38.685921 x_diff:  130.942184 Angle -0.16
+Hit the right wall at 34.920792
+New x:  -82.192192  Current x: 24.916666 Current y: 34.920792 x_diff:  -107.108856 Angle -2.98
+Hit the left wall at 31.155661
+New x:  84.358856  Current x: 1.083333 Current y: 31.155661 x_diff:  83.275520 Angle -0.16
+Hit the right wall at 27.390530
+New x:  -34.525520  Current x: 24.916666 Current y: 27.390530 x_diff:  -59.442188 Angle -2.98
+Hit the left wall at 23.625399
+New x:  36.692188  Current x: 1.083333 Current y: 23.625399 x_diff:  35.608856 Angle -0.16
+Hit the right wall at 19.860268
+New x:  13.141145  Current x: 24.916666 Current y: 19.860268 x_diff:  -11.775521 Angle -2.98
+New x:  5.454355  Current x: 12.260682 Current y: 42.804649 x_diff:  -6.806327 Angle -1.84
+New x:  5.325040  Current x: 11.207960 Current y: 39.039692 x_diff:  -5.882920 Angle -1.84
+New x:  6.441545  Current x: 10.355611 Current y: 35.277290 x_diff:  -3.914065 Angle -1.79
+New x:  7.150534  Current x: 9.772639 Current y: 32.134724 x_diff:  -2.622105 Angle -1.75
+New x:  8.401648  Current x: 9.481297 Current y: 29.131031 x_diff:  -1.079650 Angle -1.67
+New x:  8.594196  Current x: 9.235010 Current y: 26.040707 x_diff:  -0.640814 Angle -1.65
+New x:  9.179201  Current x: 9.216303 Current y: 23.345434 x_diff:  -0.037101 Angle -1.58
+New x:  9.248516  Current x: 9.234131 Current y: 20.387083 x_diff:  0.014385 Angle -1.56
+New x:  9.354670  Current x: 9.398838 Current y: 17.125313 x_diff:  -0.044168 Angle -1.52
+New x:  9.331324  Current x: 9.613598 Current y: 14.342996 x_diff:  -0.282275 Angle -1.49
+New x:  9.132373  Current x: 10.149757 Current y: 10.268519 x_diff:  -1.017384 Angle -1.44
+CROSSED THE LINE AT [10.25, 9.51]
 
-CROSSED THE LINE AT [24.23, 9.40]
+New x:  8.955228  Current x: 10.536201 Current y: 7.767295 x_diff:  -1.580974 Angle -1.42
+New x:  8.615060  Current x: 11.071483 Current y: 4.916191 x_diff:  -2.456423 Angle -1.39
+New x:  8.108151  Current x: 11.619722 Current y: 2.495583 x_diff:  -3.511571 Angle -1.35
+New x:  -45.754688  Current x: 14.466846 Current y: 1.726199 x_diff:  -60.221535 Angle -0.26
+Hit the left wall at 5.342855
+New x:  47.921349  Current x: 1.083333 Current y: 5.342855 x_diff:  46.838017 Angle -2.88
+Hit the right wall at 11.783392
+New x:  1.911983  Current x: 24.916666 Current y: 11.783392 x_diff:  -23.004683 Angle -0.26
+New x:  20.428919  Current x: 20.310062 Current y: 17.262283 x_diff:  0.118856 Angle -1.73
+New x:  20.657055  Current x: 19.379551 Current y: 15.283986 x_diff:  1.277503 Angle -2.01
+New x:  18.018709  Current x: 20.362770 Current y: 17.900457 x_diff:  -2.344061 Angle -0.04
+New x:  -1.262095  Current x: 11.978275 Current y: 22.561422 x_diff:  -13.240371 Angle -2.81
+Hit the left wall at 18.808022
+New x:  3.428765  Current x: 1.083333 Current y: 18.808022 x_diff:  2.345432 Angle -0.33
+New x:  9.572435  Current x: 9.982926 Current y: 18.778282 x_diff:  -0.410491 Angle -2.06
+New x:  33.988846  Current x: 19.426352 Current y: 21.553879 x_diff:  14.562493 Angle -0.24
+Hit the right wall at 20.214005
+New x:  15.844486  Current x: 24.916666 Current y: 20.214005 x_diff:  -9.072180 Angle -2.90
+New x:  24.920876  Current x: 22.366259 Current y: 19.652336 x_diff:  2.554618 Angle -0.57
+Hit the right wall at 18.002724
+New x:  24.912455  Current x: 24.916666 Current y: 18.002724 x_diff:  -0.004211 Angle -2.57
+New x:  23.828558  Current x: 23.243475 Current y: 18.661119 x_diff:  0.585084 Angle -0.85
+New x:  23.126598  Current x: 23.526491 Current y: 15.620646 x_diff:  -0.399894 Angle -1.40
+New x:  23.251722  Current x: 24.745558 Current y: 5.064129 x_diff:  -1.493835 Angle -1.46
+New x:  34.903912  Current x: 22.074991 Current y: 1.663371 x_diff:  12.828920 Angle -2.24
+Hit the right wall at 5.282022
+New x:  14.929421  Current x: 24.916666 Current y: 5.282022 x_diff:  -9.987245 Angle -0.91
+New x:  -44.162884  Current x: 9.188012 Current y: 7.476110 x_diff:  -53.350895 Angle -0.19
+Hit the left wall at 9.074822
+New x:  46.329552  Current x: 1.083333 Current y: 9.074822 x_diff:  45.246220 Angle -2.95
+Hit the right wall at 13.776137
+New x:  3.503778  Current x: 24.916666 Current y: 13.776137 x_diff:  -21.412888 Angle -0.19
+New x:  -37.749283  Current x: 9.935091 Current y: 7.308606 x_diff:  -47.684372 Angle -0.22
+Hit the left wall at 9.293274
+New x:  39.915939  Current x: 1.083333 Current y: 9.293274 x_diff:  38.832607 Angle -2.92
+Hit the right wall at 14.636987
+New x:  9.917392  Current x: 24.916666 Current y: 14.636987 x_diff:  -14.999274 Angle -0.22
+New x:  -52.662617  Current x: 10.755994 Current y: 7.168399 x_diff:  -63.418610 Angle -0.17
+Hit the left wall at 8.820444
+New x:  54.829319  Current x: 1.083333 Current y: 8.820444 x_diff:  53.745987 Angle -2.97
+Hit the right wall at 12.891063
+New x:  -4.995991  Current x: 24.916666 Current y: 12.891063 x_diff:  -29.912657 Angle -0.17
+Hit the left wall at 16.961681
+New x:  7.162654  Current x: 1.083333 Current y: 16.961681 x_diff:  6.079320 Angle -2.97
+New x:  -111.417839  Current x: 11.564851 Current y: 7.096688 x_diff:  -122.982689 Angle -0.09
+Hit the left wall at 8.025951
+New x:  113.584587  Current x: 1.083333 Current y: 8.025951 x_diff:  112.501251 Angle -3.05
+Hit the right wall at 10.138948
+New x:  -63.751259  Current x: 24.916666 Current y: 10.138948 x_diff:  -88.667923 Angle -0.09
+Hit the left wall at 12.251945
+New x:  65.917923  Current x: 1.083333 Current y: 12.251945 x_diff:  64.834587 Angle -3.05
+Hit the right wall at 14.364943
+New x:  -16.084589  Current x: 24.916666 Current y: 14.364943 x_diff:  -41.001255 Angle -0.09
+Hit the left wall at 16.477940
+New x:  18.251257  Current x: 1.083333 Current y: 16.477940 x_diff:  17.167923 Angle -3.05
+New x:  -69.783493  Current x: 12.368174 Current y: 6.989017 x_diff:  -82.151665 Angle -0.13
+Hit the left wall at 8.501551
+New x:  71.950211  Current x: 1.083333 Current y: 8.501551 x_diff:  70.866875 Angle -3.01
+Hit the right wall at 11.695987
+New x:  -22.116873  Current x: 24.916666 Current y: 11.695987 x_diff:  -47.033539 Angle -0.13
+Hit the left wall at 14.890423
+New x:  24.283543  Current x: 1.083333 Current y: 14.890423 x_diff:  23.200209 Angle -3.01
+New x:  -80.654434  Current x: 13.153852 Current y: 6.896017 x_diff:  -93.808289 Angle -0.12
+Hit the left wall at 8.324791
+New x:  82.821114  Current x: 1.083333 Current y: 8.324791 x_diff:  81.737778 Angle -3.02
+Hit the right wall at 11.145916
+New x:  -32.987778  Current x: 24.916666 Current y: 11.145916 x_diff:  -57.904442 Angle -0.12
+Hit the left wall at 13.967041
+New x:  35.154442  Current x: 1.083333 Current y: 13.967041 x_diff:  34.071110 Angle -3.02
+Hit the right wall at 16.788166
+New x:  14.678891  Current x: 24.916666 Current y: 16.788166 x_diff:  -10.237775 Angle -0.12
+New x:  -59.630108  Current x: 13.990216 Current y: 6.768421 x_diff:  -73.620323 Angle -0.15
+Hit the left wall at 8.737506
+New x:  61.796745  Current x: 1.083333 Current y: 8.737506 x_diff:  60.713413 Angle -2.99
+Hit the right wall at 12.373541
+New x:  -11.963415  Current x: 24.916666 Current y: 12.373541 x_diff:  -36.880081 Angle -0.15
+Hit the left wall at 16.009575
+New x:  14.130089  Current x: 1.083333 Current y: 16.009575 x_diff:  13.046756 Angle -2.99
+New x:  -72.261665  Current x: 14.871109 Current y: 6.653712 x_diff:  -87.132774 Angle -0.13
+Hit the left wall at 8.449134
+New x:  74.428291  Current x: 1.083333 Current y: 8.449134 x_diff:  73.344955 Angle -3.01
+Hit the right wall at 11.552673
+New x:  -24.594957  Current x: 24.916666 Current y: 11.552673 x_diff:  -49.511623 Angle -0.13
+Hit the left wall at 14.656213
+New x:  26.761625  Current x: 1.083333 Current y: 14.656213 x_diff:  25.678291 Angle -3.01
+Hit the right wall at 17.759752
+New x:  23.071707  Current x: 24.916666 Current y: 17.759752 x_diff:  -1.844959 Angle -0.13
+New x:  -265.553253  Current x: 15.708403 Current y: 6.619834 x_diff:  -281.261658 Angle -0.04
+Hit the left wall at 7.211581
+New x:  267.720154  Current x: 1.083333 Current y: 7.211581 x_diff:  266.636810 Angle -3.10
+Hit the right wall at 8.175904
+New x:  -217.886795  Current x: 24.916666 Current y: 8.175904 x_diff:  -242.803467 Angle -0.04
+Hit the left wall at 9.140227
+New x:  220.053467  Current x: 1.083333 Current y: 9.140227 x_diff:  218.970139 Angle -3.10
+Hit the right wall at 10.104550
+New x:  -170.220123  Current x: 24.916666 Current y: 10.104550 x_diff:  -195.136795 Angle -0.04
+Hit the left wall at 11.068873
+New x:  172.386795  Current x: 1.083333 Current y: 11.068873 x_diff:  171.303467 Angle -3.10
+Hit the right wall at 12.033196
+New x:  -122.553459  Current x: 24.916666 Current y: 12.033196 x_diff:  -147.470123 Angle -0.04
+Hit the left wall at 12.997519
+New x:  124.720123  Current x: 1.083333 Current y: 12.997519 x_diff:  123.636787 Angle -3.10
+Hit the right wall at 13.961843
+New x:  -74.886787  Current x: 24.916666 Current y: 13.961843 x_diff:  -99.803452 Angle -0.04
+Hit the left wall at 14.926166
+New x:  77.053452  Current x: 1.083333 Current y: 14.926166 x_diff:  75.970116 Angle -3.10
+Hit the right wall at 15.890489
+New x:  -27.220110  Current x: 24.916666 Current y: 15.890489 x_diff:  -52.136776 Angle -0.04
+Hit the left wall at 16.854811
+New x:  29.386797  Current x: 1.083333 Current y: 16.854811 x_diff:  28.303463 Angle -3.10
+Hit the right wall at 17.819134
+New x:  20.446539  Current x: 24.916666 Current y: 17.819134 x_diff:  -4.470127 Angle -0.04
+New x:  -105.078133  Current x: 16.562960 Current y: 6.539320 x_diff:  -121.641090 Angle -0.09
+Hit the left wall at 7.997767
+New x:  107.244728  Current x: 1.083333 Current y: 7.997767 x_diff:  106.161392 Angle -3.05
+Hit the right wall at 10.243278
+New x:  -57.411392  Current x: 24.916666 Current y: 10.243278 x_diff:  -82.328056 Angle -0.09
+Hit the left wall at 12.488789
+New x:  59.578056  Current x: 1.083333 Current y: 12.488789 x_diff:  58.494724 Angle -3.05
+Hit the right wall at 14.734300
+New x:  -9.744722  Current x: 24.916666 Current y: 14.734300 x_diff:  -34.661388 Angle -0.09
+Hit the left wall at 16.979811
+New x:  11.911386  Current x: 1.083333 Current y: 16.979811 x_diff:  10.828053 Angle -3.05
+New x:  -93.950943  Current x: 17.385717 Current y: 6.453998 x_diff:  -111.336662 Angle -0.10
+Hit the left wall at 8.144612
+New x:  96.117638  Current x: 1.083333 Current y: 8.144612 x_diff:  95.034302 Angle -3.04
+Hit the right wall at 10.616212
+New x:  -46.284309  Current x: 24.916666 Current y: 10.616212 x_diff:  -71.200974 Angle -0.10
+Hit the left wall at 13.087811
+New x:  48.450970  Current x: 1.083333 Current y: 13.087811 x_diff:  47.367638 Angle -3.04
+Hit the right wall at 15.559411
+New x:  1.382364  Current x: 24.916666 Current y: 15.559411 x_diff:  -23.534302 Angle -0.10
+New x:  -59.288666  Current x: 18.266672 Current y: 6.321339 x_diff:  -77.555336 Angle -0.15
+Hit the left wall at 8.908890
+New x:  61.455338  Current x: 1.083333 Current y: 8.908890 x_diff:  60.372005 Angle -2.99
+Hit the right wall at 12.497828
+New x:  -11.622011  Current x: 24.916666 Current y: 12.497828 x_diff:  -36.538677 Angle -0.15
+Hit the left wall at 16.086767
+New x:  13.788679  Current x: 1.083333 Current y: 16.086767 x_diff:  12.705346 Angle -2.99
+New x:  -107.731331  Current x: 19.136293 Current y: 6.240735 x_diff:  -126.867622 Angle -0.09
+Hit the left wall at 7.914050
+New x:  109.897896  Current x: 1.083333 Current y: 7.914050 x_diff:  108.814560 Angle -3.05
+Hit the right wall at 10.123146
+New x:  -60.064568  Current x: 24.916666 Current y: 10.123146 x_diff:  -84.981232 Angle -0.09
+Hit the left wall at 12.332242
+New x:  62.231224  Current x: 1.083333 Current y: 12.332242 x_diff:  61.147892 Angle -3.05
+Hit the right wall at 14.541338
+New x:  -12.397898  Current x: 24.916666 Current y: 14.541338 x_diff:  -37.314564 Angle -0.09
+Hit the left wall at 16.750433
+New x:  14.564570  Current x: 1.083333 Current y: 16.750433 x_diff:  13.481237 Angle -3.05
+CROSSED THE LINE AT [17.79, 9.21]
 
-CROSSED THE LINE AT [24.23, 9.22]
+CROSSED THE LINE AT [17.69, 9.57]
 
-New x:  24.285236  Current x: 24.159876 Current y: 8.748248 x_diff:  0.125360 Angle -1.74
-[24.16, 8.75] -> [24.16, 8.75] Dist: 0.884  Angle: -1.74  Prediction: 24.29
-New x:  24.242886  Current x: 23.956682 Current y: 6.908111 x_diff:  0.286204 Angle -1.68
-[23.96, 6.91] -> [23.96, 6.91] Dist: 0.370  Angle: -1.68  Prediction: 24.24
-New x:  24.175241  Current x: 23.820299 Current y: 5.290749 x_diff:  0.354942 Angle -1.65
-[23.82, 5.29] -> [23.82, 5.29] Dist: 0.325  Angle: -1.65  Prediction: 24.18
-New x:  23.874441  Current x: 23.802729 Current y: 3.924730 x_diff:  0.071712 Angle -1.58
-[23.80, 3.92] -> [23.80, 3.92] Dist: 0.273  Angle: -1.58  Prediction: 23.87
-New x:  23.712284  Current x: 23.822203 Current y: 2.724304 x_diff:  -0.109919 Angle -1.55
-[23.82, 2.72] -> [23.82, 2.72] Dist: 0.240  Angle: -1.55  Prediction: 23.71
-New x:  23.303963  Current x: 23.896633 Current y: 1.751167 x_diff:  -0.592670 Angle -1.49
-[23.90, 1.75] -> [23.90, 1.75] Dist: 0.195  Angle: -1.49  Prediction: 23.30
-New x:  51.470329  Current x: 21.195530 Current y: 39.482658 x_diff:  30.274799 Angle -0.78
-Hit the right wall at 35.797428
-New x:  -1.636999  Current x: 24.916666 Current y: 35.797428 x_diff:  -26.553665 Angle -2.36
-Hit the left wall at 12.194084
-New x:  3.803668  Current x: 1.083333 Current y: 12.194084 x_diff:  2.720335 Angle -0.78
-[21.20, 39.48] -> [21.20, 39.48] Dist: 0.037  Angle: -0.78  Prediction: 3.80
-New x:  17.534655  Current x: 21.084841 Current y: 38.192101 x_diff:  -3.550186 Angle -1.69
-[21.08, 38.19] -> [21.08, 38.19] Dist: 0.274  Angle: -1.69  Prediction: 17.53
-New x:  18.427313  Current x: 20.838406 Current y: 35.531452 x_diff:  -2.411092 Angle -1.66
-[20.84, 35.53] -> [20.84, 35.53] Dist: 0.534  Angle: -1.66  Prediction: 18.43
-New x:  18.184332  Current x: 20.585993 Current y: 33.055759 x_diff:  -2.401661 Angle -1.67
-[20.59, 33.06] -> [20.59, 33.06] Dist: 0.498  Angle: -1.67  Prediction: 18.18
-New x:  19.009867  Current x: 20.460823 Current y: 31.185053 x_diff:  -1.450957 Angle -1.64
-[20.46, 31.19] -> [20.46, 31.19] Dist: 0.375  Angle: -1.64  Prediction: 19.01
-New x:  19.071291  Current x: 20.348669 Current y: 29.434776 x_diff:  -1.277378 Angle -1.63
-[20.35, 29.43] -> [20.35, 29.43] Dist: 0.351  Angle: -1.63  Prediction: 19.07
-New x:  19.973927  Current x: 20.320831 Current y: 27.953922 x_diff:  -0.346905 Angle -1.59
-[20.32, 27.95] -> [20.32, 27.95] Dist: 0.296  Angle: -1.59  Prediction: 19.97
-New x:  20.274166  Current x: 20.316721 Current y: 26.328421 x_diff:  -0.042554 Angle -1.57
-[20.32, 26.33] -> [20.32, 26.33] Dist: 0.325  Angle: -1.57  Prediction: 20.27
-New x:  20.288837  Current x: 20.314972 Current y: 25.272797 x_diff:  -0.026135 Angle -1.57
-[20.31, 25.27] -> [20.31, 25.27] Dist: 0.211  Angle: -1.57  Prediction: 20.29
-New x:  21.280378  Current x: 20.366087 Current y: 24.437681 x_diff:  0.914292 Angle -1.51
-[20.37, 24.44] -> [20.37, 24.44] Dist: 0.167  Angle: -1.51  Prediction: 21.28
-New x:  21.978558  Current x: 20.449900 Current y: 23.661253 x_diff:  1.528659 Angle -1.46
-[20.45, 23.66] -> [20.45, 23.66] Dist: 0.156  Angle: -1.46  Prediction: 21.98
-New x:  22.940407  Current x: 20.541782 Current y: 23.138800 x_diff:  2.398625 Angle -1.40
-[20.54, 23.14] -> [20.54, 23.14] Dist: 0.106  Angle: -1.40  Prediction: 22.94
-New x:  23.796745  Current x: 20.668537 Current y: 22.607677 x_diff:  3.128207 Angle -1.34
-[20.67, 22.61] -> [20.67, 22.61] Dist: 0.109  Angle: -1.34  Prediction: 23.80
-New x:  26.450151  Current x: 20.783772 Current y: 22.346426 x_diff:  5.666380 Angle -1.16
-Hit the right wall at 12.976612
-New x:  23.383181  Current x: 24.916666 Current y: 12.976612 x_diff:  -1.533485 Angle -1.99
-[20.78, 22.35] -> [20.78, 22.35] Dist: 0.057  Angle: -1.16  Prediction: 23.38
-New x:  30.646025  Current x: 20.890528 Current y: 22.207367 x_diff:  9.755497 Angle -0.92
-Hit the right wall at 16.962978
-New x:  19.187307  Current x: 24.916666 Current y: 16.962978 x_diff:  -5.729358 Angle -2.23
-[20.89, 22.21] -> [20.89, 22.21] Dist: 0.035  Angle: -0.92  Prediction: 19.19
-New x:  123.708466  Current x: 20.961086 Current y: 22.198647 x_diff:  102.747375 Angle -0.12
-Hit the right wall at 21.709772
-New x:  -73.875122  Current x: 24.916666 Current y: 21.709772 x_diff:  -98.791786 Angle -3.02
-Hit the left wall at 18.764187
-New x:  76.041786  Current x: 1.083333 Current y: 18.764187 x_diff:  74.958450 Angle -0.12
-Hit the right wall at 15.818603
-New x:  -26.208452  Current x: 24.916666 Current y: 15.818603 x_diff:  -51.125118 Angle -3.02
-Hit the left wall at 12.873018
-New x:  28.375122  Current x: 1.083333 Current y: 12.873018 x_diff:  27.291788 Angle -0.12
-Hit the right wall at 9.927434
-New x:  21.458210  Current x: 24.916666 Current y: 9.927434 x_diff:  -3.458457 Angle -3.02
-[20.96, 22.20] -> [20.96, 22.20] Dist: 0.014  Angle: -0.12  Prediction: 21.46
-New x:  16.580755  Current x: 20.807835 Current y: 21.731827 x_diff:  -4.227079 Angle -1.90
-[20.81, 21.73] -> [20.81, 21.73] Dist: 0.098  Angle: -1.90  Prediction: 16.58
-New x:  17.108101  Current x: 20.328014 Current y: 20.145475 x_diff:  -3.219914 Angle -1.86
-[20.33, 20.15] -> [20.33, 20.15] Dist: 0.331  Angle: -1.86  Prediction: 17.11
-New x:  17.538309  Current x: 20.013231 Current y: 18.944267 x_diff:  -2.474922 Angle -1.83
-[20.01, 18.94] -> [20.01, 18.94] Dist: 0.248  Angle: -1.83  Prediction: 17.54
-New x:  17.753798  Current x: 19.767019 Current y: 17.915119 x_diff:  -2.013222 Angle -1.81
-[19.77, 17.92] -> [19.77, 17.92] Dist: 0.212  Angle: -1.81  Prediction: 17.75
-New x:  18.257380  Current x: 19.594952 Current y: 16.955971 x_diff:  -1.337573 Angle -1.75
-[19.59, 16.96] -> [19.59, 16.96] Dist: 0.195  Angle: -1.75  Prediction: 18.26
-New x:  18.966894  Current x: 19.509514 Current y: 15.941697 x_diff:  -0.542619 Angle -1.65
-[19.51, 15.94] -> [19.51, 15.94] Dist: 0.204  Angle: -1.65  Prediction: 18.97
-New x:  20.149149  Current x: 19.540970 Current y: 15.624907 x_diff:  0.608179 Angle -1.47
-[19.54, 15.62] -> [19.54, 15.62] Dist: 0.064  Angle: -1.47  Prediction: 20.15
-New x:  30.614143  Current x: 18.370241 Current y: 29.731834 x_diff:  12.243903 Angle -1.03
-Hit the right wall at 18.914516
-New x:  19.219189  Current x: 24.916666 Current y: 18.914516 x_diff:  -5.697477 Angle -2.12
-[18.37, 29.73] -> [18.37, 29.73] Dist: 0.047  Angle: -1.03  Prediction: 19.22
-New x:  45.209305  Current x: 18.526754 Current y: 29.613852 x_diff:  26.682549 Angle -0.65
-Hit the right wall at 24.797005
-New x:  4.624027  Current x: 24.916666 Current y: 24.797005 x_diff:  -20.292639 Angle -2.50
-[18.53, 29.61] -> [18.53, 29.61] Dist: 0.039  Angle: -0.65  Prediction: 4.62
-New x:  42.976082  Current x: 18.717817 Current y: 29.456669 x_diff:  24.258266 Angle -0.69
-Hit the right wall at 24.357031
-New x:  6.857246  Current x: 24.916666 Current y: 24.357031 x_diff:  -18.059420 Angle -2.45
-[18.72, 29.46] -> [18.72, 29.46] Dist: 0.049  Angle: -0.69  Prediction: 6.86
-New x:  69.163345  Current x: 18.975275 Current y: 29.354816 x_diff:  50.188068 Angle -0.38
-Hit the right wall at 27.004353
-New x:  -19.330023  Current x: 24.916666 Current y: 27.004353 x_diff:  -44.246689 Angle -2.76
-Hit the left wall at 17.575691
-New x:  21.496691  Current x: 1.083333 Current y: 17.575691 x_diff:  20.413357 Angle -0.38
-[18.98, 29.35] -> [18.98, 29.35] Dist: 0.055  Angle: -0.38  Prediction: 21.50
-New x:  57.537415  Current x: 19.231409 Current y: 29.222939 x_diff:  38.306004 Angle -0.48
-Hit the right wall at 26.295723
-New x:  -7.704081  Current x: 24.916666 Current y: 26.295723 x_diff:  -32.620747 Angle -2.67
-Hit the left wall at 14.024451
-New x:  9.870748  Current x: 1.083333 Current y: 14.024451 x_diff:  8.787415 Angle -0.48
-[19.23, 29.22] -> [19.23, 29.22] Dist: 0.058  Angle: -0.48  Prediction: 9.87
-New x:  62.984131  Current x: 19.499231 Current y: 29.102209 x_diff:  43.484901 Angle -0.42
-Hit the right wall at 26.660128
-New x:  -13.150801  Current x: 24.916666 Current y: 26.660128 x_diff:  -38.067467 Angle -2.72
-Hit the left wall at 15.916492
-New x:  15.317469  Current x: 1.083333 Current y: 15.916492 x_diff:  14.234136 Angle -0.42
-[19.50, 29.10] -> [19.50, 29.10] Dist: 0.059  Angle: -0.42  Prediction: 15.32
-New x:  144.654724  Current x: 19.838303 Current y: 29.049103 x_diff:  124.816422 Angle -0.16
-Hit the right wall at 28.253716
-New x:  -94.821457  Current x: 24.916666 Current y: 28.253716 x_diff:  -119.738121 Angle -2.99
-Hit the left wall at 24.520874
-New x:  96.988129  Current x: 1.083333 Current y: 24.520874 x_diff:  95.904793 Angle -0.16
-Hit the right wall at 20.788033
-New x:  -47.154800  Current x: 24.916666 Current y: 20.788033 x_diff:  -72.071465 Angle -2.99
-Hit the left wall at 17.055191
-New x:  49.321472  Current x: 1.083333 Current y: 17.055191 x_diff:  48.238140 Angle -0.16
-Hit the right wall at 13.322349
-New x:  0.511858  Current x: 24.916666 Current y: 13.322349 x_diff:  -24.404808 Angle -2.99
-Hit the left wall at 9.589506
-New x:  1.654809  Current x: 1.083333 Current y: 9.589506 x_diff:  0.571476 Angle -0.16
-[19.84, 29.05] -> [19.84, 29.05] Dist: 0.069  Angle: -0.16  Prediction: 1.65
-New x:  108.697098  Current x: 20.327663 Current y: 28.941442 x_diff:  88.369438 Angle -0.22
-Hit the right wall at 27.931854
-New x:  -58.863747  Current x: 24.916666 Current y: 27.931854 x_diff:  -83.780411 Angle -2.93
-Hit the left wall at 22.688475
-New x:  61.030411  Current x: 1.083333 Current y: 22.688475 x_diff:  59.947079 Angle -0.22
-Hit the right wall at 17.445095
-New x:  -11.197081  Current x: 24.916666 Current y: 17.445095 x_diff:  -36.113747 Angle -2.93
-Hit the left wall at 12.201715
-New x:  13.363749  Current x: 1.083333 Current y: 12.201715 x_diff:  12.280416 Angle -0.22
-[20.33, 28.94] -> [20.33, 28.94] Dist: 0.100  Angle: -0.22  Prediction: 13.36
-New x:  141.474762  Current x: 20.684868 Current y: 28.884119 x_diff:  120.789886 Angle -0.16
-Hit the right wall at 28.205009
-New x:  -91.641510  Current x: 24.916666 Current y: 28.205009 x_diff:  -116.558174 Angle -2.98
-Hit the left wall at 24.380287
-New x:  93.808182  Current x: 1.083333 Current y: 24.380287 x_diff:  92.724846 Angle -0.16
-Hit the right wall at 20.555565
-New x:  -43.974846  Current x: 24.916666 Current y: 20.555565 x_diff:  -68.891510 Angle -2.98
-Hit the left wall at 16.730843
-New x:  46.141518  Current x: 1.083333 Current y: 16.730843 x_diff:  45.058186 Angle -0.16
-Hit the right wall at 12.906120
-New x:  3.691809  Current x: 24.916666 Current y: 12.906120 x_diff:  -21.224857 Angle -2.98
-[20.68, 28.88] -> [20.68, 28.88] Dist: 0.072  Angle: -0.16  Prediction: 3.69
-New x:  284.591675  Current x: 21.089264 Current y: 28.854416 x_diff:  263.502411 Angle -0.07
-Hit the right wall at 28.573292
-New x:  -234.758652  Current x: 24.916666 Current y: 28.573292 x_diff:  -259.675323 Angle -3.07
-Hit the left wall at 26.822721
-New x:  236.925354  Current x: 1.083333 Current y: 26.822721 x_diff:  235.842026 Angle -0.07
-Hit the right wall at 25.072151
-New x:  -187.092010  Current x: 24.916666 Current y: 25.072151 x_diff:  -212.008682 Angle -3.07
-Hit the left wall at 23.321581
-New x:  189.258713  Current x: 1.083333 Current y: 23.321581 x_diff:  188.175385 Angle -0.07
-Hit the right wall at 21.571011
-New x:  -139.425369  Current x: 24.916666 Current y: 21.571011 x_diff:  -164.342041 Angle -3.07
-Hit the left wall at 19.820440
-New x:  141.592056  Current x: 1.083333 Current y: 19.820440 x_diff:  140.508728 Angle -0.07
-Hit the right wall at 18.069870
-New x:  -91.758728  Current x: 24.916666 Current y: 18.069870 x_diff:  -116.675392 Angle -3.07
-Hit the left wall at 16.319300
-New x:  93.925415  Current x: 1.083333 Current y: 16.319300 x_diff:  92.842079 Angle -0.07
-Hit the right wall at 14.568729
-New x:  -44.092079  Current x: 24.916666 Current y: 14.568729 x_diff:  -69.008743 Angle -3.07
-Hit the left wall at 12.818158
-New x:  46.258747  Current x: 1.083333 Current y: 12.818158 x_diff:  45.175415 Angle -0.07
-Hit the right wall at 11.067587
-New x:  3.574591  Current x: 24.916666 Current y: 11.067587 x_diff:  -21.342075 Angle -3.07
-[21.09, 28.85] -> [21.09, 28.85] Dist: 0.081  Angle: -0.07  Prediction: 3.57
-New x:  197.993835  Current x: 21.525141 Current y: 28.806728 x_diff:  176.468689 Angle -0.11
-Hit the right wall at 28.435675
-New x:  -148.160645  Current x: 24.916666 Current y: 28.435675 x_diff:  -173.077316 Angle -3.03
-Hit the left wall at 25.828169
-New x:  150.327332  Current x: 1.083333 Current y: 25.828169 x_diff:  149.244003 Angle -0.11
-Hit the right wall at 23.220663
-New x:  -100.494003  Current x: 24.916666 Current y: 23.220663 x_diff:  -125.410667 Angle -3.03
-Hit the left wall at 20.613157
-New x:  102.660675  Current x: 1.083333 Current y: 20.613157 x_diff:  101.577339 Angle -0.11
-Hit the right wall at 18.005651
-New x:  -52.827354  Current x: 24.916666 Current y: 18.005651 x_diff:  -77.744019 Angle -3.03
-Hit the left wall at 15.398146
-New x:  54.994022  Current x: 1.083333 Current y: 15.398146 x_diff:  53.910690 Angle -0.11
-Hit the right wall at 12.790640
-New x:  -5.160696  Current x: 24.916666 Current y: 12.790640 x_diff:  -30.077362 Angle -3.03
-Hit the left wall at 10.183134
-New x:  7.327369  Current x: 1.083333 Current y: 10.183134 x_diff:  6.244035 Angle -0.11
-[21.53, 28.81] -> [21.53, 28.81] Dist: 0.088  Angle: -0.11  Prediction: 7.33
-New x:  578.450012  Current x: 21.958586 Current y: 28.791702 x_diff:  556.491455 Angle -0.03
-Hit the right wall at 28.689156
-New x:  -528.615479  Current x: 24.916666 Current y: 28.689156 x_diff:  -553.532166 Angle -3.11
-Hit the left wall at 27.862932
-New x:  530.782166  Current x: 1.083333 Current y: 27.862932 x_diff:  529.698853 Angle -0.03
-Hit the right wall at 27.036709
-New x:  -480.948883  Current x: 24.916666 Current y: 27.036709 x_diff:  -505.865540 Angle -3.11
-Hit the left wall at 26.210485
-New x:  483.115570  Current x: 1.083333 Current y: 26.210485 x_diff:  482.032227 Angle -0.03
-Hit the right wall at 25.384262
-New x:  -433.282257  Current x: 24.916666 Current y: 25.384262 x_diff:  -458.198914 Angle -3.11
-Hit the left wall at 24.558039
-New x:  435.448944  Current x: 1.083333 Current y: 24.558039 x_diff:  434.365601 Angle -0.03
-Hit the right wall at 23.731815
-New x:  -385.615631  Current x: 24.916666 Current y: 23.731815 x_diff:  -410.532288 Angle -3.11
-Hit the left wall at 22.905592
-New x:  387.782288  Current x: 1.083333 Current y: 22.905592 x_diff:  386.698944 Angle -0.03
-Hit the right wall at 22.079369
-New x:  -337.948975  Current x: 24.916666 Current y: 22.079369 x_diff:  -362.865631 Angle -3.11
-Hit the left wall at 21.253145
-New x:  340.115662  Current x: 1.083333 Current y: 21.253145 x_diff:  339.032318 Angle -0.03
-Hit the right wall at 20.426922
-New x:  -290.282349  Current x: 24.916666 Current y: 20.426922 x_diff:  -315.199005 Angle -3.11
-Hit the left wall at 19.600698
-New x:  292.449036  Current x: 1.083333 Current y: 19.600698 x_diff:  291.365692 Angle -0.03
-Hit the right wall at 18.774475
-New x:  -242.615707  Current x: 24.916666 Current y: 18.774475 x_diff:  -267.532379 Angle -3.11
-Hit the left wall at 17.948252
-New x:  244.782379  Current x: 1.083333 Current y: 17.948252 x_diff:  243.699051 Angle -0.03
-Hit the right wall at 17.122028
-New x:  -194.949066  Current x: 24.916666 Current y: 17.122028 x_diff:  -219.865738 Angle -3.11
-Hit the left wall at 16.295805
-New x:  197.115753  Current x: 1.083333 Current y: 16.295805 x_diff:  196.032425 Angle -0.03
-Hit the right wall at 15.469581
-New x:  -147.282410  Current x: 24.916666 Current y: 15.469581 x_diff:  -172.199081 Angle -3.11
-Hit the left wall at 14.643356
-New x:  149.449066  Current x: 1.083333 Current y: 14.643356 x_diff:  148.365738 Angle -0.03
-Hit the right wall at 13.817132
-New x:  -99.615730  Current x: 24.916666 Current y: 13.817132 x_diff:  -124.532394 Angle -3.11
-Hit the left wall at 12.990908
-New x:  101.782387  Current x: 1.083333 Current y: 12.990908 x_diff:  100.699051 Angle -0.03
-Hit the right wall at 12.164683
-New x:  -51.949043  Current x: 24.916666 Current y: 12.164683 x_diff:  -76.865707 Angle -3.11
-Hit the left wall at 11.338459
-New x:  54.115692  Current x: 1.083333 Current y: 11.338459 x_diff:  53.032360 Angle -0.03
-Hit the right wall at 10.512235
-New x:  -4.282351  Current x: 24.916666 Current y: 10.512235 x_diff:  -29.199017 Angle -3.11
-Hit the left wall at 9.686010
-New x:  6.449006  Current x: 1.083333 Current y: 9.686010 x_diff:  5.365672 Angle -0.03
-[21.96, 28.79] -> [21.96, 28.79] Dist: 0.087  Angle: -0.03  Prediction: 6.45
-New x:  1563.492310  Current x: 22.945965 Current y: 28.814632 x_diff:  1540.546387 Angle -0.01
-Hit the right wall at 28.789925
-New x:  -1513.652832  Current x: 24.916666 Current y: 28.789925 x_diff:  -1538.569458 Angle -3.13
-Hit the left wall at 28.491112
-New x:  1515.819458  Current x: 1.083333 Current y: 28.491112 x_diff:  1514.736084 Angle -0.01
-Hit the right wall at 28.192299
-New x:  -1465.986084  Current x: 24.916666 Current y: 28.192299 x_diff:  -1490.902710 Angle -3.13
-Hit the left wall at 27.893486
-New x:  1468.152588  Current x: 1.083333 Current y: 27.893486 x_diff:  1467.069214 Angle -0.01
-Hit the right wall at 27.594673
-New x:  -1418.319214  Current x: 24.916666 Current y: 27.594673 x_diff:  -1443.235840 Angle -3.13
-Hit the left wall at 27.295860
-New x:  1420.485840  Current x: 1.083333 Current y: 27.295860 x_diff:  1419.402466 Angle -0.01
-Hit the right wall at 26.997047
-New x:  -1370.652466  Current x: 24.916666 Current y: 26.997047 x_diff:  -1395.569092 Angle -3.13
-Hit the left wall at 26.698235
-New x:  1372.819092  Current x: 1.083333 Current y: 26.698235 x_diff:  1371.735718 Angle -0.01
-Hit the right wall at 26.399422
-New x:  -1322.985718  Current x: 24.916666 Current y: 26.399422 x_diff:  -1347.902344 Angle -3.13
-Hit the left wall at 26.100609
-New x:  1325.152344  Current x: 1.083333 Current y: 26.100609 x_diff:  1324.068970 Angle -0.01
-Hit the right wall at 25.801796
-New x:  -1275.318848  Current x: 24.916666 Current y: 25.801796 x_diff:  -1300.235474 Angle -3.13
-Hit the left wall at 25.502983
-New x:  1277.485474  Current x: 1.083333 Current y: 25.502983 x_diff:  1276.402100 Angle -0.01
-Hit the right wall at 25.204170
-New x:  -1227.652100  Current x: 24.916666 Current y: 25.204170 x_diff:  -1252.568726 Angle -3.13
-Hit the left wall at 24.905357
-New x:  1229.818726  Current x: 1.083333 Current y: 24.905357 x_diff:  1228.735352 Angle -0.01
-Hit the right wall at 24.606544
-New x:  -1179.985352  Current x: 24.916666 Current y: 24.606544 x_diff:  -1204.901978 Angle -3.13
-Hit the left wall at 24.307732
-New x:  1182.151978  Current x: 1.083333 Current y: 24.307732 x_diff:  1181.068604 Angle -0.01
-Hit the right wall at 24.008919
-New x:  -1132.318481  Current x: 24.916666 Current y: 24.008919 x_diff:  -1157.235107 Angle -3.13
-Hit the left wall at 23.710106
-New x:  1134.485107  Current x: 1.083333 Current y: 23.710106 x_diff:  1133.401733 Angle -0.01
-Hit the right wall at 23.411293
-New x:  -1084.651733  Current x: 24.916666 Current y: 23.411293 x_diff:  -1109.568359 Angle -3.13
-Hit the left wall at 23.112480
-New x:  1086.818359  Current x: 1.083333 Current y: 23.112480 x_diff:  1085.734985 Angle -0.01
-Hit the right wall at 22.813667
-New x:  -1036.984985  Current x: 24.916666 Current y: 22.813667 x_diff:  -1061.901611 Angle -3.13
-Hit the left wall at 22.514854
-New x:  1039.151611  Current x: 1.083333 Current y: 22.514854 x_diff:  1038.068237 Angle -0.01
-Hit the right wall at 22.216042
-New x:  -989.318115  Current x: 24.916666 Current y: 22.216042 x_diff:  -1014.234802 Angle -3.13
-Hit the left wall at 21.917229
-New x:  991.484741  Current x: 1.083333 Current y: 21.917229 x_diff:  990.401428 Angle -0.01
-Hit the right wall at 21.618416
-New x:  -941.651367  Current x: 24.916666 Current y: 21.618416 x_diff:  -966.568054 Angle -3.13
-Hit the left wall at 21.319603
-New x:  943.817932  Current x: 1.083333 Current y: 21.319603 x_diff:  942.734619 Angle -0.01
-Hit the right wall at 21.020790
-New x:  -893.984558  Current x: 24.916666 Current y: 21.020790 x_diff:  -918.901245 Angle -3.13
-Hit the left wall at 20.721977
-New x:  896.151184  Current x: 1.083333 Current y: 20.721977 x_diff:  895.067871 Angle -0.01
-Hit the right wall at 20.423164
-New x:  -846.317749  Current x: 24.916666 Current y: 20.423164 x_diff:  -871.234436 Angle -3.13
-Hit the left wall at 20.124352
-New x:  848.484375  Current x: 1.083333 Current y: 20.124352 x_diff:  847.401062 Angle -0.01
-Hit the right wall at 19.825539
-New x:  -798.651001  Current x: 24.916666 Current y: 19.825539 x_diff:  -823.567688 Angle -3.13
-Hit the left wall at 19.526726
-New x:  800.817566  Current x: 1.083333 Current y: 19.526726 x_diff:  799.734253 Angle -0.01
-Hit the right wall at 19.227913
-New x:  -750.984192  Current x: 24.916666 Current y: 19.227913 x_diff:  -775.900879 Angle -3.13
-Hit the left wall at 18.929100
-New x:  753.150818  Current x: 1.083333 Current y: 18.929100 x_diff:  752.067505 Angle -0.01
-Hit the right wall at 18.630287
-New x:  -703.317383  Current x: 24.916666 Current y: 18.630287 x_diff:  -728.234070 Angle -3.13
-Hit the left wall at 18.331474
-New x:  705.484009  Current x: 1.083333 Current y: 18.331474 x_diff:  704.400696 Angle -0.01
-Hit the right wall at 18.032661
-New x:  -655.650635  Current x: 24.916666 Current y: 18.032661 x_diff:  -680.567322 Angle -3.13
-Hit the left wall at 17.733849
-New x:  657.817261  Current x: 1.083333 Current y: 17.733849 x_diff:  656.733948 Angle -0.01
-Hit the right wall at 17.435036
-New x:  -607.983826  Current x: 24.916666 Current y: 17.435036 x_diff:  -632.900513 Angle -3.13
-Hit the left wall at 17.136223
-New x:  610.150452  Current x: 1.083333 Current y: 17.136223 x_diff:  609.067139 Angle -0.01
-Hit the right wall at 16.837410
-New x:  -560.317078  Current x: 24.916666 Current y: 16.837410 x_diff:  -585.233765 Angle -3.13
-Hit the left wall at 16.538597
-New x:  562.483643  Current x: 1.083333 Current y: 16.538597 x_diff:  561.400330 Angle -0.01
-Hit the right wall at 16.239784
-New x:  -512.650269  Current x: 24.916666 Current y: 16.239784 x_diff:  -537.566956 Angle -3.13
-Hit the left wall at 15.940972
-New x:  514.816956  Current x: 1.083333 Current y: 15.940972 x_diff:  513.733643 Angle -0.01
-Hit the right wall at 15.642160
-New x:  -464.983673  Current x: 24.916666 Current y: 15.642160 x_diff:  -489.900330 Angle -3.13
-Hit the left wall at 15.343349
-New x:  467.150360  Current x: 1.083333 Current y: 15.343349 x_diff:  466.067017 Angle -0.01
-Hit the right wall at 15.044537
-New x:  -417.317047  Current x: 24.916666 Current y: 15.044537 x_diff:  -442.233704 Angle -3.13
-Hit the left wall at 14.745725
-New x:  419.483734  Current x: 1.083333 Current y: 14.745725 x_diff:  418.400391 Angle -0.01
-Hit the right wall at 14.446913
-New x:  -369.650391  Current x: 24.916666 Current y: 14.446913 x_diff:  -394.567047 Angle -3.13
-Hit the left wall at 14.148101
-New x:  371.817078  Current x: 1.083333 Current y: 14.148101 x_diff:  370.733734 Angle -0.01
-Hit the right wall at 13.849289
-New x:  -321.983765  Current x: 24.916666 Current y: 13.849289 x_diff:  -346.900421 Angle -3.13
-Hit the left wall at 13.550477
-New x:  324.150452  Current x: 1.083333 Current y: 13.550477 x_diff:  323.067108 Angle -0.01
-Hit the right wall at 13.251665
-New x:  -274.317139  Current x: 24.916666 Current y: 13.251665 x_diff:  -299.233795 Angle -3.13
-Hit the left wall at 12.952853
-New x:  276.483826  Current x: 1.083333 Current y: 12.952853 x_diff:  275.400482 Angle -0.01
-Hit the right wall at 12.654041
-New x:  -226.650482  Current x: 24.916666 Current y: 12.654041 x_diff:  -251.567154 Angle -3.13
-Hit the left wall at 12.355229
-New x:  228.817169  Current x: 1.083333 Current y: 12.355229 x_diff:  227.733841 Angle -0.01
-Hit the right wall at 12.056417
-New x:  -178.983856  Current x: 24.916666 Current y: 12.056417 x_diff:  -203.900528 Angle -3.13
-Hit the left wall at 11.757606
-New x:  181.150543  Current x: 1.083333 Current y: 11.757606 x_diff:  180.067215 Angle -0.01
-Hit the right wall at 11.458794
-New x:  -131.317230  Current x: 24.916666 Current y: 11.458794 x_diff:  -156.233902 Angle -3.13
-Hit the left wall at 11.159982
-New x:  133.483902  Current x: 1.083333 Current y: 11.159982 x_diff:  132.400574 Angle -0.01
-Hit the right wall at 10.861170
-New x:  -83.650597  Current x: 24.916666 Current y: 10.861170 x_diff:  -108.567261 Angle -3.13
-Hit the left wall at 10.562358
-New x:  85.817284  Current x: 1.083333 Current y: 10.562358 x_diff:  84.733948 Angle -0.01
-Hit the right wall at 10.263546
-New x:  -35.983963  Current x: 24.916666 Current y: 10.263546 x_diff:  -60.900627 Angle -3.13
-Hit the left wall at 9.964734
-New x:  38.150642  Current x: 1.083333 Current y: 9.964734 x_diff:  37.067310 Angle -0.01
-Hit the right wall at 9.665922
-New x:  11.682671  Current x: 24.916666 Current y: 9.665922 x_diff:  -13.233995 Angle -3.13
-[22.95, 28.81] -> [22.95, 28.81] Dist: 0.093  Angle: -0.01  Prediction: 11.68
-New x:  9.840641  Current x: 23.999456 Current y: 28.846827 x_diff:  -14.158815 Angle -2.20
-[24.00, 28.85] -> [24.00, 28.85] Dist: 0.014  Angle: -2.20  Prediction: 9.84
-New x:  -21.527163  Current x: 23.813662 Current y: 28.767872 x_diff:  -45.340824 Angle -2.74
-Hit the left wall at 19.108475
-New x:  23.693832  Current x: 1.083333 Current y: 19.108475 x_diff:  22.610498 Angle -0.40
-[23.81, 28.77] -> [23.81, 28.77] Dist: 0.040  Angle: -2.74  Prediction: 23.69
-New x:  -189.684509  Current x: 23.632053 Current y: 28.751482 x_diff:  -213.316559 Angle -3.05
-Hit the left wall at 26.716496
-New x:  191.851166  Current x: 1.083333 Current y: 26.716496 x_diff:  190.767838 Angle -0.09
-Hit the right wall at 24.565575
-New x:  -142.017822  Current x: 24.916666 Current y: 24.565575 x_diff:  -166.934494 Angle -3.05
-Hit the left wall at 22.414654
-New x:  144.184494  Current x: 1.083333 Current y: 22.414654 x_diff:  143.101166 Angle -0.09
-Hit the right wall at 20.263733
-New x:  -94.351158  Current x: 24.916666 Current y: 20.263733 x_diff:  -119.267822 Angle -3.05
-Hit the left wall at 18.112812
-New x:  96.517830  Current x: 1.083333 Current y: 18.112812 x_diff:  95.434494 Angle -0.09
-Hit the right wall at 15.961891
-New x:  -46.684494  Current x: 24.916666 Current y: 15.961891 x_diff:  -71.601158 Angle -3.05
-Hit the left wall at 13.810970
-New x:  48.851151  Current x: 1.083333 Current y: 13.810970 x_diff:  47.767818 Angle -0.09
-Hit the right wall at 11.660049
-New x:  0.982182  Current x: 24.916666 Current y: 11.660049 x_diff:  -23.934484 Angle -3.05
-Hit the left wall at 9.509129
-New x:  1.184483  Current x: 1.083333 Current y: 9.509129 x_diff:  0.101149 Angle -0.09
-[23.63, 28.75] -> [23.63, 28.75] Dist: 0.036  Angle: -3.05  Prediction: 1.18
-New x:  -255.418884  Current x: 23.403357 Current y: 28.735704 x_diff:  -278.822235 Angle -3.07
-Hit the left wall at 27.195866
-New x:  257.585571  Current x: 1.083333 Current y: 27.195866 x_diff:  256.502228 Angle -0.07
-Hit the right wall at 25.551624
-New x:  -207.752197  Current x: 24.916666 Current y: 25.551624 x_diff:  -232.668869 Angle -3.07
-Hit the left wall at 23.907383
-New x:  209.918884  Current x: 1.083333 Current y: 23.907383 x_diff:  208.835556 Angle -0.07
-Hit the right wall at 22.263142
-New x:  -160.085526  Current x: 24.916666 Current y: 22.263142 x_diff:  -185.002197 Angle -3.07
-Hit the left wall at 20.618900
-New x:  162.252213  Current x: 1.083333 Current y: 20.618900 x_diff:  161.168884 Angle -0.07
-Hit the right wall at 18.974659
-New x:  -112.418861  Current x: 24.916666 Current y: 18.974659 x_diff:  -137.335526 Angle -3.07
-Hit the left wall at 17.330418
-New x:  114.585533  Current x: 1.083333 Current y: 17.330418 x_diff:  113.502197 Angle -0.07
-Hit the right wall at 15.686177
-New x:  -64.752197  Current x: 24.916666 Current y: 15.686177 x_diff:  -89.668861 Angle -3.07
-Hit the left wall at 14.041936
-New x:  66.918869  Current x: 1.083333 Current y: 14.041936 x_diff:  65.835533 Angle -0.07
-Hit the right wall at 12.397696
-New x:  -17.085535  Current x: 24.916666 Current y: 12.397696 x_diff:  -42.002201 Angle -3.07
-Hit the left wall at 10.753454
-New x:  19.252199  Current x: 1.083333 Current y: 10.753454 x_diff:  18.168865 Angle -0.07
-[23.40, 28.74] -> [23.40, 28.74] Dist: 0.046  Angle: -3.07  Prediction: 19.25
-New x:  -137.758957  Current x: 23.254915 Current y: 28.717987 x_diff:  -161.013870 Angle -3.02
-Hit the left wall at 26.071674
-New x:  139.925629  Current x: 1.083333 Current y: 26.071674 x_diff:  138.842300 Angle -0.12
-Hit the right wall at 23.227020
-New x:  -90.092293  Current x: 24.916666 Current y: 23.227020 x_diff:  -115.008957 Angle -3.02
-Hit the left wall at 20.382366
-New x:  92.258957  Current x: 1.083333 Current y: 20.382366 x_diff:  91.175621 Angle -0.12
-Hit the right wall at 17.537712
-New x:  -42.425621  Current x: 24.916666 Current y: 17.537712 x_diff:  -67.342285 Angle -3.02
-Hit the left wall at 14.693059
-New x:  44.592285  Current x: 1.083333 Current y: 14.693059 x_diff:  43.508953 Angle -0.12
-Hit the right wall at 11.848406
-New x:  5.241041  Current x: 24.916666 Current y: 11.848406 x_diff:  -19.675625 Angle -3.02
-[23.25, 28.72] -> [23.25, 28.72] Dist: 0.030  Angle: -3.02  Prediction: 5.24
-New x:  -215.166794  Current x: 23.079668 Current y: 28.703861 x_diff:  -238.246460 Angle -3.06
-Hit the left wall at 26.930847
-New x:  217.333466  Current x: 1.083333 Current y: 26.930847 x_diff:  216.250137 Angle -0.08
-Hit the right wall at 25.009762
-New x:  -167.500137  Current x: 24.916666 Current y: 25.009762 x_diff:  -192.416809 Angle -3.06
-Hit the left wall at 23.088676
-New x:  169.666824  Current x: 1.083333 Current y: 23.088676 x_diff:  168.583496 Angle -0.08
-Hit the right wall at 21.167591
-New x:  -119.833504  Current x: 24.916666 Current y: 21.167591 x_d
+CROSSED THE LINE AT [17.55, 9.68]
+
+New x:  -116.919525  Current x: 21.442139 Current y: 43.666794 x_diff:  -138.361664 Angle -2.96
+Hit the left wall at 39.890133
+New x:  119.086212  Current x: 1.083333 Current y: 39.890133 x_diff:  118.002876 Angle -0.18
+Hit the right wall at 35.468929
+New x:  -69.252876  Current x: 24.916666 Current y: 35.468929 x_diff:  -94.169540 Angle -2.96
+Hit the left wall at 31.047726
+New x:  71.419556  Current x: 1.083333 Current y: 31.047726 x_diff:  70.336220 Angle -0.18
+Hit the right wall at 26.626522
+New x:  -21.586218  Current x: 24.916666 Current y: 26.626522 x_diff:  -46.502884 Angle -2.96
+Hit the left wall at 22.205318
+New x:  23.752893  Current x: 1.083333 Current y: 22.205318 x_diff:  22.669559 Angle -0.18
+New x:  -13.307041  Current x: 20.730530 Current y: 43.141178 x_diff:  -34.037571 Angle -2.51
+Hit the left wall at 28.629166
+New x:  15.473708  Current x: 1.083333 Current y: 28.629166 x_diff:  14.390375 Angle -0.64
+New x:  3.557524  Current x: 20.189062 Current y: 42.348473 x_diff:  -16.631538 Angle -2.17
+New x:  16.621279  Current x: 20.105240 Current y: 41.776424 x_diff:  -3.483960 Angle -1.72
+New x:  19.481379  Current x: 20.086617 Current y: 41.066658 x_diff:  -0.605238 Angle -1.60
+New x:  47.608055  Current x: 20.368755 Current y: 40.840195 x_diff:  27.239300 Angle -0.70
+Hit the right wall at 37.026764
+New x:  2.225273  Current x: 24.916666 Current y: 37.026764 x_diff:  -22.691393 Angle -2.44
+New x:  52.928577  Current x: 20.575939 Current y: 40.694859 x_diff:  32.352638 Angle -0.61
+Hit the right wall at 37.649910
+New x:  -3.095253  Current x: 24.916666 Current y: 37.649910 x_diff:  -28.011919 Angle -2.53
+Hit the left wall at 20.931211
+New x:  5.261920  Current x: 1.083333 Current y: 20.931211 x_diff:  4.178586 Angle -0.61
+New x:  25.257160  Current x: 20.674898 Current y: 40.093838 x_diff:  4.582263 Angle -1.37
+Hit the right wall at 19.641729
+New x:  24.576172  Current x: 24.916666 Current y: 19.641729 x_diff:  -0.340495 Angle -1.78
+New x:  29.433689  Current x: 20.787468 Current y: 39.809883 x_diff:  8.646222 Angle -1.19
+Hit the right wall at 29.394081
+New x:  20.399643  Current x: 24.916666 Current y: 29.394081 x_diff:  -4.517023 Angle -1.95
+New x:  41.202957  Current x: 20.931900 Current y: 39.655586 x_diff:  20.271059 Angle -0.82
+Hit the right wall at 35.398659
+New x:  8.630377  Current x: 24.916666 Current y: 35.398659 x_diff:  -16.286289 Angle -2.32
+New x:  85.207932  Current x: 21.194229 Current y: 39.567204 x_diff:  64.013702 Angle -0.32
+Hit the right wall at 38.313057
+New x:  -35.374619  Current x: 24.916666 Current y: 38.313057 x_diff:  -60.291283 Angle -2.82
+Hit the left wall at 30.283241
+New x:  37.541283  Current x: 1.083333 Current y: 30.283241 x_diff:  36.457951 Angle -0.32
+Hit the right wall at 22.253426
+New x:  12.292052  Current x: 24.916666 Current y: 22.253426 x_diff:  -12.624614 Angle -2.82
+New x:  3.432188  Current x: 20.684187 Current y: 38.947895 x_diff:  -17.251999 Angle -2.26
+New x:  23.274637  Current x: 20.817902 Current y: 37.866600 x_diff:  2.456735 Angle -1.45
+New x:  73.236137  Current x: 21.526838 Current y: 37.597912 x_diff:  51.709301 Angle -0.36
+Hit the right wall at 36.313160
+New x:  -23.402811  Current x: 24.916666 Current y: 36.313160 x_diff:  -48.319477 Angle -2.78
+Hit the left wall at 27.280289
+New x:  25.569479  Current x: 1.083333 Current y: 27.280289 x_diff:  24.486145 Angle -0.36
+Hit the right wall at 18.247417
+New x:  24.263853  Current x: 24.916666 Current y: 18.247417 x_diff:  -0.652814 Angle -2.78
+New x:  -54.143829  Current x: 19.128328 Current y: 38.352119 x_diff:  -73.272156 Angle -2.87
+Hit the left wall at 33.339931
+New x:  56.310497  Current x: 1.083333 Current y: 33.339931 x_diff:  55.227165 Angle -0.27
+Hit the right wall at 26.719971
+New x:  -6.477167  Current x: 24.916666 Current y: 26.719971 x_diff:  -31.393833 Angle -2.87
+Hit the left wall at 20.100010
+New x:  8.643836  Current x: 1.083333 Current y: 20.100010 x_diff:  7.560503 Angle -0.27
+New x:  -32.582870  Current x: 18.426786 Current y: 38.076012 x_diff:  -51.009655 Angle -2.77
+Hit the left wall at 31.250101
+New x:  34.749535  Current x: 1.083333 Current y: 31.250101 x_diff:  33.666203 Angle -0.37
+Hit the right wall at 21.869949
+New x:  15.083797  Current x: 24.916666 Current y: 21.869949 x_diff:  -9.832869 Angle -2.77
+New x:  -33.340424  Current x: 17.748840 Current y: 37.813095 x_diff:  -51.089264 Angle -2.77
+Hit the left wall at 31.349991
+New x:  35.507092  Current x: 1.083333 Current y: 31.349991 x_diff:  34.423759 Angle -0.37
+Hit the right wall at 22.107109
+New x:  14.326237  Current x: 24.916666 Current y: 22.107109 x_diff:  -10.590429 Angle -2.77
+New x:  -29.701237  Current x: 17.227417 Current y: 37.595371 x_diff:  -46.928654 Angle -2.75
+Hit the left wall at 30.854301
+New x:  31.867903  Current x: 1.083333 Current y: 30.854301 x_diff:  30.784569 Angle -0.40
+Hit the right wall at 20.902534
+New x:  17.965431  Current x: 24.916666 Current y: 20.902534 x_diff:  -6.951235 Angle -2.75
+New x:  -31.413286  Current x: 16.650827 Current y: 37.363087 x_diff:  -48.064114 Angle -2.76
+Hit the left wall at 31.091574
+New x:  33.579952  Current x: 1.083333 Current y: 31.091574 x_diff:  32.496620 Angle -0.38
+Hit the right wall at 21.490089
+New x:  16.253376  Current x: 24.916666 Current y: 21.490089 x_diff:  -8.663291 Angle -2.76
+New x:  -20.973984  Current x: 16.126629 Current y: 37.093315 x_diff:  -37.100613 Angle -2.67
+Hit the left wall at 29.351492
+New x:  23.140652  Current x: 1.083333 Current y: 29.351492 x_diff:  22.057318 Angle -0.48
+New x:  -35.377762  Current x: 15.584542 Current y: 36.892357 x_diff:  -50.962303 Angle -2.79
+Hit the left wall at 31.516579
+New x:  37.544426  Current x: 1.083333 Current y: 31.516579 x_diff:  36.461094 Angle -0.36
+Hit the right wall at 22.681267
+New x:  12.288906  Current x: 24.916666 Current y: 22.681267 x_diff:  -12.627760 Angle -2.79
+New x:  8.686051  Current x: 15.389978 Current y: 36.359520 x_diff:  -6.703927 Angle -1.92
+New x:  26.017197  Current x: 15.808389 Current y: 35.636677 x_diff:  10.208809 Angle -1.05
+Hit the right wall at 19.901272
+New x:  23.816135  Current x: 24.916666 Current y: 19.901272 x_diff:  -1.100532 Angle -2.10
+New x:  37.399525  Current x: 17.295599 Current y: 34.421852 x_diff:  20.103926 Angle -0.68
+Hit the right wall at 28.196598
+New x:  12.433807  Current x: 24.916666 Current y: 28.196598 x_diff:  -12.482859 Angle -2.46
+New x:  110.071266  Current x: 19.005430 Current y: 34.119202 x_diff:  91.065834 Angle -0.18
+Hit the right wall at 33.072876
+New x:  -60.237984  Current x: 24.916666 Current y: 33.072876 x_diff:  -85.154648 Angle -2.97
+Hit the left wall at 28.854235
+New x:  62.404640  Current x: 1.083333 Current y: 28.854235 x_diff:  61.321308 Angle -0.18
+Hit the right wall at 24.635593
+New x:  -12.571310  Current x: 24.916666 Current y: 24.635593 x_diff:  -37.487976 Angle -2.97
+Hit the left wall at 20.416952
+New x:  14.737973  Current x: 1.083333 Current y: 20.416952 x_diff:  13.654640 Angle -0.18
+New x:  24.408884  Current x: 22.037567 Current y: 34.707512 x_diff:  2.371317 Angle -1.43
+New x:  -68.851379  Current x: 21.522934 Current y: 34.548679 x_diff:  -90.374313 Angle -2.96
+Hit the left wall at 30.805931
+New x:  71.018059  Current x: 1.083333 Current y: 30.805931 x_diff:  69.934723 Angle -0.18
+Hit the right wall at 26.441746
+New x:  -21.184717  Current x: 24.916666 Current y: 26.441746 x_diff:  -46.101383 Angle -2.96
+Hit the left wall at 22.077560
+New x:  23.351379  Current x: 1.083333 Current y: 22.077560 x_diff:  22.268045 Angle -0.18
+New x:  62.365196  Current x: 21.963331 Current y: 34.522453 x_diff:  40.401863 Angle -0.39
+Hit the right wall at 33.314678
+New x:  -12.531855  Current x: 24.916666 Current y: 33.314678 x_diff:  -37.448521 Angle -2.75
+Hit the left wall at 23.567970
+New x:  14.698523  Current x: 1.083333 Current y: 23.567970 x_diff:  13.615190 Angle -0.39
+New x:  20.345991  Current x: 21.927555 Current y: 34.156971 x_diff:  -1.581564 Angle -1.67
+New x:  62.357216  Current x: 22.024172 Current y: 34.068249 x_diff:  40.333046 Angle -0.38
+Hit the right wall at 32.915909
+New x:  -12.523886  Current x: 24.916666 Current y: 32.915909 x_diff:  -37.440552 Angle -2.76
+Hit the left wall at 23.420967
+New x:  14.690550  Current x: 1.083333 Current y: 23.420967 x_diff:  13.607217 Angle -0.38
+New x:  83.300262  Current x: 22.272739 Current y: 34.114040 x_diff:  61.027519 Angle -0.26
+Hit the right wall at 33.415924
+New x:  -33.466934  Current x: 24.916666 Current y: 33.415924 x_diff:  -58.383602 Angle -2.88
+Hit the left wall at 27.122841
+New x:  35.633602  Current x: 1.083333 Current y: 27.122841 x_diff:  34.550270 Angle -0.26
+Hit the right wall at 20.829758
+New x:  14.199732  Current x: 24.916666 Current y: 20.829758 x_diff:  -10.716934 Angle -2.88
+New x:  -35.702797  Current x: 21.839083 Current y: 33.993507 x_diff:  -57.541878 Angle -2.87
+Hit the left wall at 28.224541
+New x:  37.869465  Current x: 1.083333 Current y: 28.224541 x_diff:  36.786133 Angle -0.27
+Hit the right wall at 21.600174
+New x:  11.963861  Current x: 24.916666 Current y: 21.600174 x_diff:  -12.952805 Angle -2.87
+New x:  -43.708069  Current x: 21.868233 Current y: 34.113430 x_diff:  -65.576302 Angle -2.90
+Hit the left wall at 29.006159
+New x:  45.874741  Current x: 1.083333 Current y: 29.006159 x_diff:  44.791409 Angle -0.24
+Hit the right wall at 23.149826
+New x:  3.958586  Current x: 24.916666 Current y: 23.149826 x_diff:  -20.958080 Angle -2.90
+New x:  -18.268623  Current x: 21.524403 Current y: 33.975395 x_diff:  -39.793026 Angle -2.76
+Hit the left wall at 25.769079
+New x:  20.435293  Current x: 1.083333 Current y: 25.769079 x_diff:  19.351959 Angle -0.38
+New x:  12.458621  Current x: 21.972103 Current y: 34.069805 x_diff:  -9.513482 Angle -2.11
+New x:  11.019285  Current x: 21.102921 Current y: 34.779678 x_diff:  -10.083635 Angle -2.11
+New x:  18.857014  Current x: 21.048763 Current y: 34.375057 x_diff:  -2.191751 Angle -1.70
+New x:  34.980736  Current x: 21.496216 Current y: 33.849140 x_diff:  13.484519 Angle -0.87
+Hit the right wall at 29.828886
+New x:  14.852595  Current x: 24.916666 Current y: 29.828886 x_diff:  -10.064071 Angle -2.28
+New x:  -3.665997  Current x: 20.301634 Current y: 33.096699 x_diff:  -23.967630 Angle -2.58
+Hit the left wall at 20.991501
+New x:  5.832663  Current x: 1.083333 Current y: 20.991501 x_diff:  4.749329 Angle -0.56
+New x:  -173.026413  Current x: 13.774905 Current y: 32.587036 x_diff:  -186.801315 Angle -3.06
+Hit the left wall at 31.595970
+New x:  175.193069  Current x: 1.083333 Current y: 31.595970 x_diff:  174.109741 Angle -0.08
+Hit the right wall at 29.734861
+New x:  -125.359764  Current x: 24.916666 Current y: 29.734861 x_diff:  -150.276428 Angle -3.06
+Hit the left wall at 27.873753
+New x:  127.526428  Current x: 1.083333 Current y: 27.873753 x_diff:  126.443092 Angle -0.08
+Hit the right wall at 26.012644
+New x:  -77.693108  Current x: 24.916666 Current y: 26.012644 x_diff:  -102.609772 Angle -3.06
+Hit the left wall at 24.151535
+New x:  79.859779  Current x: 1.083333 Current y: 24.151535 x_diff:  78.776443 Angle -0.08
+Hit the right wall at 22.290426
+New x:  -30.026453  Current x: 24.916666 Current y: 22.290426 x_diff:  -54.943119 Angle -3.06
+Hit the left wall at 20.429317
+New x:  32.193127  Current x: 1.083333 Current y: 20.429317 x_diff:  31.109795 Angle -0.08
+Hit the right wall at 18.568209
+New x:  17.640196  Current x: 24.916666 Current y: 18.568209 x_diff:  -7.276470 Angle -3.06
+New x:  -166.016266  Current x: 5.331243 Current y: 31.901974 x_diff:  -171.347504 Angle -3.06
+Hit the left wall at 31.557327
+New x:  168.182922  Current x: 1.083333 Current y: 31.557327 x_diff:  167.099594 Angle -0.08
+Hit the right wall at 29.623652
+New x:  -118.349586  Current x: 24.916666 Current y: 29.623652 x_diff:  -143.266251 Angle -3.06
+Hit the left wall at 27.689976
+New x:  120.516243  Current x: 1.083333 Current y: 27.689976 x_diff:  119.432907 Angle -0.08
+Hit the right wall at 25.756300
+New x:  -70.682899  Current x: 24.916666 Current y: 25.756300 x_diff:  -95.599564 Angle -3.06
+Hit the left wall at 23.822624
+New x:  72.849556  Current x: 1.083333 Current y: 23.822624 x_diff:  71.766220 Angle -0.08
+Hit the right wall at 21.888948
+New x:  -23.016211  Current x: 24.916666 Current y: 21.888948 x_diff:  -47.932877 Angle -3.06
+Hit the left wall at 19.955273
+New x:  25.182867  Current x: 1.083333 Current y: 19.955273 x_diff:  24.099533 Angle -0.08
+Hit the right wall at 18.021597
+New x:  24.650475  Current x: 24.916666 Current y: 18.021597 x_diff:  -0.266191 Angle -3.06
+New x:  -135.256088  Current x: 1.168463 Current y: 31.490337 x_diff:  -136.424545 Angle -3.04
+Hit the left wall at 31.481920
+New x:  137.422760  Current x: 1.083333 Current y: 31.481920 x_diff:  136.339432 Angle -0.10
+Hit the right wall at 29.125162
+New x:  -87.589432  Current x: 24.916666 Current y: 29.125162 x_diff:  -112.506096 Angle -3.04
+Hit the left wall at 26.768404
+New x:  89.756111  Current x: 1.083333 Current y: 26.768404 x_diff:  88.672775 Angle -0.10
+Hit the right wall at 24.411646
+New x:  -39.922775  Current x: 24.916666 Current y: 24.411646 x_diff:  -64.839439 Angle -3.04
+Hit the left wall at 22.054888
+New x:  42.089443  Current x: 1.083333 Current y: 22.054888 x_diff:  41.006111 Angle -0.10
+Hit the right wall at 19.698130
+New x:  7.743887  Current x: 24.916666 Current y: 19.698130 x_diff:  -17.172779 Angle -3.04
+New x:  70.477966  Current x: 4.137479 Current y: 30.912451 x_diff:  66.340485 Angle -0.19
+Hit the right wall at 26.868010
+New x:  -20.644617  Current x: 24.916666 Current y: 26.868010 x_diff:  -45.561283 Angle -2.95
+Hit the left wall at 22.229111
+New x:  22.811289  Current x: 1.083333 Current y: 22.229111 x_diff:  21.727955 Angle -0.19
+New x:  82.274261  Current x: 7.147073 Current y: 30.415102 x_diff:  75.127190 Angle -0.16
+Hit the right wall at 27.478598
+New x:  -32.440903  Current x: 24.916666 Current y: 27.478598 x_diff:  -57.357567 Angle -2.98
+Hit the left wall at 23.540031
+New x:  34.607563  Current x: 1.083333 Current y: 23.540031 x_diff:  33.524231 Angle -0.16
+Hit the right wall at 19.601465
+New x:  15.225765  Current x: 24.916666 Current y: 19.601465 x_diff:  -9.690901 Angle -2.98
+New x:  73.020523  Current x: 10.162465 Current y: 29.846794 x_diff:  62.858055 Angle -0.19
+Hit the right wall at 27.066084
+New x:  -23.187151  Current x: 24.916666 Current y: 27.066084 x_diff:  -48.103817 Angle -2.96
+Hit the left wall at 22.574238
+New x:  25.353827  Current x: 1.083333 Current y: 22.574238 x_diff:  24.270493 Angle -0.19
+Hit the right wall at 18.082392
+New x:  24.479504  Current x: 24.916666 Current y: 18.082392 x_diff:  -0.437163 Angle -2.96
+New x:  84.769150  Current x: 13.214355 Current y: 29.362185 x_diff:  71.554794 Angle -0.16
+Hit the right wall at 27.503975
+New x:  -34.935844  Current x: 24.916666 Current y: 27.503975 x_diff:  -59.852512 Angle -2.98
+Hit the left wall at 23.719482
+New x:  37.102512  Current x: 1.083333 Current y: 23.719482 x_diff:  36.019180 Angle -0.16
+Hit the right wall at 19.934990
+New x:  12.730816  Current x: 24.916666 Current y: 19.934990 x_diff:  -12.185850 Angle -2.98
+New x:  84.723442  Current x: 16.277933 Current y: 28.875408 x_diff:  68.445511 Angle -0.16
+Hit the right wall at 27.502787
+New x:  -34.890068  Current x: 24.916666 Current y: 27.502787 x_diff:  -59.806732 Angle -2.98
+Hit the left wall at 23.715870
+New x:  37.056728  Current x: 1.083333 Current y: 23.715870 x_diff:  35.973396 Angle -0.16
+Hit the right wall at 19.928953
+New x:  12.776608  Current x: 24.916666 Current y: 19.928953 x_diff:  -12.140059 Angle -2.98
+New x:  84.897430  Current x: 19.324230 Current y: 28.392605 x_diff:  65.573204 Angle -0.16
+Hit the right wall at 27.506268
+New x:  -35.064125  Current x: 24.916666 Current y: 27.506268 x_diff:  -59.980793 Angle -2.98
+Hit the left wall at 23.728958
+New x:  37.230793  Current x: 1.083333 Current y: 23.728958 x_diff:  36.147461 Angle -0.16
+Hit the right wall at 19.951649
+New x:  12.602533  Current x: 24.916666 Current y: 19.951649 x_diff:  -12.314133 Angle -2.98
+New x:  85.115128  Current x: 22.370148 Current y: 27.911459 x_diff:  62.744976 Angle -0.16
+Hit the right wall at 27.509201
+New x:  -35.281837  Current x: 24.916666 Current y: 27.509201 x_diff:  -60.198502 Angle -2.98
+Hit the left wall at 23.744390
+New x:  37.448502  Current x: 1.083333 Current y: 23.744390 x_diff:  36.365170 Angle -0.16
+Hit the right wall at 19.979580
+New x:  12.384830  Current x: 24.916666 Current y: 19.979580 x_diff:  -12.531836 Angle -2.98
+New x:  11.449532  Current x: 18.921053 Current y: 34.498241 x_diff:  -7.471521 Angle -2.00
+New x:  -339.850830  Current x: 15.163960 Current y: 34.325470 x_diff:  -355.014801 Angle -3.10
+Hit the left wall at 33.677967
+New x:  342.017487  Current x: 1.083333 Current y: 33.677967 x_diff:  340.934143 Angle -0.05
+Hit the right wall at 32.581985
+New x:  -292.184204  Current x: 24.916666 Current y: 32.581985 x_diff:  -317.100861 Angle -3.10
+Hit the left wall at 31.486002
+New x:  294.350861  Current x: 1.083333 Current y: 31.486002 x_diff:  293.267517 Angle -0.05
+Hit the right wall at 30.390018
+New x:  -244.517532  Current x: 24.916666 Current y: 30.390018 x_diff:  -269.434204 Angle -3.10
+Hit the left wall at 29.294035
+New x:  246.684189  Current x: 1.083333 Current y: 29.294035 x_diff:  245.600861 Angle -0.05
+Hit the right wall at 28.198051
+New x:  -196.850861  Current x: 24.916666 Current y: 28.198051 x_diff:  -221.767532 Angle -3.10
+Hit the left wall at 27.102068
+New x:  199.017532  Current x: 1.083333 Current y: 27.102068 x_diff:  197.934204 Angle -0.05
+Hit the right wall at 26.006084
+New x:  -149.184189  Current x: 24.916666 Current y: 26.006084 x_diff:  -174.100861 Angle -3.10
+Hit the left wall at 24.910101
+New x:  151.350861  Current x: 1.083333 Current y: 24.910101 x_diff:  150.267532 Angle -0.05
+Hit the right wall at 23.814117
+New x:  -101.517532  Current x: 24.916666 Current y: 23.814117 x_diff:  -126.434196 Angle -3.10
+Hit the left wall at 22.718134
+New x:  103.684204  Current x: 1.083333 Current y: 22.718134 x_diff:  102.600868 Angle -0.05
+Hit the right wall at 21.622150
+New x:  -53.850868  Current x: 24.916666 Current y: 21.622150 x_diff:  -78.767532 Angle -3.10
+Hit the left wall at 20.526167
+New x:  56.017532  Current x: 1.083333 Current y: 20.526167 x_diff:  54.934200 Angle -0.05
+Hit the right wall at 19.430183
+New x:  -6.184202  Current x: 24.916666 Current y: 19.430183 x_diff:  -31.100868 Angle -3.10
+Hit the left wall at 18.334200
+New x:  8.350867  Current x: 1.083333 Current y: 18.334200 x_diff:  7.267534 Angle -0.05
+New x:  -285.871887  Current x: 11.457093 Current y: 34.124443 x_diff:  -297.328979 Angle -3.09
+Hit the left wall at 33.561863
+New x:  288.038544  Current x: 1.083333 Current y: 33.561863 x_diff:  286.955200 Angle -0.05
+Hit the right wall at 32.269360
+New x:  -238.205215  Current x: 24.916666 Current y: 32.269360 x_diff:  -263.121887 Angle -3.09
+Hit the left wall at 30.976854
+New x:  240.371887  Current x: 1.083333 Current y: 30.976854 x_diff:  239.288559 Angle -0.05
+Hit the right wall at 29.684349
+New x:  -190.538559  Current x: 24.916666 Current y: 29.684349 x_diff:  -215.455231 Angle -3.09
+Hit the left wall at 28.391844
+New x:  192.705215  Current x: 1.083333 Current y: 28.391844 x_diff:  191.621887 Angle -0.05
+Hit the right wall at 27.099339
+New x:  -142.871887  Current x: 24.916666 Current y: 27.099339 x_diff:  -167.788559 Angle -3.09
+Hit the left wall at 25.806833
+New x:  145.038544  Current x: 1.083333 Current y: 25.806833 x_diff:  143.955215 Angle -0.05
+Hit the right wall at 24.514328
+New x:  -95.205223  Current x: 24.916666 Current y: 24.514328 x_diff:  -120.121887 Angle -3.09
+Hit the left wall at 23.221823
+New x:  97.371887  Current x: 1.083333 Current y: 23.221823 x_diff:  96.288551 Angle -0.05
+Hit the right wall at 21.929317
+New x:  -47.538551  Current x: 24.916666 Current y: 21.929317 x_diff:  -72.455215 Angle -3.09
+Hit the left wall at 20.636812
+New x:  49.705208  Current x: 1.083333 Current y: 20.636812 x_diff:  48.621876 Angle -0.05
+Hit the right wall at 19.344307
+New x:  0.128126  Current x: 24.916666 Current y: 19.344307 x_diff:  -24.788540 Angle -3.09
+Hit the left wall at 18.051802
+New x:  2.038538  Current x: 1.083333 Current y: 18.051802 x_diff:  0.955205 Angle -0.05
+New x:  -338.453522  Current x: 7.865051 Current y: 33.958916 x_diff:  -346.318573 Angle -3.10
+Hit the left wall at 33.646404
+New x:  340.620178  Current x: 1.083333 Current y: 33.646404 x_diff:  339.536835 Angle -0.05
+Hit the right wall at 32.548126
+New x:  -290.786896  Current x: 24.916666 Current y: 32.548126 x_diff:  -315.703552 Angle -3.10
+Hit the left wall at 31.449848
+New x:  292.953522  Current x: 1.083333 Current y: 31.449848 x_diff:  291.870178 Angle -0.05
+Hit the right wall at 30.351570
+New x:  -243.120224  Current x: 24.916666 Current y: 30.351570 x_diff:  -268.036896 Angle -3.10
+Hit the left wall at 29.253292
+New x:  245.286865  Current x: 1.083333 Current y: 29.253292 x_diff:  244.203537 Angle -0.05
+Hit the right wall at 28.155014
+New x:  -195.453552  Current x: 24.916666 Current y: 28.155014 x_diff:  -220.370224 Angle -3.10
+Hit the left wall at 27.056736
+New x:  197.620209  Current x: 1.083333 Current y: 27.056736 x_diff:  196.536880 Angle -0.05
+Hit the right wall at 25.958458
+New x:  -147.786896  Current x: 24.916666 Current y: 25.958458 x_diff:  -172.703568 Angle -3.10
+Hit the left wall at 24.860180
+New x:  149.953552  Current x: 1.083333 Current y: 24.860180 x_diff:  148.870224 Angle -0.05
+Hit the right wall at 23.761902
+New x:  -100.120247  Current x: 24.916666 Current y: 23.761902 x_diff:  -125.036911 Angle -3.10
+Hit the left wall at 22.663624
+New x:  102.286911  Current x: 1.083333 Current y: 22.663624 x_diff:  101.203575 Angle -0.05
+Hit the right wall at 21.565346
+New x:  -52.453590  Current x: 24.916666 Current y: 21.565346 x_diff:  -77.370255 Angle -3.10
+Hit the left wall at 20.467068
+New x:  54.620258  Current x: 1.083333 Current y: 20.467068 x_diff:  53.536926 Angle -0.05
+Hit the right wall at 19.368790
+New x:  -4.786936  Current x: 24.916666 Current y: 19.368790 x_diff:  -29.703602 Angle -3.10
+Hit the left wall at 18.270512
+New x:  6.953607  Current x: 1.083333 Current y: 18.270512 x_diff:  5.870273 Angle -0.05
+New x:  -268.184448  Current x: 4.945682 Current y: 33.790142 x_diff:  -273.130127 Angle -3.08
+Hit the left wall at 33.566853
+New x:  270.351105  Current x: 1.083333 Current y: 33.566853 x_diff:  269.267761 Angle -0.06
+Hit the right wall at 32.189003
+New x:  -220.517731  Current x: 24.916666 Current y: 32.189003 x_diff:  -245.434402 Angle -3.08
+Hit the left wall at 30.811155
+New x:  222.684402  Current x: 1.083333 Current y: 30.811155 x_diff:  221.601074 Angle -0.06
+Hit the right wall at 29.433308
+New x:  -172.851074  Current x: 24.916666 Current y: 29.433308 x_diff:  -197.767746 Angle -3.08
+Hit the left wall at 28.055460
+New x:  175.017731  Current x: 1.083333 Current y: 28.055460 x_diff:  173.934402 Angle -0.06
+Hit the right wall at 26.677612
+New x:  -125.184410  Current x: 24.916666 Current y: 26.677612 x_diff:  -150.101074 Angle -3.08
+Hit the left wall at 25.299765
+New x:  127.351082  Current x: 1.083333 Current y: 25.299765 x_diff:  126.267746 Angle -0.06
+Hit the right wall at 23.921917
+New x:  -77.517746  Current x: 24.916666 Current y: 23.921917 x_diff:  -102.434410 Angle -3.08
+Hit the left wall at 22.544069
+New x:  79.684418  Current x: 1.083333 Current y: 22.544069 x_diff:  78.601082 Angle -0.06
+Hit the right wall at 21.166222
+New x:  -29.851080  Current x: 24.916666 Current y: 21.166222 x_diff:  -54.767746 Angle -3.08
+Hit the left wall at 19.788374
+New x:  32.017746  Current x: 1.083333 Current y: 19.788374 x_diff:  30.934414 Angle -0.06
+Hit the right wall at 18.410526
+New x:  17.815584  Current x: 24.916666 Current y: 18.410526 x_diff:  -7.101082 Angle -3.08
+New x:  -247.515625  Current x: 0.975511 Current y: 33.541828 x_diff:  -248.491135 Angle -3.08
+Hit the left wall at 33.548573
+New x:  249.682297  Current x: 1.083333 Current y: 33.548573 x_diff:  248.598969 Angle -0.06
+Hit the right wall at 32.057922
+New x:  -199.848969  Current x: 24.916666 Current y: 32.057922 x_diff:  -224.765640 Angle -3.08
+Hit the left wall at 30.567272
+New x:  202.015656  Current x: 1.083333 Current y: 30.567272 x_diff:  200.932327 Angle -0.06
+Hit the right wall at 29.076622
+New x:  -152.182327  Current x: 24.916666 Current y: 29.076622 x_diff:  -177.098999 Angle -3.08
+Hit the left wall at 27.585972
+New x:  154.349014  Current x: 1.083333 Current y: 27.585972 x_diff:  153.265686 Angle -0.06
+Hit the right wall at 26.095322
+New x:  -104.515709  Current x: 24.916666 Current y: 26.095322 x_diff:  -129.432373 Angle -3.08
+Hit the left wall at 24.604671
+New x:  106.682388  Current x: 1.083333 Current y: 24.604671 x_diff:  105.599052 Angle -0.06
+Hit the right wall at 23.114021
+New x:  -56.849068  Current x: 24.916666 Current y: 23.114021 x_diff:  -81.765732 Angle -3.08
+Hit the left wall at 21.623371
+New x:  59.015743  Current x: 1.083333 Current y: 21.623371 x_diff:  57.932411 Angle -0.06
+Hit the right wall at 20.132721
+New x:  -9.182428  Current x: 24.916666 Current y: 20.132721 x_diff:  -34.099094 Angle -3.08
+Hit the left wall at 18.642071
+New x:  11.349107  Current x: 1.083333 Current y: 18.642071 x_diff:  10.265774 Angle -0.06
+New x:  55.829517  Current x: 2.510258 Current y: 33.106987 x_diff:  53.319260 Angle -0.28
+Hit the right wall at 26.758562
+New x:  -5.996193  Current x: 24.916666 Current y: 26.758562 x_diff:  -30.912859 Angle -2.87
+Hit the left wall at 20.005848
+New x:  8.162862  Current x: 1.083333 Current y: 20.005848 x_diff:  7.079529 Angle -0.28
+New x:  59.974037  Current x: 4.297840 Current y: 32.637039 x_diff:  55.676197 Angle -0.26
+Hit the right wall at 27.216436
+New x:  -10.140711  Current x: 24.916666 Current y: 27.216436 x_diff:  -35.057377 Angle -2.88
+Hit the left wall at 20.950754
+New x:  12.307379  Current x: 1.083333 Current y: 20.950754 x_diff:  11.224046 Angle -0.26
+New x:  62.708851  Current x: 6.096976 Current y: 32.186199 x_diff:  56.611874 Angle -0.25
+Hit the right wall at 27.470230
+New x:  -12.875528  Current x: 24.916666 Current y: 27.470230 x_diff:  -37.792194 Angle -2.90
+Hit the left wall at 21.497910
+New x:  15.042200  Current x: 1.083333 Current y: 21.497910 x_diff:  13.958867 Angle -0.25
+New x:  67.045944  Current x: 7.957915 Current y: 31.753056 x_diff:  59.088032 Angle -0.23
+Hit the right wall at 27.805815
+New x:  -17.212629  Current x: 24.916666 Current y: 27.805815 x_diff:  -42.129295 Angle -2.91
+Hit the left wall at 22.258482
+New x:  19.379299  Current x: 1.083333 Current y: 22.258482 x_diff:  18.295965 Angle -0.23
+New x:  70.149193  Current x: 9.830201 Current y: 31.339016 x_diff:  60.318989 Angle -0.22
+Hit the right wall at 28.002777
+New x:  -20.315851  Current x: 24.916666 Current y: 28.002777 x_diff:  -45.232517 Angle -2.92
+Hit the left wall at 22.732243
+New x:  22.482517  Current x: 1.083333 Current y: 22.732243 x_diff:  21.399183 Angle -0.22
+New x:  67.465965  Current x: 11.755150 Current y: 30.893513 x_diff:  55.710815 Angle -0.23
+Hit the right wall at 27.847458
+New x:  -17.632643  Current x: 24.916666 Current y: 27.847458 x_diff:  -42.549309 Angle -2.91
+Hit the left wall at 22.331558
+New x:  19.799313  Current x: 1.083333 Current y: 22.331558 x_diff:  18.715979 Angle -0.23
+New x:  72.941895  Current x: 13.361657 Current y: 30.554983 x_diff:  59.580238 Angle -0.21
+Hit the right wall at 28.120066
+New x:  -23.108583  Current x: 24.916666 Current y: 28.120066 x_diff:  -48.025249 Angle -2.93
+Hit the left wall at 23.097815
+New x:  25.275253  Current x: 1.08

@@ -114,17 +114,16 @@ int _tmain(int argc, TCHAR* argv[])
 			{
 				wait = 25 * (pkout.flt6);
 			}
-
+			/*
 			Sleep(wait);
 
-			/* RESET */
 			pkout.flt1 = 2;
 			pkout.flt2 = 2;
 			pkout.flt3 = 0; // steps
 			pkout.flt4 = 2;
 			pkout.flt5 = 2;
 			pkout.flt6 = 0; // steps
-			sender.SendData(&pkout);
+			sender.SendData(&pkout);*/
 
 		}		
 	}
