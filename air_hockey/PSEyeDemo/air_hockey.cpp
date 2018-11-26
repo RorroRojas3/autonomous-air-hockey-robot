@@ -5,6 +5,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include "xPCUDPSock.h"
+#include <Windows.h>
 
 /* UDP STRUCTURES */
 #pragma pack(push,1) 
@@ -72,6 +73,9 @@ float yPixels_per_inch = 640.0 / BOARD_LENGTH;
 
 float Y_STEPS_PER_SECOND = 60.0 / 1.11333;
 float X_STEPS_PER_SECOND = 57.0 / 1.08;
+int penalty_mode = 0, penalty_shot = 0;
+int moved_once = 1;
+
 /* DEFINES DECLARATION SECTION*/
 #define FRAME_RATE 60
 #define RESOLUTION CLEYE_VGA
@@ -83,15 +87,16 @@ float X_STEPS_PER_SECOND = 57.0 / 1.08;
 #define PUCK_DILUTE 5
 
 #define PADDLE_HUE_INIT {112, 99}
-#define PADDLE_SATURATION_INIT {140, 54}
+#define PADDLE_SATURATION_INIT {140, 36}
 #define PADDLE_VALUE_INIT {227, 0}
 #define PADDLE_ERODE 1
 #define PADDLE_DILUTE 1
+
 #define BLUE_LINE 17
 #define NEUTRAL_ZONE 23
 #define RED_LINE 9.5
 #define HOME_X 35
-#define HOME_Y 30
+#define HOME_Y 20
 #define SLEEP 1
 
 /* CAMERA STRCUTS (GIVEN TO US) */
@@ -273,8 +278,8 @@ struct puck_prediction_t
 /* DETERMINES THE PREDICTED X-VALUE COORDINATE OF THE PUCK */
 void find_x_position(float angle, float target_y, float current_x, float current_y, double velocity, struct puck_prediction_t *puck_prediction, FILE * fpt)
 {
-	float LEFT_WALL = 20.0 / xPixels_per_inch;
-	float RIGHT_WALL = 460.0 / xPixels_per_inch;
+	float LEFT_WALL = 32.0 / xPixels_per_inch;
+	float RIGHT_WALL = 457.0 / xPixels_per_inch;
 	float x_diff, y_diff, y_wall, new_x;
 	double distance_traveled = 0;
 	Point start, predicted;
@@ -405,6 +410,26 @@ int _tmain(int argc, _TCHAR* argv[])
 		case 27:
 			return 0;
 			break;
+		case 110: // n pressed
+			penalty_mode = 0;
+			printf("Standby mode disabled.\n");
+			break;
+		case 112: // p pressed
+			printf("Standby mode enabled.\n");
+			penalty_mode = 1;
+			moved_once = 1;
+			break;
+		case 115:
+			if (penalty_shot == 1)
+			{
+				printf("Penalty Shot mode disabled.\n");
+				penalty_shot = 0;
+			}
+			else
+			{
+				printf("Penalty Shot mode enabled.\n");
+				penalty_shot = 1;
+			}
 		default:
 			break;
 		}
@@ -450,7 +475,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 	int total_angles = 0;
 	float angle_sum = 0, avg_prediction, prediction_sum;
 	int total_predictions;
-	float paddleX_steps, paddleY_steps, puckX_steps, puckY_steps;
+	float paddleX_steps, paddleY_steps, puckX_steps, puckY_steps, paddleY_in;
 	double velocity, y_diff, x_diff, xDiff, yDiff;
 	float angle, target_yy, predicted_puckX, predicted_puckX_steps, dist, paddle_area, paddle_perimeter, puck_area, puck_perimeter;
 	FILE *fpt;
@@ -469,6 +494,10 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 	int incoming = 0;
 	int temp = 0;
 	int move_the_paddle = 0;
+	int offset = 0;
+	int count = 0;
+	int move_home = 1;
+	int found = 0;
 	fpt = fopen("debug_output.txt", "w");
 
 	// puck xrange (24.5 -26) - (456-460)
@@ -499,13 +528,37 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 	while (1)
 	{
 
+		while (penalty_mode)
+		{
+			if (moved_once)
+			{
+				// RESET MOTOR
+				pkout.flt1 = 2;
+				pkout.flt2 = 2;
+				pkout.flt3 = 0;
+				pkout.flt4 = 2;
+				pkout.flt5 = 2;
+				pkout.flt6 = 0;
+				sender.SendData(&pkout);
+				Sleep(1);
+
+				x_motor_steps = (HOME_X - paddleX_steps) + 25;
+				y_motor_steps = (HOME_Y - paddleY_steps) - 20;
+				set_motor_steps(&pkout, x_motor_steps, 'x');
+				set_motor_steps(&pkout, y_motor_steps, 'y');
+				sender.SendData(&pkout);
+				moved_once = 0;
+			}
+			printf("Stuck\n");
+		}
+
 		if (move_the_paddle)
 		{
 			set_motor_steps(&pkout, x_motor_steps, 'x');
 			set_motor_steps(&pkout, y_motor_steps, 'y');
 			sender.SendData(&pkout);
 			motor_start = clock();
-			wait = 25.0;
+			wait = 25;
 			move_the_paddle = 0;
 		}
 		frames_elapsed++;
@@ -514,15 +567,6 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 		paddle_travel_time = (double)(target_yy*ySteps_per_pixel*yPixels_per_inch - (paddleY_steps - 13)) / (double)Y_STEPS_PER_SECOND;
 		paddle_travel_time *= 60.0;  // # of frames
 
-		/*if (frames_elapsed + paddle_travel_time >= puck_prediction.travel_time && time_valid != -1 && incoming == 1)
-		{
-			x_motor_steps = 0;
-			y_motor_steps = target_yy*ySteps_per_pixel*yPixels_per_inch - (paddleY_steps)+20;
-			printf("MOVE TO HIT PUCK\n");
-			time_valid = -1;
-		}*/
-
-		//Get frame From Camera
 		CLEyeCameraGetFrame(Instance->CameraInstance, CamImg.data);
 
 		// Homography frame
@@ -572,19 +616,21 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 				paddle_area = contourArea(paddle.contour[i], false);
 				paddle_perimeter = arcLength(paddle.contour[i], true);
 
-				if ((paddle_area > 500) && (paddle_perimeter > 120))
+				moment = moments(paddle.contour[i], false);
+				centroid = Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00);
+				paddleX_pix = centroid.y;
+				paddleY_pix = centroid.x - 20;
+
+				if ((paddle_area > 300) && (paddle_perimeter > 120) && (paddleY_pix < 320))
 				{
 					// DRAW CONTOUR AND GET CENTROID
-					moment = moments(paddle.contour[i], false);
-					centroid = Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00);
 					Scalar color = Scalar(255, 0, 0);
 					drawContours(unwarp_frame, paddle.contour, i, color, 2, 8, hierarchy, 0, Point());
-					paddleX_pix = centroid.y;
-					paddleY_pix = centroid.x;
 
 					// DETERMINE LOCATION OF PADDLE 
 					paddleX_steps = paddleX_pix * xSteps_per_pixel;
 					paddleY_steps = paddleY_pix * ySteps_per_pixel;
+					paddleY_in = paddleY_pix / yPixels_per_inch;
 				}
 
 			}
@@ -593,16 +639,16 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 		// If Puck found
 		if (puck.contour.size() >= 1)
 		{
-			//centroid coordinates
-			//printf("%.2f %.2f\n", centroid.x, centroid.y);
 			for (i = 0; i < puck.contour.size(); i++)
 			{
 				puck_area = contourArea(puck.contour[i], false);
 				puck_perimeter = arcLength(puck.contour[i], true);
-				//printf("Area: %.2f, Perimeter: %.2f\r\n", puck_area, puck_perimeter);
+
 				if ((puck_area > 800) && (puck_perimeter > 100))
 				{
-
+					count = 0;
+					found = 1;
+					move_home = 1;
 					moment = moments(puck.contour[i], false);
 					centroid = Point2f(moment.m10 / moment.m00, moment.m01 / moment.m00);
 
@@ -615,13 +661,12 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 					puckY_pix = centroid.x;
 					puckY_in = puckY_pix / yPixels_per_inch;
 					puckX_in = puckX_pix / xPixels_per_inch;
-
+					/*
 					if (abs(9.5 - puckY_in) < 0.5)
 					{
-						fprintf(fpt, "CROSSED THE LINE AT [%.2f, %.2f]\n\n", puckX_in, puckY_in);
-						//printf("CROSSED THE LINE AT [%.2f, %.2f]\n\n", puckX_in, puckY_in);
+					fprintf(fpt, "CROSSED THE LINE AT [%.2f, %.2f]\n\n", puckX_in, puckY_in);
 					}
-
+					*/
 					// Resets X and Y value at start of new FPS
 					if (num_frames == 0)
 					{
@@ -645,18 +690,17 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 					// LOGIC AFTER 5 FRAMES 
 					if ((double)((clock() - motor_start) / CLOCKS_PER_SEC) * 1000 >= (double)wait)
 					{
-						// reset the motor
+						// RESET MOTOR
 						pkout.flt1 = 2;
 						pkout.flt2 = 2;
-						pkout.flt3 = 0; // steps
+						pkout.flt3 = 0;
 						pkout.flt4 = 2;
 						pkout.flt5 = 2;
-						pkout.flt6 = 0; // steps
+						pkout.flt6 = 0;
 						sender.SendData(&pkout);
 
 						if (num_frames > 3)
 						{
-							//printf("Y Paddle Steps: %.2f\n\r", paddleX_steps);
 							avg_xdiff = total_xdiff / ((float)num_frames - 1);
 							avg_ydiff = total_ydiff / ((float)num_frames - 1);
 							dist = sqrt(pow((avg_xdiff), 2) + pow((avg_ydiff), 2));
@@ -665,119 +709,126 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 							end_t = clock();
 							duration = (end_t - start_t) / (double)CLOCKS_PER_SEC;
 							velocity = (double)dist / (double)(1.0 / 60.0);
-
 							start_t = clock();
 
-
 							//printf("puckx %.3f, pucky %.3f\n Paddlex %.3f, Paddley %.3f\n", puckX_pix, puckY_pix, paddleX_pix, paddleY_pix);
-							if (dist > 0.05)
+							if (dist > 0.02)
 							{
-								//printf("Dist: %f Duration: %f Velocity %f\n", dist, duration, velocity);
 								angle = atan2(avg_ydiff, avg_xdiff);
 
 								// PUCK MOVING TOWARDS PADDLE
-								if ((angle < 0) /*&& (puckY_pix - (paddleY_pix - 30) > 0)*/)
+								if (angle < 0)
 								{
 									total_angles++;
 									angle_sum += angle;
 									avg_angle = angle_sum / (float)total_angles;
-									target_yy = 18; //inches
-									find_x_position(angle, target_yy, puckX_in, puckY_in, velocity, &puck_prediction, fpt);
+									target_yy = 15; //inches
+									find_x_position(angle, target_yy - 2, puckX_in, puckY_in, velocity, &puck_prediction, fpt);
 									total_predictions++;
 									prediction_sum += puck_prediction.x;
 									avg_prediction = prediction_sum / (float)total_predictions;
 
-									velocity = (double)dist / (double)((num_frames) / 61.0);
 									start.x = puckY_pix;
 									start.y = puckX_pix;
 									predicted.x = target_yy * yPixels_per_inch;
 									predicted.y = puck_prediction.x * xPixels_per_inch;
 
 									line(unwarp_frame, start, predicted, Scalar(0, 255, 0), 2, 8, 0);
-									fitLine(points, outputLine, CV_DIST_L1, 0, 0.1, 0.1);
+									//fitLine(points, outputLine, CV_DIST_L1, 0, 0.1, 0.1);
 
-									line(unwarp_frame, Point(outputLine.data[2] * yPixels_per_inch, outputLine.data[3] * xPixels_per_inch), Point((outputLine.data[2] + outputLine.data[0] * 10)*yPixels_per_inch, (outputLine.data[3] + outputLine.data[1] * 10)*xPixels_per_inch), Scalar(0, 0, 255), 2, 8, 0);
-									points.clear();
+									//line(unwarp_frame, Point(outputLine.data[2] * yPixels_per_inch, outputLine.data[3] * xPixels_per_inch), Point((outputLine.data[2] + outputLine.data[0] * 10)*yPixels_per_inch, (outputLine.data[3] + outputLine.data[1] * 10)*xPixels_per_inch), Scalar(0, 0, 255), 2, 8, 0);
+									//points.clear();
 
 									predicted_puckX_steps = puck_prediction.x * xPixels_per_inch * xSteps_per_pixel;
+									avg_prediction = avg_prediction * xPixels_per_inch * xSteps_per_pixel;
 
 									xDiff = predicted_puckX_steps - paddleX_steps;
+									x_diff = avg_prediction - paddleX_steps;
 									yDiff = puckY_steps - paddleY_steps;
 
-									paddle_travel_time = (double)(target_yy*ySteps_per_pixel*yPixels_per_inch - (paddleY_steps - 13)) / (double)Y_STEPS_PER_SECOND;
-									paddle_travel_time *= 60;
-									frames_elapsed = 0;
-									incoming = 1;
-
-
+									//paddle_travel_time = (double)(target_yy*ySteps_per_pixel*yPixels_per_inch - (paddleY_steps - 13)) / (double)Y_STEPS_PER_SECOND;
+									//paddle_travel_time *= 60;
+									//frames_elapsed = 0;
+									//incoming = 1;
 
 									//printf("target_yy_steps %f,  paddle_y_steps-13 %f\n", target_yy*ySteps_per_pixel*yPixels_per_inch, paddleY_steps - 13);
 									//printf("Puck Travel Time %.f. Dist: %f  Paddle Travel_time %.f \n", puck_prediction.travel_time, puck_prediction.travel_distance, paddle_travel_time);
 									//printf("Prediction_X: %f Current X: %f\n", puck_prediction.x, puckX_in);
 
 									//printf("Elapsed time: %.2f, Wait time: %d\n\r", (clock() - motor_start) / CLOCKS_PER_SEC * 1000, wait);
-									printf("Puck Y in: %.2f\n", puckY_in);
 									if (puckY_in < RED_LINE)
 									{
-										printf("Puck behind RED\n");
-										time_valid = 0;
-										incoming = 0;
-										x_motor_steps = puckX_steps - paddleX_steps;
-										y_motor_steps = puckY_steps - paddleY_steps;
+										if (puckY_steps > HOME_Y || puckX_in < 10 || puckX_in > 18) {
+											x_motor_steps = puckX_steps - paddleX_steps;
+											y_motor_steps = puckY_steps - paddleY_steps;
+											move_the_paddle = 1;
+										}
+									}
+									else if (puckY_in > 27)
+									{
+										x_motor_steps = xDiff;
+										y_motor_steps = target_yy * yPixels_per_inch * ySteps_per_pixel - paddleY_steps - 10;
 										move_the_paddle = 1;
 									}
 									else
 									{
-										printf("Coming Towards us\n");
-										incoming = 0;
-										time_valid = 0;
+										//	printf("Before PaddleY_in %f\n");
 										x_motor_steps = xDiff;
-										y_motor_steps = target_yy * yPixels_per_inch * ySteps_per_pixel - paddleY_steps - 15;
+										y_motor_steps = target_yy * yPixels_per_inch * ySteps_per_pixel - paddleY_steps + 20;
 										move_the_paddle = 1;
 									}
 								}
-								else if (angle > 0) // Going away from board
+								// PUCK GOING TO OPPONENTS SIDE OF TABLE
+								else if (angle > 0)
 								{
-									incoming = 0;
-									time_valid = 1;
-
+									total_predictions = 0;
+									avg_prediction = 0;
+									prediction_sum = 0;
 									if ((puckY_in < RED_LINE)
 										|| (puckY_in < BLUE_LINE && puckY_in > RED_LINE && ((puckY_steps - paddleY_steps) < 0)))
 									{
-										printf("Puck behind RED\n");
-										x_motor_steps = puckX_steps - paddleX_steps;
-										y_motor_steps = puckY_steps - paddleY_steps;
-										move_the_paddle = 1;
+										if ((puckY_in > 3) && (puckX_in < 10 || puckX_in > 18))
+										{
+											x_motor_steps = puckX_steps - paddleX_steps;
+											y_motor_steps = puckY_steps - paddleY_steps;
+											move_the_paddle = 1;
+										}
 
 									}
-									else if (puckY_in < BLUE_LINE && puckY_in > RED_LINE && ((puckY_steps - paddleY_steps) > 0))
+									else if (puckY_in < NEUTRAL_ZONE && puckY_in > RED_LINE && ((puckY_steps - paddleY_steps) > 0))
 									{
 
-										incoming = 0;
-										time_valid = 0;
-										printf("Almost gone from ours zone\n");
 										x_motor_steps = puckX_steps - paddleX_steps;
-										y_motor_steps = puckY_steps - paddleY_steps + 40;
+										y_motor_steps = puckY_steps - paddleY_steps + 50;
 										move_the_paddle = 1;
 									}
-									else  // Go home
+									else
 									{
-										incoming = 0;
-										time_valid = 0;
 										x_motor_steps = HOME_X - paddleX_steps;
 										y_motor_steps = HOME_Y - paddleY_steps;
 										move_the_paddle = 1;
 									}
 								}
 							}
-							else // Puck dead
+							// PUCK NOT MOVING 
+							else
 							{
-								printf("PUCK DEAD\n");
-								if ((puckY_in < RED_LINE) || (puckY_in < NEUTRAL_ZONE))
+								if (puckY_in < NEUTRAL_ZONE)
 								{
-									printf("Puck behind RED\n");
-									x_motor_steps = puckX_steps - paddleX_steps;
-									y_motor_steps = puckY_steps - paddleY_steps;
+									if (penalty_shot)  offset = 40;
+									else  offset = 0;
+
+									if (puckY_steps > HOME_Y || puckX_in < 10 || puckX_in > 18)
+									{
+										x_motor_steps = puckX_steps - paddleX_steps;
+										y_motor_steps = puckY_steps - paddleY_steps + offset;
+										move_the_paddle = 1;
+									}
+								}
+								else
+								{
+									x_motor_steps = HOME_X - paddleX_steps;
+									y_motor_steps = HOME_Y - paddleY_steps;
 									move_the_paddle = 1;
 								}
 							}
@@ -785,34 +836,40 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 
 						// RESET VALUES
 						num_frames = 0;
-						x = 0;
-						y = 0;
-						x_in = puckX_in;
-						y_in = puckY_in;
 					}
+				}
+				else
+				{
+					count++;
 				}
 				num_frames++;
 			}
-
 		}
-		else // Go home if puck not detected	
+		if (count > 1000 && found == 0)
 		{
-			if ((double)((clock() - motor_start) / CLOCKS_PER_SEC) * 1000 >= (double)wait)
-			{
-				printf("Puck not detected, go home\n");
-				pkout.flt1 = 2;
-				pkout.flt2 = 2;
-				pkout.flt3 = 0; // steps
-				pkout.flt4 = 2;
-				pkout.flt5 = 2;
-				pkout.flt6 = 0; // steps
-				sender.SendData(&pkout);
+			printf("GO HOME\n");
+			// RESET MOTOR
+			pkout.flt1 = 2;
+			pkout.flt2 = 2;
+			pkout.flt3 = 0;
+			pkout.flt4 = 2;
+			pkout.flt5 = 2;
+			pkout.flt6 = 0;
+			sender.SendData(&pkout);
+			Sleep(1);
 
-				x_motor_steps = HOME_X - paddleX_steps;
-				y_motor_steps = HOME_Y - paddleY_steps;
-				move_the_paddle = 1;
-			}
+			x_motor_steps = HOME_X - paddleX_steps;
+			y_motor_steps = HOME_Y - paddleY_steps;
+			set_motor_steps(&pkout, x_motor_steps, 'x');
+			set_motor_steps(&pkout, y_motor_steps, 'y');
+			sender.SendData(&pkout);
+			motor_start = clock();
+			move_home = 0;
+			count = 0;
 		}
+
+		found = 0;
+		
 
 		imshow("Paddle/Puck Contours", unwarp_frame);
 

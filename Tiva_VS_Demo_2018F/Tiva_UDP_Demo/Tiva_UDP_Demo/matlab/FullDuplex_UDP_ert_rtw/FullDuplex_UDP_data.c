@@ -8,9 +8,9 @@
  *
  * Code generated for Simulink model 'FullDuplex_UDP'.
  *
- * Model version                  : 1.142
+ * Model version                  : 1.145
  * Simulink Coder version         : 8.12 (R2017a) 16-Feb-2017
- * C/C++ source code generated on : Sun Nov 25 18:10:03 2018
+ * C/C++ source code generated on : Mon Nov 26 15:48:11 2018
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -94,10 +94,10 @@ P_FullDuplex_UDP FullDuplex_UDP_P = {
   1073770496U,                         /* Computed Parameter: GPIOWrite1_p1
                                         * Referenced by: '<S8>/GPIO Write1'
                                         */
-  1500U,                               /* Expression: uint32(freq)
+  1800U,                               /* Expression: uint32(freq)
                                         * Referenced by: '<S17>/S-Function2'
                                         */
-  1500U,                               /* Expression: uint32(freq)
+  1800U,                               /* Expression: uint32(freq)
                                         * Referenced by: '<S18>/S-Function2'
                                         */
   536870920U,                          /* Computed Parameter: GPIOSetup1_p1_l
