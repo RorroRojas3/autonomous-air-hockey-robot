@@ -40,7 +40,7 @@ using namespace cv;
 const int MAX_VALUE_H = 180;
 const int MAX_VALUE = 255;
 const float	STEPS_WIDTH_X = 70;										// Number of steps to move across board in x-direction
-const float STEPS_LENGTH_Y = 60;											// Number of steps to move across board in y-direction
+const float STEPS_LENGTH_Y = 55;											// Number of steps to move across board in y-direction
 const float BOARD_WIDTH = 26;												// board width in inches
 const float	BOARD_LENGTH = 53;												// board length in inches
 const String CAMERA_WINDOW_NAME = "PS3 Camera";
@@ -558,7 +558,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 			set_motor_steps(&pkout, y_motor_steps, 'y');
 			sender.SendData(&pkout);
 			motor_start = clock();
-			wait = 25;
+			wait = 10;
 			move_the_paddle = 0;
 		}
 		frames_elapsed++;
@@ -644,7 +644,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 				puck_area = contourArea(puck.contour[i], false);
 				puck_perimeter = arcLength(puck.contour[i], true);
 
-				if ((puck_area > 800) && (puck_perimeter > 100))
+				if ((puck_area > 600) && (puck_perimeter > 80))
 				{
 					count = 0;
 					found = 1;
@@ -661,6 +661,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 					puckY_pix = centroid.x;
 					puckY_in = puckY_pix / yPixels_per_inch;
 					puckX_in = puckX_pix / xPixels_per_inch;
+				
 					/*
 					if (abs(9.5 - puckY_in) < 0.5)
 					{
@@ -699,7 +700,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 						pkout.flt6 = 0;
 						sender.SendData(&pkout);
 
-						if (num_frames > 3)
+						if (num_frames > 6)
 						{
 							avg_xdiff = total_xdiff / ((float)num_frames - 1);
 							avg_ydiff = total_ydiff / ((float)num_frames - 1);
@@ -710,14 +711,35 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 							duration = (end_t - start_t) / (double)CLOCKS_PER_SEC;
 							velocity = (double)dist / (double)(1.0 / 60.0);
 							start_t = clock();
-
+							// RESET VALUES
+							num_frames = 0;
+							if (puckX_in < 3)
+							{
+								puckX_in = -1;
+								puckX_steps = puckX_in * xPixels_per_inch * xSteps_per_pixel;
+							}
+							else if (puckX_in > 24)
+							{
+								puckX_in = 28;
+								puckX_steps = puckX_in * xPixels_per_inch * xSteps_per_pixel;
+							}
+							else if ((puckX_in > 3) && (puckX_in < 7))
+							{
+								puckX_in = puckX_in - 1;
+								puckX_steps = puckX_in * xPixels_per_inch * xSteps_per_pixel;
+							}
+							else if ((puckX_in < 23) && (puckX_in > 19))
+							{
+								puckX_in = puckX_in + 1;
+								puckX_steps = puckX_in * xPixels_per_inch * xSteps_per_pixel;
+							}
 							//printf("puckx %.3f, pucky %.3f\n Paddlex %.3f, Paddley %.3f\n", puckX_pix, puckY_pix, paddleX_pix, paddleY_pix);
-							if (dist > 0.02)
+							if (dist > 0.01)
 							{
 								angle = atan2(avg_ydiff, avg_xdiff);
 
 								// PUCK MOVING TOWARDS PADDLE
-								if (angle < 0)
+								if ((angle < 0) && (puckY_in > target_yy))
 								{
 									total_angles++;
 									angle_sum += angle;
@@ -738,13 +760,36 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 
 									//line(unwarp_frame, Point(outputLine.data[2] * yPixels_per_inch, outputLine.data[3] * xPixels_per_inch), Point((outputLine.data[2] + outputLine.data[0] * 10)*yPixels_per_inch, (outputLine.data[3] + outputLine.data[1] * 10)*xPixels_per_inch), Scalar(0, 0, 255), 2, 8, 0);
 									//points.clear();
+								
+
+									if (puck_prediction.x < 3)
+									{
+										puck_prediction.x = -1;
+									}
+									else if (puck_prediction.x > 24)
+									{
+										puck_prediction.x = 28;
+									}
+									else if ((puck_prediction.x > 3) && (puck_prediction.x < 7))
+									{
+										puck_prediction.x = puck_prediction.x - 1;
+									}
+									else if ((puck_prediction.x < 23 ) && (puck_prediction.x > 19))
+									{
+										puck_prediction.x = puck_prediction.x + 1;
+									}
+
+									
+									
 
 									predicted_puckX_steps = puck_prediction.x * xPixels_per_inch * xSteps_per_pixel;
 									avg_prediction = avg_prediction * xPixels_per_inch * xSteps_per_pixel;
 
+								
 									xDiff = predicted_puckX_steps - paddleX_steps;
 									x_diff = avg_prediction - paddleX_steps;
 									yDiff = puckY_steps - paddleY_steps;
+									printf("Position: %f Velocity: %f\n", puckY_in, velocity);
 
 									//paddle_travel_time = (double)(target_yy*ySteps_per_pixel*yPixels_per_inch - (paddleY_steps - 13)) / (double)Y_STEPS_PER_SECOND;
 									//paddle_travel_time *= 60;
@@ -756,25 +801,26 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 									//printf("Prediction_X: %f Current X: %f\n", puck_prediction.x, puckX_in);
 
 									//printf("Elapsed time: %.2f, Wait time: %d\n\r", (clock() - motor_start) / CLOCKS_PER_SEC * 1000, wait);
+									if (paddleY_in < puckY_in) offset = 40; else offset = 0;
 									if (puckY_in < RED_LINE)
 									{
 										if (puckY_steps > HOME_Y || puckX_in < 10 || puckX_in > 18) {
 											x_motor_steps = puckX_steps - paddleX_steps;
-											y_motor_steps = puckY_steps - paddleY_steps;
+											y_motor_steps = puckY_steps - paddleY_steps + offset;
 											move_the_paddle = 1;
 										}
 									}
-									else if (puckY_in > 27)
+									else if (puckY_in > 17)
 									{
 										x_motor_steps = xDiff;
-										y_motor_steps = target_yy * yPixels_per_inch * ySteps_per_pixel - paddleY_steps - 10;
+										y_motor_steps = target_yy * yPixels_per_inch * ySteps_per_pixel - paddleY_steps;
 										move_the_paddle = 1;
 									}
 									else
 									{
 										//	printf("Before PaddleY_in %f\n");
 										x_motor_steps = xDiff;
-										y_motor_steps = target_yy * yPixels_per_inch * ySteps_per_pixel - paddleY_steps + 20;
+										y_motor_steps = target_yy * yPixels_per_inch * ySteps_per_pixel - paddleY_steps + 30;
 										move_the_paddle = 1;
 									}
 								}
@@ -784,13 +830,14 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 									total_predictions = 0;
 									avg_prediction = 0;
 									prediction_sum = 0;
+									if (paddleY_in < puckY_in) offset = 40; else offset = 0;
 									if ((puckY_in < RED_LINE)
 										|| (puckY_in < BLUE_LINE && puckY_in > RED_LINE && ((puckY_steps - paddleY_steps) < 0)))
 									{
 										if ((puckY_in > 3) && (puckX_in < 10 || puckX_in > 18))
 										{
 											x_motor_steps = puckX_steps - paddleX_steps;
-											y_motor_steps = puckY_steps - paddleY_steps;
+											y_motor_steps = puckY_steps - paddleY_steps - 8 + offset;
 											move_the_paddle = 1;
 										}
 
@@ -799,13 +846,13 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 									{
 
 										x_motor_steps = puckX_steps - paddleX_steps;
-										y_motor_steps = puckY_steps - paddleY_steps + 50;
+										y_motor_steps = puckY_steps - paddleY_steps + 70;
 										move_the_paddle = 1;
 									}
 									else
 									{
 										x_motor_steps = HOME_X - paddleX_steps;
-										y_motor_steps = HOME_Y - paddleY_steps;
+										y_motor_steps = HOME_Y - paddleY_steps + offset;
 										move_the_paddle = 1;
 									}
 								}
@@ -813,10 +860,18 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 							// PUCK NOT MOVING 
 							else
 							{
+							
+								if (puckX_in < 3)
+								{
+									puckX_steps = 0;
+								}
+								else if (puckX_in > 25)
+								{
+									puckX_steps = 72;
+								}
 								if (puckY_in < NEUTRAL_ZONE)
 								{
-									if (penalty_shot)  offset = 40;
-									else  offset = 0;
+									if ((penalty_shot) || (paddleY_in < puckY_in))  offset = 40; else  offset = -5;
 
 									if (puckY_steps > HOME_Y || puckX_in < 10 || puckX_in > 18)
 									{
@@ -834,8 +889,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 							}
 						}
 
-						// RESET VALUES
-						num_frames = 0;
+						
 					}
 				}
 				else
@@ -845,9 +899,9 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 				num_frames++;
 			}
 		}
-		if (count > 1000 && found == 0)
+		if (count > 110 && found == 0)
 		{
-			printf("GO HOME\n");
+			//printf("GO HOME\n");
 			// RESET MOTOR
 			pkout.flt1 = 2;
 			pkout.flt2 = 2;
@@ -856,7 +910,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 			pkout.flt5 = 2;
 			pkout.flt6 = 0;
 			sender.SendData(&pkout);
-			Sleep(1);
+			Sleep(5);
 
 			x_motor_steps = HOME_X - paddleX_steps;
 			y_motor_steps = HOME_Y - paddleY_steps;
@@ -864,6 +918,7 @@ static DWORD WINAPI CaptureThread(LPVOID ThreadPointer)
 			set_motor_steps(&pkout, y_motor_steps, 'y');
 			sender.SendData(&pkout);
 			motor_start = clock();
+			move_the_paddle = 0;
 			move_home = 0;
 			count = 0;
 		}
